@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from www.cryptocoinsniper.co/members/members/login by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 25 Jun 2018 15:28:35 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Crypto Coin Sniper - Dashboard | Login</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="http://www.cryptocoinsniper.co/members/css/vendors/iconfonts/mdi/css/materialdesignicons.min.css"/><link rel="stylesheet" href="http://www.cryptocoinsniper.co/members/css/vendors/css/vendor.bundle.base.css"/><link rel="stylesheet" href="http://www.cryptocoinsniper.co/members/css/style.css?ver=1"/><script type="text/javascript">
+js_url = String('http://www.cryptocoinsniper.co/members/');
+jsBaseURL = js_url.substr(0, js_url.length - 1);
+</script>
+<link href="http://www.cryptocoinsniper.co/members/favicon.ico" type="image/x-icon" rel="icon"/><link href="http://www.cryptocoinsniper.co/members/favicon.ico" type="image/x-icon" rel="shortcut icon"/>  <!-- endinject -->
+</head>
+
+<body>
+    <div class="container-scroller">
+    	<div class="container-fluid page-body-wrapper full-page-wrapper">
+        	<div class="content-wrapper d-flex align-items-center auth">
+            	<div class="row w-100">
+              		<div class="col-lg-4 mx-auto">
+                		<div class="auth-form-light text-left p-5">
+                  			<div class="brand-logo">
+                    			<img src="http://www.cryptocoinsniper.co/members/img/logo.png" alt=""/>                  			</div>
+                  			<h4>Hello! let's get started</h4>
+                  			<h6 class="font-weight-light">Sign in to continue.</h6>
+                  			<form method="post" enctype="multipart/form-data" accept-charset="utf-8" id="site_login" name="site_login" action="login.php"><div style="display:none;"><input type="hidden" name="_method" value="POST"/></div>            				<div class="form-group"><div class="input email required"><input type="email" name="email" class="form-control form-control-lg" required="required" placeholder="Username" id="member-email"/></div></div>
+                            <div class="form-group"><div class="input password required"><input type="password" name="password" class="form-control form-control-lg" required="required" placeholder="Password" id="member-password"/></div></div>
+                            <div class="mt-3"><div class="submit"><input type="submit" name="login" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" value="SIGN IN"/></div></div>
+                            <div class="my-2 d-flex justify-content-between align-items-center">
+                            	<div class="form-check">
+                                	<label class="form-check-label text-muted"><input type="checkbox" class="form-check-input">Keep me signed in</label>
+                              	</div>
+                              	<a href="#" class="auth-link text-black" data-toggle="modal" data-target="#forgot-password">Forgot password?</a>
+                            </div>
+                            <div class="text-center mt-4 font-weight-light">
+                              	Just signed up? Check your inbox and junk email now, we have sent you your user name and password.
+                            </div>
+                            </form>                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+
+<!-- Forgot Password Modal start -->
+<div class="modal fade" id="forgot-password" tabindex="-1" role="dialog" aria-labelledby="#forgot-passwordLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    	<div class="modal-header">
+    		<h5 class="modal-title" id="notes-1-label">Forgot Password</h5>
+    	    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+      <div class="modal-body text-center">
+      	<div class="col-xs-12">
+			<p class="text-center">Please enter your email</p>
+		</div>
+        <div class="col-xs-12 text-center margin-bot15">
+        	<small id="invalidEmailError"></small>
+        </div>
+	    <form method="post" accept-charset="utf-8" id="forgot_password" class="form-horizontal margin-top20 margin-bot40" role="form" action="http://www.cryptocoinsniper.co/members/members/login"><div style="display:none;"><input type="hidden" name="_method" value="POST"/></div>	    	<div class="form-group">
+	            <div class="col-xs-12">
+	                <div class="input email required"><input type="email" name="email" Type="email" class="form-control" required="required" id="email" placeholder="Enter your Email"/></div>	            </div>
+	        </div>
+	        <div class="form-group">
+	            <div class="col-xs-12">
+	                <div class="submit"><input type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" value="Send Password" title="Send Password"/></div>            		<!-- </a> -->
+	            </div>
+	        </div>
+			
+	    </form>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+    </div>
+  </div>
+</div>
+<!-- Forgot Password Modal end -->
+
+<!-- Thank You Modal start -->
+<div class="modal fade" id="thank-you" tabindex="-1" role="dialog" aria-labelledby="#thank-youLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+         	<div class="modal-header">
+         	    <h5 class="modal-title" id="notes-1-label">Forgot Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body text-center">
+            	<div class="clearfix">
+                    <p class="col-xs-12 text-center margin-top30 margin-bot40">Thank You. You will shortly recieve an E-Mail containing your new password</p>
+                </div>   
+        	</div>
+        	<div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+    	</div>
+	</div>
+</div>
+<!-- Thank You Modal end -->
+<script>
+$('.modal').on('hidden.bs.modal', function(){
+	$(this).find(".alert-danger").html("");
+    $(this).find('form')[0].reset()
+});
+</script>
+<script src="http://www.cryptocoinsniper.co/members/js/vendor.bundle.base.js"></script><script src="http://www.cryptocoinsniper.co/members/js/vendor.bundle.addons.js"></script><script src="http://www.cryptocoinsniper.co/members/js/off-canvas.js"></script><script src="http://www.cryptocoinsniper.co/members/js/misc.js"></script></body>
+
+<!-- Mirrored from www.cryptocoinsniper.co/members/members/login by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 25 Jun 2018 15:28:35 GMT -->
+</html>
