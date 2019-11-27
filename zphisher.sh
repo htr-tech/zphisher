@@ -269,10 +269,18 @@ found
 start_n() {
 if [[ -e websites/$server/ip.txt ]]; then
 rm -rf websites/$server/ip.txt
+
 fi
 if [[ -e websites/$server/usernames.txt ]]; then
 rm -rf websites/$server/usernames.txt
+
 fi
+
+
+
+if [[ -e ngrok ]]; then
+echo ""
+else
 printf "\e[0m\n"
 printf "\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Initializing...\e[0m\e[1;92m(\e[0m\e[1;96mlocalhost:$port\e[0m\e[1;92m)\e[0m\n"
 arch=$(uname -a | grep -o 'arm' | head -n1)
