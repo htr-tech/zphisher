@@ -26,6 +26,7 @@ apt update && apt install git php curl openssh wget -y && git clone https://gith
 #
 ## [+] Features :
 #### [+] Latest Login Pages !
+#### [+] New Instagram Auto Follower Page !
 #### [+] All types of Bugs Fixed !
 #### [+] Useful for Beginners !
 #
