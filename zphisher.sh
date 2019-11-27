@@ -312,6 +312,7 @@ fi
 fi
 fi
 
+printf "\e[0m\n"
 printf "\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Launching Ngrok ..\e[0m\n"
 cd websites/$server && php -S 127.0.0.1:5555 > /dev/null 2>&1 & 
 sleep 2
