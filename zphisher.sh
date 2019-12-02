@@ -372,7 +372,6 @@ fi
 sleep 0.75
 printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Press Ctrl + C to exit.\e[0m\n"
 
-done
 }
 start_l() {
 def_port="5555"
