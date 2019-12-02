@@ -1,15 +1,15 @@
-# Zphisher V-1.0
+# Zphisher V-1.1
 ### [+] Created By HTR-TECH (@***tahmid.rayat***)
 ### [+] Disclaimer :
-***Zphisher is an upgraded form of Shellphish. The main source code is from [Shellphish](https://github.com/thelinuxchoice/shellphish) . But I have not fully copied it . I have upgraded it & cleared the Unnecessary Files . Zphisher has 37 Phishing Page Templates ; including Facebook , Twitter & Paypal . It also has 3 Port Forwarding Tools . You can Find the Templates [HERE](/websites/Pages.md)***
+***Zphisher is an upgraded form of Shellphish. The main source code is from [Shellphish](https://github.com/thelinuxchoice/shellphish) . But I have not fully copied it . I have upgraded it & cleared the Unnecessary Files . Zphisher has 37 Phishing Page Templates ; including Facebook , Twitter & Paypal . It also has 4 Port Forwarding Tools . You can Find the Templates [HERE](/websites/Pages.md)***
 #
 ## **[!] I am not Responsible for any Misuse of this tool . Use at your Own Risk [!]**
-<img src="https://i.ibb.co/8BJX0b6/1.jpg" alt="1" border="0">
+<img src="https://i.ibb.co/vxtNb72/1.jpg" alt="1" border="0">
 
 ## [+] Installation :
 
 * ```apt update```
-* ```apt install git wget php openssh curl -y```
+* ```apt install git php openssh curl -y```
 * ```git clone https://github.com/htr-tech/zphisher```
 * ```cd zphisher```
 * ```chmod +x zphisher.sh```
@@ -17,7 +17,7 @@
 
 ### Or ; Use Single Command
 ```
-apt update && apt install git php curl openssh wget -y && git clone https://github.com/htr-tech/zphisher && cd zphisher && chmod +x zphisher.sh && bash zphisher.sh
+apt update && apt install git php curl openssh -y && git clone https://github.com/htr-tech/zphisher && cd zphisher && chmod +x zphisher.sh && bash zphisher.sh
 ```
 #
 ## [+] Credits :
