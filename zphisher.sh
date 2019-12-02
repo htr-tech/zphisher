@@ -347,6 +347,8 @@ printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Press Ctrl + C to exit.\e[0m
 printf "\e[1;93m\n"
 ssh -R 80:localhost:$port ssh.localhost.run 2>&1
 printf "\e[0m\n"
+found
+
 }
 start_l() {
 def_port="5555"
