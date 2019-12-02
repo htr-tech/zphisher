@@ -360,7 +360,9 @@ cd websites/$server && php -S 127.0.0.1:$port > /dev/null 2>&1 &
 sleep 2
 printf "\e[0m\n"
 printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Successfully Hosted at :\e[0m\e[1;93m http://localhost:$port\e[0m\n"
+printf "\n"
 found
+
 }
 found() {
 
