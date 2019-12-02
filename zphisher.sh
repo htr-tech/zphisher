@@ -363,7 +363,7 @@ rm -rf websites/$server/usernames.txt
 fi
 sleep 0.75
 
-
+done
 }
 start_l() {
 def_port="5555"
