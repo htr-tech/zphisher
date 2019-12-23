@@ -2,7 +2,7 @@
 ### [+] Created By HTR-TECH (@***tahmid.rayat***)
 [![GitHub followers](https://img.shields.io/github/followers/htr-tech?label=Followers&style=social)](https://github.com/htr-tech?tab=followers)
 [![GitHub stars](https://img.shields.io/github/stars/htr-tech/zphisher?style=social)](https://github.com/htr-tech/zphisher/stargazers/)
-[![GitHub forks](https://img.shields.io/github/forks/htr-tech/zphisher?label=Fork&style=social)](https://github.com/htr-tech/zphisher/network/)
+[![GitHub forks](https://img.shields.io/github/forks/htr-tech/zphisher?label=Fork&style=social)](https://github.com/htr-tech/zphisher/network/members)
 [![GitHub watchers](https://img.shields.io/github/watchers/htr-tech/zphisher?label=Watchers&style=social)](https://github.com/htr-tech/zphisher/watchers/)
 
 ### [+] Disclaimer :
