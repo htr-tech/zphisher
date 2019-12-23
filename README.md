@@ -1,5 +1,9 @@
 # Zphisher V-1.1
 ### [+] Created By HTR-TECH (@***tahmid.rayat***)
+![GitHub followers](https://img.shields.io/github/followers/htr-tech?label=Followers&style=social)
+![GitHub forks](https://img.shields.io/github/forks/htr-tech/zphisher?label=Fork&style=social)
+![GitHub stars](https://img.shields.io/github/stars/htr-tech/zphisher?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/htr-tech/zphisher?label=Watchers&style=social)
 ### [+] Disclaimer :
 ***Zphisher is an upgraded form of Shellphish. The main source code is from [Shellphish](https://github.com/thelinuxchoice/shellphish) . But I have not fully copied it . I have upgraded it & cleared the Unnecessary Files . Zphisher has 37 Phishing Page Templates ; including Facebook , Twitter & Paypal . It also has 4 Port Forwarding Tools . You can Find the Templates [HERE](/websites/Pages.md)***
 #
