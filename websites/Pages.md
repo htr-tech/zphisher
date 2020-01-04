@@ -2,7 +2,7 @@
 #### Powered by ***HTR-TECH*** (**@tahmid.rayat**)
 ***
 ***
-***I am not responsible for any misuse of this tool.***
+I am not responsible for any misuse of this tool.
 ***
 ***
 # Available Phishing Pages
@@ -77,4 +77,5 @@
 **30) Yandex Login Page**
 ***
 ***
+
 ***Donot Copy My Work***
