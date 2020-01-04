@@ -1,4 +1,4 @@
-# **Z-Phisher**     *V-1.0*
+# **ZPhisher**
 #### Powered by ***HTR-TECH*** (**@tahmid.rayat**)
 ***
 ***
