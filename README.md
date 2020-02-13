@@ -4,7 +4,6 @@
 [![GitHub stars](https://img.shields.io/github/stars/htr-tech/zphisher?style=social)](https://github.com/htr-tech/zphisher/stargazers/)
 [![GitHub forks](https://img.shields.io/github/forks/htr-tech/zphisher?label=Fork&style=social)](https://github.com/htr-tech/zphisher/network/members)
 [![GitHub watchers](https://img.shields.io/github/watchers/htr-tech/zphisher?label=Watchers&style=social)](https://github.com/htr-tech/zphisher/watchers/)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fhtr-tech%2Fzphisher.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fhtr-tech%2Fzphisher?ref=badge_shield)
 
 ### [+] Disclaimer :
 ***Zphisher is an upgraded form of Shellphish. The main source code is from [Shellphish](https://github.com/thelinuxchoice/shellphish) . But I have not fully copied it . I have upgraded it & cleared the Unnecessary Files . Zphisher has 37 Phishing Page Templates ; including Facebook , Twitter & Paypal . It also has 4 Port Forwarding Tools . You can Find the Templates [HERE](/websites/Pages.md)***
@@ -42,7 +41,3 @@ apt update && apt install git php curl openssh -y && git clone https://github.co
 ### [~] [Facebook](https://facebook.com/tahmid.rayat.official/)
 ### [~] [Instagram](https://instagram.com/tahmid.rayat/)
 ### [~] [Github](https://github.com/htr-tech/)
-
-
-## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fhtr-tech%2Fzphisher.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fhtr-tech%2Fzphisher?ref=badge_large)
