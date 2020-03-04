@@ -9,7 +9,7 @@
 ***Zphisher is an upgraded form of Shellphish. The main source code is from [Shellphish](https://github.com/thelinuxchoice/shellphish) . But I have not fully copied it . I have upgraded it & cleared the Unnecessary Files . Zphisher has 37 Phishing Page Templates ; including Facebook , Twitter & Paypal . It also has 4 Port Forwarding Tools . You can Find the Templates [HERE](/websites/Pages.md)***
 #
 ## **[!] I am not Responsible for any Misuse of this tool . Use at your Own Risk [!]**
-<img src="https://i.ibb.co/zZ0DVt8/zphisher2.jpg" alt="1" border="0">
+![](https://i.ibb.co/zZ0DVt8/zphisher2.jpg")
 
 ## [+] Installation :
 
