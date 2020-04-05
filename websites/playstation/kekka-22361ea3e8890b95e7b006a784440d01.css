@@ -1,0 +1,7 @@
+/**
+ * kekka.css
+ * Copyright 2016 Sony Corporation
+ * 
+ */
+
+* :not(p):not(h2):not(h3):not(ul):not(li){margin:0;padding:0;-webkit-tap-highlight-color:transparent}body,html{height:100%}body{overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,HiraKakuProN-W3,'Noto Sans CJK JP',sans-serif;-webkit-text-size-adjust:100%}span{unicode-bidi:embed}html{font-size:10px}
