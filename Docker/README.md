@@ -39,7 +39,7 @@ zphisher   bash zphisher.sh   Up
 ```
 
 
-Executing HiddenEye inside of container
+Executing zphisher inside of container
 
 ```bash
 docker-compose exec zphisher bash zphisher.sh
