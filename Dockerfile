@@ -5,6 +5,7 @@ WORKDIR /home/
 
 COPY . /home/
 
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends openssh-server && \
     apt-get install -y curl && \

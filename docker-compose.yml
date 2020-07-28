@@ -9,6 +9,7 @@ services:
     zphisher:
 
         container_name: zphisher
+        
         build: .
         image: zphisher:v0.1
         command: bash zphisher.sh
