@@ -1,0 +1,22 @@
+version: '3.7'
+
+networks:
+    internet:
+        driver: bridge
+
+services: 
+
+    zphisher:
+
+        container_name: zphisher
+        
+        build: .
+        image: zphisher:v0.1
+        command: bash zphisher.sh
+        stdin_open: true
+        tty: true
+        volumes: 
+            - $PWD/websites:/home/websites
+        networks: 
+            - internet
+        restart: always
