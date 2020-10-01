@@ -35,7 +35,7 @@ apt update ; apt install git curl php openssh -y ; git clone git://github.com/ht
 <img width="51%" src="https://raw.githubusercontent.com/htr-tech/release-download/master/images/zphisher2.png"/>
 </p>
 
-### <<< If you copy , Then Give me The Credits >>>
+### <<< If you copy , Then Give me The Credits And Thanks For Using , Stay Happy Good Luck.>>>
 
 ## Features :
 #### [+] Latest Login Pages !
