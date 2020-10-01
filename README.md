@@ -60,3 +60,8 @@ apt update ; apt install git curl php openssh -y ; git clone git://github.com/ht
 [![Messenger](https://img.shields.io/badge/Chat-Messenger-blue?style=for-the-badge&logo=messenger)](https://m.me/tahmid.rayat.official)
 
 #### Docker Added !!  Checkout `docker-legacy` branch
+
+### Conclusion
+This is a open source automatic phishing tool. 
+I request you to don't use this for any type of **Illegal** activities.
+
