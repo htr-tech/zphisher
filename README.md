@@ -20,39 +20,37 @@
 ## Installation :
 
 * `apt update`
-* `apt install git curl php openssh -y`
+* `apt install git curl php -y`
 * `git clone git://github.com/htr-tech/zphisher.git`
 * `cd zphisher`
 #### > Run : `bash zphisher.sh`
 
 ## Single Command :
 ```
-apt update ; apt install git curl php openssh -y ; git clone git://github.com/htr-tech/zphisher.git ; cd zphisher ; bash zphisher.sh
+apt update ; apt install git curl php -y ; git clone git://github.com/htr-tech/zphisher.git ; cd zphisher ; bash zphisher.sh
 ```
 <br>
 <p align="center">
 <img width="40%" src="https://raw.githubusercontent.com/htr-tech/release-download/master/images/zphisher1.png"/>
-<img width="51%" src="https://raw.githubusercontent.com/htr-tech/release-download/master/images/zphisher2.png"/>
+<img width="42%" src="https://raw.githubusercontent.com/htr-tech/release-download/master/images/zphisher02.png"/>
 </p>
 
 ### <<< If you copy , Then Give me The Credits >>>
 
 ## Features :
 #### [+] Latest Login Pages !
-#### [+] New Instagram Auto Follower Page !
-#### [+] 4 Port Forwarding Options !
+#### [+] Mask URL Added !
 #### [+] Easy for Beginners !
 
-## Credits :
+## Thanks :
 #### > TheLinuxChoice (https://github.com/thelinuxchoice)
 #### > DarksecDevelopers (https://github.com/DarksecDevelopers)
-#### > UndeadSec (https://github.com/UndeadSec)
+#### > Moises Tapia (https://github.com/MoisesTapia)
 
 ## Tunelling Options :
-#### > Localhost (127.0.0.1)
-#### > NGROK (https://ngrok.com)
-#### > SERVEO (https://serveo.net)
-#### > LOCALHOSTRUN (https://localhost.run)
+#### > Localhost
+#### > NGROK Hotspot
+#### > NGROK No Hotspot
 
 ## Find Me on :
 [![Github](https://img.shields.io/badge/Github-HTR--TECH-green?style=for-the-badge&logo=github)](https://github.com/htr-tech)
