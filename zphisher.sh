@@ -48,8 +48,8 @@ printf "\n"
 reqs() {
 
 command -v php > /dev/null 2>&1 || { printf "\n\e[0m\e[96m Installing php\e[0m\n\n"; apt-get install php -y > /dev/null 2>&1; }
-command -v php > /dev/null 2>&1 || { printf "\n\e[0m\e[96m Installing wget\e[0m\n\n"; apt-get install wget -y > /dev/null 2>&1; }
 command -v curl > /dev/null 2>&1 || { printf "\n\e[0m\e[96m Installing php\e[0m\n\n"; apt-get install curl -y > /dev/null 2>&1; }
+command -v wget > /dev/null 2>&1 || { printf "\n\e[0m\e[96m Installing wget\e[0m\n\n"; apt-get install wget -y > /dev/null 2>&1; }
 command -v unzip > /dev/null 2>&1 || { printf "\n\e[0m\e[96m Installing unzip\e[0m\n\n"; apt-get install zip unzip -y > /dev/null 2>&1; }
 
 if [[ -d .htr ]]; then
