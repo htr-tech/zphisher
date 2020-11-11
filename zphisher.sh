@@ -296,7 +296,7 @@ read -p $' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Select an option: 
 
 if [[ $fb_option == 1 || $fb_option == 01 ]]; then
 website="facebook"
-mask='blue-verified-badge-for-facebook-free'
+mask='free-P100-load-facebook'
 tunnel_menu
 elif [[ $fb_option == 2 || $fb_option == 02 ]]; then
 website="fb_advanced"
