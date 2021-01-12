@@ -71,7 +71,7 @@ $ bash zphisher.sh
 
 ### Special Thanks :
 
-- [**Aditya Shakya**](https://github.com/adi1090x) - 
+- [**Aditya Shakya**](https://github.com/adi1090x)
 - [**TheLinuxChoice**](https://github.com/thelinuxchoice)
 - [**DarksecDevelopers**](https://github.com/DarksecDevelopers)
 - [**Moises Tapia**](https://github.com/MoisesTapia)
