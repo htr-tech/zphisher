@@ -175,7 +175,7 @@ about() {
 		${GREEN}Social   ${RED}:  ${CYAN}https://linktr.ee/tahmid.rayat
 		${GREEN}Version  ${RED}:  ${ORANGE}2.1 Beta
 
-		${REDBG}${WHITE} Thanks to MoisesTapia , Hiddeneye Team & Thelinuxchoice ${RESETBG}
+		${REDBG}${WHITE} Thanks to adi1090x , MoisesTapia , Hiddeneye Team & Thelinuxchoice ${RESETBG}
 
 		${RED}[${WHITE}00${RED}]${ORANGE} Main Menu     ${RED}[${WHITE}99${RED}]${ORANGE} Exit
 
