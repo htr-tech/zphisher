@@ -1,0 +1,351 @@
+.PinBetterSave__Button {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #bd081c;
+  border: none;
+  border-bottom-right-radius: 4px;
+  border-top-right-radius: 4px;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+  height: 40px;
+  padding: 0 14px; }
+  .PinBetterSave__Button:hover {
+    background-color: #ad081b; }
+  .PinBetterSave__Button:focus {
+    box-shadow: 0 0 0 4px rgba(0, 132, 255, 0.5);
+    outline: 0;
+    position: relative; }
+  .PinBetterSave__Dropdown {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #fff;
+  border: none;
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  height: 40px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  min-width: 0;
+  padding: 0 14px;
+  position: relative; }
+  .PinBetterSave__Dropdown:hover {
+    background-color: #f1f1f1; }
+  .PinBetterSave__Dropdown:focus {
+    box-shadow: 0 0 0 4px rgba(0, 132, 255, 0.5);
+    outline: 0;
+    position: relative; }
+  .PinBetterSave__Dropdown--expanded {
+  border-radius: 4px; }
+.ShowcaseContainer {
+  height: 464px;
+  padding-left: 5px;
+  padding-right: 5px; }
+  .ShowcaseContainer .editButton {
+    border: solid 0.5px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    height: 40px;
+    visibility: hidden;
+    width: 40px;
+    z-index: 3; }
+  .ShowcaseContainer .editButton em {
+      background: url(https://s.pinimg.com/webapp/style/images/webapp-common-main-1x-c20ceaff.png) -295px -20px no-repeat;
+      height: 18px;
+      margin-left: 2px;
+      margin-top: 2px;
+      width: 18px; }
+  .ShowcaseContainer .showcaseCarouselWrapper {
+    box-sizing: border-box;
+    height: 464px;
+    padding: 11px;
+    position: relative;
+    width: 790px; }
+  .ShowcaseContainer .showcaseCarouselWrapper::before {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+      content: " " !important;
+      height: 100%;
+      left: 0;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      -webkit-transform: scale(0.96);
+              transform: scale(0.96);
+      width: 100%;
+      z-index: 3; }
+  .ShowcaseContainer .showcaseCarouselWrapper:hover::before {
+      -webkit-animation: tapAnimation 0.25s cubic-bezier(0.31, 1, 0.34, 1) forwards;
+              animation: tapAnimation 0.25s cubic-bezier(0.31, 1, 0.34, 1) forwards;
+      cursor: pointer; }
+  .ShowcaseContainer .showcaseCarouselWrapper:hover .showcaseButton {
+      visibility: visible; }
+  .ShowcaseContainer .backButton {
+    left: 23px;
+    position: absolute;
+    top: 180px; }
+  .ShowcaseContainer .backButton em {
+      background: url(https://s.pinimg.com/webapp/style/images/webapp-common-main-1x-c20ceaff.png) -258px -154px no-repeat;
+      height: 18px;
+      margin-right: 3px;
+      width: 12px; }
+  .ShowcaseContainer .nextButton {
+    position: absolute;
+    right: 23px;
+    top: 180px; }
+  .ShowcaseContainer .nextButton em {
+      background: url(https://s.pinimg.com/webapp/style/images/webapp-common-main-1x-c20ceaff.png) -276px -244px no-repeat;
+      height: 18px;
+      margin-left: 3px;
+      width: 12px; }
+  .ShowcaseContainer .showcaseButton {
+    border: solid 0.5px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    height: 40px;
+    visibility: hidden;
+    width: 40px;
+    z-index: 3; }
+.ShowcaseContent {
+  height: 377px;
+  width: 768px; }
+  .ShowcaseContent .articleImage {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    min-height: 100%;
+    width: 100%; }
+  .ShowcaseContent .dismissButton {
+    border: none;
+    padding: 6px;
+    position: absolute;
+    right: 8px;
+    top: 8px; }
+  .ShowcaseContent .dismissButton em {
+      background: url(https://s.pinimg.com/webapp/style/images/webapp-common-main-1x-c20ceaff.png) -261px -242px no-repeat;
+      height: 12px;
+      width: 12px; }
+  .ShowcaseContent .emptySection {
+    border-radius: 8px;
+    height: 377px; }
+  .ShowcaseContent .imageWash {
+    background: rgba(0, 0, 0, 0.05);
+    height: 100%;
+    width: 100%;
+    z-index: 1; }
+.ShopShowcaseSection .imageWash {
+  background: rgba(0, 0, 0, 0.05);
+  height: 100%;
+  width: 100%;
+  z-index: 1; }
+
+.ShopShowcaseSection .shopHoverImage {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 187px;
+  position: absolute;
+  -webkit-transition: .3s;
+  transition: .3s;
+  width: 226px; }
+
+.ShopShowcaseSection .shopHoverImage.leftCollage {
+    left: -226px; }
+
+.ShopShowcaseSection .shopHoverImage.leftCollage.hover {
+      left: 0; }
+
+.ShopShowcaseSection .shopHoverImage.righCollage {
+    right: -226px; }
+
+.ShopShowcaseSection .shopHoverImage.righCollage.hover {
+      right: 0; }
+
+.ShopShowcaseSection .shopCircle {
+  left: 50%;
+  margin-left: -40px;
+  margin-top: -40px;
+  position: absolute;
+  top: 50%; }
+
+.ShopShowcaseSection .shopCircleText {
+  font-size: 18px;
+  font-weight: normal;
+  height: 80px;
+  opacity: .95;
+  width: 80px; }
+
+.ShopShowcaseSection .shopCardImage {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100%;
+  -webkit-transition: .3s;
+  transition: .3s; }
+.ShowcaseInfo .helpCenterLink {
+  padding-left: 2px; }
+
+.ShowcaseInfo .subtitleWrapper {
+  padding-top: 3px; }
+
+.ShowcaseInfo .subtitleWrapper .value {
+    font-weight: bold; }
+
+.ShowcaseInfo.sectionInfoSlideFromLeft .titleWrapper {
+  -webkit-animation: slidefadeInLeft 0.35s cubic-bezier(0.31, 0, 0.31, 1) forwards;
+          animation: slidefadeInLeft 0.35s cubic-bezier(0.31, 0, 0.31, 1) forwards; }
+
+.ShowcaseInfo.sectionInfoSlideFromRight .titleWrapper {
+  -webkit-animation: slidefadeInRight 0.35s cubic-bezier(0.31, 0, 0.31, 1) forwards;
+          animation: slidefadeInRight 0.35s cubic-bezier(0.31, 0, 0.31, 1) forwards; }
+
+@-webkit-keyframes slidefadeInLeft {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-8px);
+            transform: translateX(-8px); }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0); } }
+
+@keyframes slidefadeInLeft {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-8px);
+            transform: translateX(-8px); }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0); } }
+
+@-webkit-keyframes slidefadeInRight {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(8px);
+            transform: translateX(8px); }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0); } }
+
+@keyframes slidefadeInRight {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(8px);
+            transform: translateX(8px); }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0); } }
+.ShowcasePips .animatingPipWrapper {
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1; }
+
+.ShowcasePips .pip {
+  background-color: #efefef;
+  border-radius: 8px;
+  height: 4px;
+  margin-right: 4px;
+  width: 24px; }
+
+.ShowcasePips .pip.animatingPip {
+  -webkit-animation-duration: 4000ms;
+          animation-duration: 4000ms;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-name: animateWidth;
+          animation-name: animateWidth;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  background-color: #b5b5b5;
+  position: absolute;
+  right: 24px;
+  top: 0; }
+
+.ShowcasePips .pip.filledPip {
+  background-color: #b5b5b5; }
+
+@-webkit-keyframes animateWidth {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0); }
+  100% {
+    -webkit-transform: translateX(24px);
+            transform: translateX(24px); } }
+
+@keyframes animateWidth {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0); }
+  100% {
+    -webkit-transform: translateX(24px);
+            transform: translateX(24px); } }
+.ShowcaseSettingsPage .clearAllButton {
+  border: none; }
+
+.ShowcaseSettingsPage .downArrow {
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 8px solid #555;
+  height: 0;
+  margin-right: 8px;
+  margin-top: 5px;
+  width: 0; }
+
+.ShowcaseSettingsPage .sectionList {
+  max-height: 400px;
+  overflow-x: hidden;
+  overflow-y: scroll; }
+
+.ShowcaseSettingsPage .sectionSlot {
+  background-color: #efefef;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  padding: 11px 8px;
+  text-align: left;
+  width: 496px; }
+
+.ShowcaseSettingsPage .sectionPickerText div {
+  line-height: 40px; }
+
+.ShowcaseSettingsPage .sectionPickerImage {
+  background-position: center;
+  background-size: cover;
+  height: 40px;
+  width: 40px; }
+
+.ShowcaseSettingsPage .sectionPickerItem {
+  background-color: #fff;
+  border: none;
+  width: 100%; }
+
+.ShowcaseSettingsPage .sectionPickerItem:hover {
+  background-color: #f1f1f1; }
+
+.ShowcaseSettingsPage .sectionSlotName {
+  display: inline-block; }
+
+.ShowcaseSettingsPage .showcaseContent {
+  width: 496px; }
