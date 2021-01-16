@@ -15,11 +15,11 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Author-HTR--Tech-cyan?style=flat-square">
   <img src="https://img.shields.io/badge/Open%20Source-Yes-cyan?style=flat-square">
-  <img src="https://img.shields.io/badge/Made%20In-Bangladesh-cyan?style=flat-square">
+  <img src="https://img.shields.io/badge/MADE%20IN-BANGLADESH-green?colorA=%23ff0000&colorB=%23017e40&style=flat-square">
   <img src="https://img.shields.io/badge/Written%20In-Bash-cyan?style=flat-square">
 </p>
 
-<p align="center">A beginners friendly, Automated phishing tool with 30+ logins.</p>
+<p align="center">A beginners friendly, Automated phishing tool with 30+ templates.</p>
 
 ##
 
@@ -32,17 +32,6 @@
 - Multiple tunneling options
   - Localhost
   - Ngrok (With or without hotspot)
-
-### Dependencies
-
-**`Zphisher`** requires following programs to run properly - 
-- `php`
-- `wget`
-- `curl`
-- `git`
-
-> All the dependencies will be installed automatically when you run `Zphisher` for the first time.
-> Supported Platform : **`Termux`**, **`Ubuntu/Debian/Kali`**, **`Arch Linux/Manjaro`**, **`Fedora`**
 
 
 ### Installation
@@ -59,6 +48,24 @@ $ bash zphisher.sh
 ```
 
 - On first launch, It'll install the dependencies and that's it. `Zphisher` is installed.
+
+### Run on Docker
+```
+$ docker pull htrtech/zphisher
+$ docker run --rm -it htrtech/zphisher
+```
+
+### Dependencies
+
+**`Zphisher`** requires following programs to run properly - 
+- `php`
+- `wget`
+- `curl`
+- `git`
+
+> All the dependencies will be installed automatically when you run `Zphisher` for the first time.
+
+> Supported Platform : **`Termux`**, **`Ubuntu/Debian/Kali`**, **`Arch Linux/Manjaro`**, **`Fedora`**
 
 ##
 
