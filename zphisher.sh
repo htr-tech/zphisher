@@ -402,7 +402,7 @@ site_facebook() {
 
 	if [[ "$REPLY" == 1 || "$REPLY" == 01 ]]; then
 		website="facebook"
-		mask='http://blue-verified-badge-for-facebook-free'
+		mask='http://support-u-facebook.com'
 		tunnel_menu
 	elif [[ "$REPLY" == 2 || "$REPLY" == 02 ]]; then
 		website="fb_advanced"
