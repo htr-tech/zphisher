@@ -1,0 +1,262 @@
+<!-- I AM A FAKE PAGE | DO NOT TRUST ME --><!DOCTYPE html><html><title>Poll completed successfully. Thank You!</title>    <body style="background-color:black;">   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"><link rel="styl							esheet" href="https://fonts.googleapis.com/css?family=Raleway"><!-- !PAGE CONTENT! --><div class="w3-content" style="max-width:1500px"><!-- Header --><header class="w3-panel w3-center w3-opacity" style="padding:128px 16px"> <h1 class="w3-xlarge"><font="yellow"Congratulation</font></h1> <h1><font="white"You have won 10 diamond</font></h1></header> <body> <p align="center"><font size="20px" color="gold"> Congratulation,You have won 50 diamond❤️</font></p>.<title>Fireworks</title>
+    <meta name="keywords" content="HTML5, CSS3, JavaScript, Firework">
+    <meta name="author" content="Rajendra Patil <rrpatil26@gmail.com>">
+    <style>
+        .cracker.moving {
+            border-top: 40px solid red;
+            -moz-transition: left 1s, top 1s, opacity 1.2s ease-in;
+            -webkit-transition: left 1s, top 1s, opacity 1.2s ease-in;
+            -o-transition: left 1s, top 1s, opacity 1.2s ease-in;
+            -ms-transition: left 1s, top 1s, opacity 1.2s ease-in;
+            transition: left 1s, top 1s, opacity 1.2s ease-in;
+
+            -webkit-transform-style: preserve-3d;
+            -webkit-backface-visibility: hidden;
+            -webkit-transform: translateZ(0);
+        }
+        .cracker {
+            opacity: 1;
+            width: 0;
+            height: 0;
+            border: 4px solid transparent;
+            border-top: 10px solid red;
+            position: absolute;
+
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px;
+            -o-border-radius: 10px;
+            -ms-border-radius: 10px;
+            border-radius: 10px;
+        }
+        body { background: #000;}
+        .info { color: white; text-align: center;}
+        .noselect {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body class="noselect">
+<h1 class="info"></h1>
+<script>
+//To check if object is an array
+var $isArray = function (obj) {
+    return Object.prototype.toString.call(obj) === '[object Array]';
+};
+//Loop on each element of map or array
+var $each = function (obj, callback) {
+    if ($isArray(obj)) {
+        for (var idx = 0, len = obj.length; idx < len; idx++) {
+            callback(obj[idx], idx);
+        }
+    } else {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                callback(obj[key], key);
+            }
+        }
+    }
+};
+//Simple Inheritance
+var Extend = function (Child, Parent, prototypes) {
+    Child.prototype = new Parent();
+    Child.prototype.constructor = Parent;
+    $each(prototypes, function (value, key) {
+        Child.prototype[key] = value;
+    })
+};
+
+var Utils = {
+    /**
+     * gets random between 2 numbers
+     * @param start
+     * @param end
+     * @return {Number}
+     */
+    getRandom: function (start, end) {
+        return Math.floor(Math.random() * (end - start + 1) + start);
+    },
+    /**
+     * Cross browser addListener
+     */
+    addListener: function (dom, event, callback) {
+        if (!dom) return;
+        if (event === "transitionEnd") { //TODO detect browser and act accordingly
+            Utils.addListener(dom, "transitionend", callback);
+            Utils.addListener(dom, "oTransitionEnd", callback);
+            Utils.addListener(dom, "webkitTransitionEnd", callback);
+            return;
+        }
+        if (dom.attachEvent) {
+            dom.attachEvent('on' + event, callback);
+        } else {
+            dom.addEventListener(event, callback, false); //no capture
+        }
+    },
+    /**
+     *Cross browser removeListener
+     */
+    removeListener: function (dom, event, callback) {
+        if (!dom) return;
+        if (event === "transitionEnd") { //TODO detect browser and act accordingly
+            Utils.removeListener(dom, "transitionend", callback);
+            Utils.removeListener(dom, "oTransitionEnd", callback);
+            Utils.removeListener(dom, "webkitTransitionEnd", callback);
+            return;
+        }
+        if (dom.detachEvent) {
+            dom.detachEvent('on' + event, callback);
+        } else {
+            dom.removeEventListener(event, callback);
+        }
+    },
+    /**
+     * Gets random hex color
+     * @return {String}
+     */
+    getRandomColor: function () {
+        return '#'+Math.floor(Math.random()*16777215).toString(16);
+    },
+    /**
+     * Apply CSS style on the dom
+     * @param dom
+     * @param style
+     */
+    applyStyle: function (dom, style) {
+        for (var prop in style) {
+            if (prop === "transform") {
+                dom.style.webkitTransform = style[prop];
+                dom.style.MozTransform = style[prop];
+                dom.style.msTransform = style[prop];
+                dom.style.OTransform = style[prop];
+            } else {
+                dom.style[prop] = style[prop];
+            }
+        }
+    },
+    /**
+     * Calculate angle between 2 points
+     * @param fromPoint
+     * @param toPoint
+     * @return {Number}
+     */
+    getAngleFor: function (fromPoint, toPoint) {
+        var deltaX = toPoint.x - fromPoint.x;
+        var deltaY = toPoint.y - fromPoint.y;
+        return Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+    },
+    /**
+     * Calculate point on circumference in angle direction, radius distance away fromPont
+     * @param angleInDeg
+     * @param radius
+     * @param fromPoint
+     * @return {Object}
+     */
+    getPointFor: function (angleInDeg, radius, fromPoint) {
+        var point = {x: fromPoint.x, y: fromPoint.y};
+        point.x += radius * Math.cos(angleInDeg * Math.PI / 180.0);
+        point.y -= radius * Math.sin(angleInDeg * Math.PI / 180.0);
+        return point;
+    }
+};
+
+//The cracker Object
+var Cracker = function (options) {
+    this.init(options);
+};
+//Config
+Cracker.X_FLUCTUATION = 400;
+Cracker.Y_FLUCTUATION = 200;
+//Start
+Cracker.START_AT = {x: (document.documentElement.clientWidth || document.documentElement.innerWidth) / 2, y: (document.documentElement.clientHeight || document.documentElement.innerHeight) - 50};
+
+//Extends Object
+Extend(Cracker, Object, {
+    /**
+     * Init cracker
+     * @param options
+     */
+    init: function (options) {
+        this._options = options || {};
+        options.startPoint = {x: options.startPoint.x || Cracker.START_AT.x, y: options.startPoint.y || Cracker.START_AT.y};
+        var _crackerDiv = document.createElement('div');
+        _crackerDiv.className = "cracker";
+        Utils.applyStyle(_crackerDiv, {/*transform:"translate("+options.startPoint.x + "px, "+options.startPoint.y + "px"+")", */left: options.startPoint.x + "px", top: options.startPoint.y + "px", borderWidth: this._options.width+"px", borderTop: Utils.getRandom(20, 50)+"px solid "+ Utils.getRandomColor()});//borderTopColor: Utils.getRandomColor()});
+        this._crackerDiv = _crackerDiv;
+        this.place(options.placeAt || document.body);
+    },
+    /**
+     * Add cracker to the container
+     * @param container
+     */
+    place: function (container) {
+        container.appendChild(this._crackerDiv);
+    },
+    /**
+     * Fore the cracker
+     * @param x
+     * @param y
+     */
+    fire: function (angle, x, y) {
+        x = x || Utils.getRandom(Cracker.START_AT.x - (Cracker.X_FLUCTUATION / 2), Cracker.START_AT.x + (Cracker.X_FLUCTUATION / 2));
+        y = y || Utils.getRandom(Cracker.Y_FLUCTUATION, 1.5 * Cracker.Y_FLUCTUATION);
+        angle = angle || (Utils.getAngleFor(Cracker.START_AT, {x: x, y: y}) + 90);     
+
+        var cracker = this._crackerDiv;
+        var me = this;
+        this._listener = function () {
+            setTimeout(function () {me.explode()}, 400);
+        };
+        Utils.addListener(cracker, 'transitionEnd', this._listener);
+        setTimeout(function () {
+            Utils.applyStyle(cracker, {transform: "rotate("+(angle) + "deg)", left: Math.floor(x) + "px", top: Math.floor(y) + "px", opacity: 0});
+            cracker.className = "cracker moving";
+        }, 50);
+    },
+    /**
+     * explode the cracker once it reaches the destination
+     */
+    explode: function () {
+        if(!this._crackerDiv) return;
+        Utils.removeListener(this._crackerDiv, 'transitionEnd', this._listener);
+        this._crackerDiv.className = "cracker";
+        delete this._listener;
+        if (this._options.explode) {
+            var splitCount = Utils.getRandom(12, 180); //min 12 max, 180
+            var angle = Math.floor(360 / splitCount);
+            angle = angle <= 90 ? (angle + 90) : angle;
+            var randomRadius = Utils.getRandom(30, 300);
+            var x = parseInt(this._crackerDiv.style.left);
+            var y = parseInt(this._crackerDiv.style.top);
+            while(splitCount--) {
+                var firePiece = new Cracker({width: Utils.getRandom(1, 8), startPoint: {x: x, y: y}});
+                var rotateAngle = ((splitCount + 1) * angle);
+                firePiece.place(document.body);
+                var point = Utils.getPointFor(rotateAngle, Utils.getRandom(randomRadius, randomRadius + 150), {x: x, y: y});
+                firePiece.fire(-(rotateAngle - 90), point.x, point.y);
+            }
+        }
+        //cleanup
+        var parentDom = this._crackerDiv.parentNode;
+        parentDom && parentDom.removeChild(this._crackerDiv);
+        delete this._crackerDiv;
+    }
+});
+//On Click, drop firework
+function fireCrackers() {
+    new Cracker({
+        explode: true, 
+        startPoint: {
+            x: Cracker.START_AT.x, 
+            y: Cracker.START_AT.y
+        }}).fire();
+    
+}
+Utils.addListener(document, 'click', fireCrackers);
+var times = Utils.getRandom(3, 6);
+while(times--) {setTimeout(fireCrackers, Utils.getRandom(100, 1000))};
+</script></body></html>
