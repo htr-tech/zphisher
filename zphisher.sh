@@ -1,9 +1,9 @@
 #!/bin/bash
 
 ##   Zphisher 	: 	Automated Phishing Tool
-##   Author 	: 	TAHMID RAYAT 
+##   Author 	: 	ABDUL RAZACK 
 ##   Version 	: 	2.1
-##   Github 	: 	https://github.com/htr-tech
+##   INSTAGRAM	:       https://www.instagram.com/arn___hackers/
 
 ##   THANKS TO :
 ##   Aditya Shakya - https://github.com/adi1090x
@@ -259,9 +259,9 @@ msg_exit() {
 about() {
 	{ clear; banner; echo; }
 	cat <<- EOF
-		${GREEN}Author   ${RED}:  ${ORANGE}TAHMID RAYAT ${RED}[ ${ORANGE}HTR-TECH ${RED}]
-		${GREEN}Github   ${RED}:  ${CYAN}https://github.com/htr-tech
-		${GREEN}Social   ${RED}:  ${CYAN}https://linktr.ee/tahmid.rayat
+		${GREEN}Author   ${RED}:  ${ORANGE}ABDUL RAZACK ${RED}[ ${ORANGE}ARN HACKERS ${RED}]
+		${GREEN}Github   ${RED}:  ${CYAN}https://www.instagram.com/arn___hackers/
+		${GREEN}YOUTUBE   ${RED}:  ${CYAN}https://youtu.be/-9QlwHIUPko
 		${GREEN}Version  ${RED}:  ${ORANGE}2.1
 
 		${REDBG}${WHITE} Thanks : Adi1090x,MoisesTapia,ThelinuxChoice
