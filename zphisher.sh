@@ -190,7 +190,7 @@ dependencies() {
 			type -p "$pkg" &>/dev/null || {
 				echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}$pkg${CYAN}"${WHITE}
 				if [[ `command -v pkg` ]]; then
-					pkg install "$pkg"
+					pkg install "$pkg" -y
 				elif [[ `command -v apt` ]]; then
 					apt install "$pkg" -y
 				elif [[ `command -v apt-get` ]]; then
