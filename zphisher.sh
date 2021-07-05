@@ -252,6 +252,22 @@ install_ngrok() {
 msg_exit() {
 	{ clear; banner; echo; }
 	echo -e "${GREENBG}${BLACK} Thank you for using this tool. Have a good day.${RESETBG}\n"
+	sleep 2
+	clear
+	{ reset_color; exit 0; }
+}
+
+## Uninstall Process
+uninstall() {
+	{ clear; banner; echo; }
+	echo -e "${REDBG}${BLACK} The process of unstallation will begin soon.${RESETBG}\n"
+	sleep 2
+	cd $HOME
+	rm -rf zphisher
+	clear
+	sleep 2
+	echo -e "${GREENBG}${BLACK}          Unstallation process finished${RESETBG}\n"
+	echo -e "${GREENBG}${BLACK} Thank you for using this tool. Have a good day.${RESETBG}\n"
 	{ reset_color; exit 0; }
 }
 
@@ -530,7 +546,7 @@ main_menu() {
 		${RED}[${WHITE}10${RED}]${ORANGE} Tiktok        ${RED}[${WHITE}20${RED}]${ORANGE} Adobe        ${RED}[${WHITE}30${RED}]${ORANGE} XBOX
 		${RED}[${WHITE}31${RED}]${ORANGE} Mediafire     ${RED}[${WHITE}32${RED}]${ORANGE} Gitlab       ${RED}[${WHITE}33${RED}]${ORANGE} Github
 
-		${RED}[${WHITE}99${RED}]${ORANGE} About         ${RED}[${WHITE}00${RED}]${ORANGE} Exit
+		${RED}[${WHITE}99${RED}]${ORANGE} About         ${RED}[${WHITE}50${RED}]${ORANGE} Exit         ${RED}[${WHITE}00${RED}]${ORANGE} Uninstall
 
 	EOF
 	
@@ -662,7 +678,9 @@ main_menu() {
 		tunnel_menu
 	elif [[ "$REPLY" == 99 ]]; then
 		about
-	elif [[ "$REPLY" == 0 || "$REPLY" == 00 ]]; then
+	elif [[ "$REPLY" == 00 ]]; then
+		uninstall
+	elif [[ "$REPLY" == 50 || "$REPLY" == 50 ]]; then
 		msg_exit
 	else
 		echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
