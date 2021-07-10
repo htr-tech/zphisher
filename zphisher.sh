@@ -200,7 +200,7 @@ dependencies() {
 				elif [[ `command -v dnf` ]]; then
 					sudo dnf -y install "$pkg"
 				else
-					echo -e "\n${RED}[${WHITE}!${RED}]${RED} Unsupported package manager, Install packages manually. Packages required: php, curl, wget, unzip"
+					echo -e "\n${RED}[${WHITE}!${RED}]${RED} Unsupported package manager, Install packages manually. Packages required: php, curl, wget, unzip."
 					{ reset_color; exit 1; }
 				fi
 			}
