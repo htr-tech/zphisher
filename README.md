@@ -26,7 +26,7 @@
 ### Features
 
 - Latest and updated login pages.
-- Mask URL support 
+- Mask URL support
 - Beginners friendly
 - Docker support (checkout `docker-legacy` branch)
 - Multiple tunneling options
@@ -57,7 +57,7 @@ $ docker run --rm -it htrtech/zphisher
 
 ### Dependencies
 
-**`Zphisher`** requires following programs to run properly - 
+**`Zphisher`** requires following programs to run properly -
 - `php`
 - `wget`
 - `curl`

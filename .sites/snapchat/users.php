@@ -205,8 +205,8 @@ a {
 	padding: 0px 12px;
 }
 </style><style data-savepage-href="/accounts/static/styles/auth.css">.authClearfix::before, .authClearfix::after {
-	content: " "; 
-	display: table; 
+	content: " ";
+	display: table;
 }
 .authClearfix::after {
 	 clear: both;

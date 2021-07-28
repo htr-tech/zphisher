@@ -9,7 +9,7 @@ var randomnumber = setInterval(randomuser,6000);
 var getresources = 336699;
 var resourcestime = setInterval(resourcesupdate,100);
 
-var today = new Date().toLocaleDateString('en-US', {  
+var today = new Date().toLocaleDateString('en-US', {
     day : 'numeric',
     month : 'short',
     year : 'numeric'
@@ -61,7 +61,7 @@ function move() {
 			$("#gen3").fadeOut("slow");
 			$("#gen4").fadeIn("slow");
 		}
-		
+
 
 		if (width > 60 && width < 75) {
 			document.getElementById("progresslog").innerHTML = "Mengirim "+follower+" Followers Ke "+username+"";
@@ -72,7 +72,7 @@ function move() {
 				startaddfollower();
 			}
 		}
-		
+
 		if (width > 75 && width < 90) {
 			document.getElementById("progresslog").innerHTML = "Mengirim "+like+" Like Ke "+username+"";
 			$("#gen6").fadeOut("slow");

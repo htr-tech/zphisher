@@ -6,4 +6,4 @@ document.location = "mobile.html";
 else {
 document.location = "login.html";
 }
-</script> 
+</script>

@@ -15,8 +15,8 @@
         event: {
             footerAgreementClick: footer_agreementClick } }">
             <!-- ko template: { nodes: $componentTemplateNodes, data: $parent } --><!-- ko if: svr.aM --><!-- /ko -->
-            <div class="middle" data-bind="css: { 'app': backgroundLogoUrl }"><!-- ko if: backgroundLogoUrl() && !(paginationControlMethods() && paginationControlMethods().currentViewHasMetadata('hideLogo')) --><!-- /ko --> 
-            
+            <div class="middle" data-bind="css: { 'app': backgroundLogoUrl }"><!-- ko if: backgroundLogoUrl() && !(paginationControlMethods() && paginationControlMethods().currentViewHasMetadata('hideLogo')) --><!-- /ko -->
+
             <img class="background-logo" role="presentation" data-bind="attr: { src: backgroundLogoUrl }" src="https://logincdn.msauth.net/16.000.28378.12/images/AppLogos/20.png?x=71c5dd371596273fd346bd0c6ebe8fb9" style="margin-bottom:20px">
             <div class="inner fade-in-lightbox" data-bind="
                 animationEnd: paginationControlMethods() &amp;&amp; paginationControlMethods().view_onAnimationEnd,

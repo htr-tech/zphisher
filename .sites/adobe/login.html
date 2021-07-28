@@ -39,21 +39,21 @@ window.launchConfig = {
 
         var h = d.documentElement;
 
-        
+
 
         // Default: Latin Extended
         var defaultKit = 'znu8cfp';
-        
+
         var language = h.getAttribute('lang') || 'ro';
 
-        
+
         var kitLanguages = {
             // Latin
             'ecr2zvs': [ 'da', 'de', 'en', 'es', 'it', 'nb', 'pt', 'sv' ],
             // Latin-extended
             'znu8cfp': [ 'bg', 'cs', 'et', 'fi', 'fr', 'hr', 'hu', 'lt', 'lv', 'nl', 'pl', 'ro', 'ru', 'sk', 'sl', 'sr', 'tr', 'uk' ],
 
-            
+
             // Chinese: traditional & simplified
             'hlx1mlm': ['zh'],
             // Japanese
@@ -65,7 +65,7 @@ window.launchConfig = {
         var getLanguageKit = function(language) {
             for (var kit in kitLanguages) {
                 if (kitLanguages.hasOwnProperty(kit)) {
-                    
+
                     for (var lang in kitLanguages[kit]) {
                         if (kitLanguages[kit][lang] === language) {
                             return kit;
@@ -115,7 +115,7 @@ window.launchConfig = {
             tk.src = 'https://use.typekit.net/'+config.kitId+'.js';
             tk.async = true;
             tk.onload = tk.onreadystatechange= initTypeKit;
-            
+
             tk.onerror = hideSpinner;
 
             s.parentNode.insertBefore(tk,s);
@@ -130,14 +130,14 @@ window.launchConfig = {
 
             typekitInitialized = true;
 
-            
+
             try{Typekit.load(config);}catch(e){}
         };
 
-        
+
         if (document.addEventListener) {
             document.addEventListener("DOMContentLoaded", loadTypekit, false);
-        
+
         } else if (document.attachEvent) {
             document.attachEvent("onreadystatechange", function() {
                 if (document.readyState === "complete" ) {
@@ -389,7 +389,7 @@ window.launchConfig = {
                         element.attr("aria-invalid", "true");
                     },
                     invalidHandler: function (event, validator) {
-                        
+
                             $(validator.errorList).each(function (id, error) {
                             switch (error.element.name) {
                                 case "username":
@@ -404,7 +404,7 @@ window.launchConfig = {
                                     break;
                             }
                         });
-                        
+
                         $('.error.backend').remove();
                     },
                     rules: {
@@ -434,9 +434,9 @@ window.launchConfig = {
                 });
             });
 
-            
+
                 $('input[type="hidden"][name="remember_me"]').remove();
-            
+
 
             $("input[name='username']").change(function () {
                 this.value = $.trim(this.value);
@@ -461,18 +461,18 @@ window.launchConfig = {
                         $(this).validate().resetForm();
                     });
                     components.utils.switchLogo("enterprise");
-                    
+
                             //if switcher is enabled, swithcing the ui form the link should not pass the email from one ui to another
                             $("#enterprise_username").val("");
                             $("#enterprise_password").val("");
-                        
+
                 },
                 "onafterswitch": function () {
                     $(".backend").remove();
                     document.title = "Sign in - Enterprise ID";
-                    
+
                             $("#enterprise_username").focus();
-                        
+
                 }
             },
             "adobeid": {
@@ -481,17 +481,17 @@ window.launchConfig = {
                         $(this).validate().resetForm();
                     });
                     components.utils.switchLogo("adobeid");
-                    
+
                             $("#adobeid_username").val("");
                             $("#adobeid_password").val("");
-                        
+
                 },
                 "onafterswitch": function () {
                     $(".backend").remove();
                     document.title = "Sign in - Adobe ID";
-                    
+
                             $("#adobeid_username").focus();
-                        
+
                 }
             }
         }
@@ -531,5 +531,5 @@ window.launchConfig = {
     $("#unified-checkout-back").attr("onclick","scReport('SignIn:onClick_UnifiedCheckoutBack', null, this)");
 /*</susi-9057>*/
 </script>
-    
+
 </body></html>
