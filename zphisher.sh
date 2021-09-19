@@ -312,6 +312,10 @@ about() {
 		${REDBG}${WHITE} Thanks : Adi1090x,MoisesTapia,ThelinuxChoice
 								  DarkSecDevelopers,Mustakim Ahmed,1RaY-1 ${RESETBG}
 
+		${RED}Warning:${WHITE}
+		${CYAN}This Tool is made for educational purpose only ${RED}!${WHITE}
+		${CYAN}Author will not be responsible for any misuse of this toolkit ${RED}!${WHITE}
+
 		${RED}[${WHITE}00${RED}]${ORANGE} Main Menu     ${RED}[${WHITE}99${RED}]${ORANGE} Exit
 
 	EOF
