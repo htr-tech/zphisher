@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-2.1-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Version-2.2-green?style=for-the-badge">
   <img src="https://img.shields.io/github/license/htr-tech/zphisher?style=for-the-badge">
   <img src="https://img.shields.io/github/stars/htr-tech/zphisher?style=for-the-badge">
   <img src="https://img.shields.io/github/issues/htr-tech/zphisher?color=red&style=for-the-badge">
@@ -32,6 +32,7 @@
 - Multiple tunneling options
   - Localhost
   - Ngrok (With or without hotspot)
+  - Cloudflared (Alternative of Ngrok)
 
 
 ### Installation
@@ -65,7 +66,7 @@ $ docker run --rm -it htrtech/zphisher
 
 > All the dependencies will be installed automatically when you run `Zphisher` for the first time.
 
-> Supported Platform : **`Termux`**, **`Ubuntu/Debian/Kali`**, **`Arch Linux/Manjaro`**, **`Fedora`**
+> Supported Platform : **`Termux`**, **`Ubuntu/Debian/Kali/Parrot`**, **`Arch Linux/Manjaro`**, **`Fedora`**
 
 ##
 
