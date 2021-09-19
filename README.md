@@ -79,6 +79,7 @@ $ docker run --rm -it htrtech/zphisher
 ### Special Thanks :
 
 - [**Aditya Shakya**](https://github.com/adi1090x)
+- [**1RaY-1**](https://github.com/1RaY-1)
 - [**TheLinuxChoice**](https://twitter.com/linux_choice)
 - [**DarksecDevelopers**](https://github.com/DarksecDevelopers)
 - [**Moises Tapia**](https://github.com/MoisesTapia)
