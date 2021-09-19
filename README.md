@@ -92,3 +92,8 @@ $ docker run --rm -it htrtech/zphisher
   <a href="https://www.instagram.com/tahmid.rayat" target="_blank"><img src="https://img.shields.io/badge/IG-%40tahmid.rayat-red?style=for-the-badge&logo=instagram"></a>
   <a href="https://m.me/tahmid.rayat.official" target="_blank"><img src="https://img.shields.io/badge/Chat-Messenger-blue?style=for-the-badge&logo=messenger"></a>
 </p>
+
+## Warning
+This Tool is made for educational purpose only !
+
+Author will not be responsible for any misuse of this toolkit !
