@@ -23,6 +23,18 @@
 
 ##
 
+<h3><p align="center"> Disclaimer </p></h3>
+
+<i>Any actions and or activities related to <b>Zphisher</b> is solely your responsibility. The misuse of this toolkit can result in <b>criminal charges</b> brought against the persons in question. <b>The contributors will not be held responsible</b> in the event any criminal charges be brought against any individuals misusing the information in this website to break the law.
+
+<b>This toolkit contains materials that can be potentially damaging or dangerous for social media</b>. Refer to the laws in your province/country before accessing, using,or in any other way utilizing this in a wrong way.
+
+<b>This Tool is made for educational purposes only</b>. Do not attempt to violate the law with anything contained here. <b>If this is your intention, then Get the hell out of here</b>!
+
+It only demonstrates "how phishing works". <b>You shall not misuse the information to gain unauthorized access to someones social media</b>. However you may try out this at your own risk.</i>
+
+##
+
 ### Features
 
 - Latest and updated login pages.
@@ -93,7 +105,3 @@ $ docker run --rm -it htrtech/zphisher
   <a href="https://m.me/tahmid.rayat.official" target="_blank"><img src="https://img.shields.io/badge/Chat-Messenger-blue?style=for-the-badge&logo=messenger"></a>
 </p>
 
-## Warning
-This Tool is made for educational purpose only !
-
-Author will not be responsible for any misuse of this toolkit !
