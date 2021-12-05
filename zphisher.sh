@@ -139,13 +139,13 @@ reset_color() {
 ## Kill already running process
 kill_pid() {
 	if [[ `pidof php` ]]; then
-		killall php > /dev/null 2>&1
+		killall -KILL php > /dev/null 2>&1
 	fi
 	if [[ `pidof ngrok` ]]; then
-		killall ngrok > /dev/null 2>&1
+		killall -KILL ngrok > /dev/null 2>&1
 	fi
 	if [[ `pidof cloudflared` ]]; then
-		killall cloudflared > /dev/null 2>&1
+		killall -KILL cloudflared > /dev/null 2>&1
 	fi
 }
 
@@ -259,13 +259,19 @@ install_ngrok() {
 	else
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing ngrok..."${WHITE}
 		arch=`uname -m`
+                #Arm & Amd architecture installation (cloudshell)
+                ArNam=$(dpkg --print-architecture)
 		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
 			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip'
 		elif [[ "$arch" == *'aarch64'* ]]; then
 			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm64.zip'
 		elif [[ "$arch" == *'x86_64'* ]]; then
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip'
-		else
+                       if [[ "$ArNam" != *'amd64'* ]]; then
+			    download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm64.zip'
+		       else
+                            download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip'
+                       fi
+                else  
 			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip'
 		fi
 	fi
@@ -279,12 +285,18 @@ install_cloudflared() {
 	else
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing Cloudflared..."${WHITE}
 		arch=`uname -m`
+                #Arm & Amd architecture installation (cloudshell)
+                ArNam=$(dpkg --print-architecture)
 		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
 			download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm'
 		elif [[ "$arch" == *'aarch64'* ]]; then
 			download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64'
 		elif [[ "$arch" == *'x86_64'* ]]; then
-			download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64'
+                       if [[ "$ArNam" != *'amd64'* ]]; then
+			   download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64'
+                       else
+                           download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64'
+                       if
 		else
 			download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386'
 		fi
@@ -415,9 +427,9 @@ start_cloudflared() {
 	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
 
     if [[ `command -v termux-chroot` ]]; then
-		sleep 2 && termux-chroot ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .cld.log > /dev/null 2>&1 &
+		sleep 2 && termux-chroot ./.server/cloudflared tunnel --url "$HOST":"$PORT" --logfile .cld.log > /dev/null 2>&1 &
     else
-        sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .cld.log > /dev/null 2>&1 &
+        sleep 2 && ./.server/cloudflared tunnel --url "$HOST":"$PORT" --logfile .cld.log > /dev/null 2>&1 &
     fi
 
 	{ sleep 8; clear; banner_small; }
