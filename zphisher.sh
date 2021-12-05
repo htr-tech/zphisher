@@ -113,6 +113,7 @@ else
 fi
 if [[ -e ".cld.log" ]]; then
 	rm -rf ".cld.log"
+        touch .cld.log
 fi
 
 ## Script termination
