@@ -148,7 +148,7 @@ kill_pid() {
 	if [[ `pidof cloudflared` ]]; then
 		killall cloudflared > /dev/null 2>&1
 	fi
-# kills and terminate the process of ngrok, cld , php i personally use this better then uppen one.
+# kills and terminate the process of ngrok, cld , php i personally use this better then upper one.
            killall -KILL cloudflared ngrok php &>/dev/null
 }
 
