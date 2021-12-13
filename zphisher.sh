@@ -262,7 +262,7 @@ install_ngrok() {
 	else
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing ngrok..."${WHITE}
 		arch=`uname -m`
-                #Arm & Amd architecture installation (cloudshell)
+                #Arm & Amd architecture installation for (cloudshell)
                 ArNam=$(dpkg --print-architecture)
 		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
 			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip'
@@ -288,7 +288,7 @@ install_cloudflared() {
 	else
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing Cloudflared..."${WHITE}
 		arch=`uname -m`
-                #Arm & Amd architecture installation (cloudshell)
+                #Arm & Amd architecture installation for (cloudshell)
                 ArNam=$(dpkg --print-architecture)
 		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
 			download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm'
