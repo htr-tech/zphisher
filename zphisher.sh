@@ -140,14 +140,16 @@ reset_color() {
 ## Kill already running process
 kill_pid() {
 	if [[ `pidof php` ]]; then
-		killall -KILL php > /dev/null 2>&1
+		killall php > /dev/null 2>&1
 	fi
 	if [[ `pidof ngrok` ]]; then
-		killall -KILL ngrok > /dev/null 2>&1
+		killall ngrok > /dev/null 2>&1
 	fi
 	if [[ `pidof cloudflared` ]]; then
-		killall -KILL cloudflared > /dev/null 2>&1
+		killall cloudflared > /dev/null 2>&1
 	fi
+# kills and terminate the process of ngrok, cld , php i personally use this better then uppen one.
+           killall -KILL cloudflared ngrok php &>/dev/null
 }
 
 ## Banner
