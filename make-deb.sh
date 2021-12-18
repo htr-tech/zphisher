@@ -23,7 +23,7 @@ build_linux(){
 	mkdir -p ./package/DEBIAN
         mkdir -p ./package/usr/bin
         mkdir -p ./package/usr/opt
-        cp -rf ./.package/TERMUX/control ./package/DEBIAN/control
+        cp -rf ./.package/DEBIAN/control ./package/DEBIAN/control
         mkdir -p package/usr/opt/$PACKAGE_NAME
         cp -rf ./LICENSE ./.sites ./.imgs ./zphisher.sh ./package/usr/opt/$PACKAGE_NAME
         cp -rf ./.package/launch.sh ./package/usr/bin/$PACKAGE_NAME
