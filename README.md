@@ -92,6 +92,7 @@ $ docker run --rm -it htrtech/zphisher
 
 - [**Aditya Shakya**](https://github.com/adi1090x)
 - [**1RaY-1**](https://github.com/1RaY-1)
+- [**Yisus7u7**](https://github.com/Yisus7u7)
 - [**TheLinuxChoice**](https://twitter.com/linux_choice)
 - [**DarksecDevelopers**](https://github.com/DarksecDevelopers)
 - [**Moises Tapia**](https://github.com/MoisesTapia)
