@@ -1,14 +1,8 @@
-FROM debian:10
+FROM debian:latest
 LABEL MAINTAINER="https://github.com/htr-tech/zphisher"
 
 WORKDIR zphisher/
 ADD . /zphisher
 
-RUN apt-get update
-RUN apt-get install -y curl
-RUN apt-get install --no-install-recommends -y php
-RUN apt-get install -y unzip
-RUN apt-get clean
-RUN apt-get install -y wget
-
+RUN apt update && apt full-upgrade -y && apt install -y curl unzip wget && apt install --no-install-recommends -y php && apt clean
 CMD ["./zphisher.sh"]
