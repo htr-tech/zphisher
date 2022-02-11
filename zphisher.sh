@@ -410,6 +410,7 @@ start_ngrok() {
 
 ## Start Cloudflared
 start_cloudflared() { 
+        rm .cld.log > /dev/null 2>&1 &
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
 	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
