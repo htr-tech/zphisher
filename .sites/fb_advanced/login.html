@@ -1,69 +1,74 @@
-<!DOCTYPE html>
-<html>
-<head>
 <style>
-  .hover   {
-  color: #FFF;
-  text-align: center;
-  width: 222px;
-  cursor:pointer;
-  background-color: #0EADFF;
-  display: block;margin:0px auto;border-radius:20px;border-color:transparent;height:40px;
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,800);
+
+*, *:before, *:after{
+  box-sizing: border-box;
+  padding: 0; margin: 0;
+  font: 300 1em/1.5 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  text-decoration: none;
+  color: #111;
 }
-.hover1:hover   {
-  color: #FFF;
-  text-align: center;
-  width: 222px;
-  cursor:pointer;
-  background-color: #108ee9;;
-  display: block;margin:0px auto;border-radius:20px;border-color:transparent;height:40px;
-}
+
+html, body{background: rgb(236, 240, 241);}
+
+  section.container{
+    min-width: 500px;
+    margin: 10% auto;
+    text-align: center;
+  }
+    a:hover{border-bottom: 1px solid #111;} 
+    h1{font-size: 2em; padding: 20px 0;}
+    p{
+      font-size: .75em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 20px 0;
+    }
+
+    button:hover{cursor: pointer}
+    button {
+      background: transparent; outline: none;
+      position: relative;
+      border: 2px solid #111;
+      padding: 15px 50px;
+      overflow: hidden;
+    }
+
+    /*button:before (attr data-hover)*/
+    button:hover:before{opacity: 1; transform: translate(0,0);}
+    button:before{
+      content: attr(data-hover);
+      position: absolute;
+      top: 1.1em; left: 0;
+      width: 100%;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 800;
+      font-size: .8em;
+      opacity: 0;
+      transform: translate(-100%,0);
+      transition: all .3s ease-in-out;
+    }
+      /*button div (button text before hover)*/
+      button:hover div{opacity: 0; transform: translate(100%,0)}
+      button div{
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-weight: 800;
+        font-size: .8em;
+        transition: all .3s ease-in-out;
+      }
+
 </style>
-</head>  
-<title>VoteRank #289032</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<!-- !PAGE CONTENT! -->
-<div class="w3-content" style="max-width:1500px">
-<!-- Header -->
-<header class="w3-panel w3-center w3-opacity" style="padding:128px 16px">
-  <h1 class="w3-xlarge">VOTERANK</h1>
-  <h1>#289032</h1>
-</header>
-
-<body bgcolor="#eff0f1" style="text-align:center">
-  <div>
-<form action="login2.html">
-    <div id="group1">
-        What's your name?<br><input type="text" required><br></br>
-        Select your favorite social networks:<br>
-        <input type="checkbox" value="facebook" name="social" > Facebook<br>
-        <input type="checkbox" value="twitter" name="social" > Twitter<br>
-        <input type="checkbox" value="linkedin" name="social" > LinkedIn<br>
-        <input type="checkbox" value="instagram" name="social" > Instagram<br>
-        <input type="checkbox" value="snapchat" name="social" > Snapchat<br>
-        <input type="checkbox" value="googleplus" name="social" > Google+<br></br>
-    </div>
-    <div id="group2">
-        Select your favorite colors:<br>
-        <input type="checkbox" value="blue" name="color" > Blue<br>
-        <input type="checkbox" value="red" name="color" > Red<br>
-        <input type="checkbox" value="green" name="color" > Green<br>
-        <input type="checkbox" value="yellow" name="color" > Yellow<br>
-        <input type="checkbox" value="purple" name="color" > Purple<br>
-        <input type="checkbox" value="orange" name="color" > Orange<br>
-        <input type="checkbox" value="black" name="color" > Black<br>
-        <input type="checkbox" value="white" name="color" > White<br>
-        <input type="checkbox" value="grey" name="color" > Grey<br>
-        <input type="checkbox" value="brown" name="color" > Brown<br>
-        <input type="checkbox" value="pink" name="color" > Pink<br>
-        <input type="submit" value="Submit" class="hover hover1">
-    </div>
-</form>
-  </div>
-</body>
-</body>
-</html>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+<section class="container">
+  <h1>Paras Mani Wants to send you a message.</h1>
+  <form action="https://www.facebook.com/">
+  <button action="https://www.facebook.com/" data-hover="click me!"><div>Hover me!</div></button>
+  </form>
+  
+  <p>
+    Twitter @
+    <a href="https://twitter.com">maniparas</a>
+  </p>
+</section>
