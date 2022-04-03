@@ -8,6 +8,7 @@
 ##   THANKS TO :
 ##   Aditya Shakya - https://github.com/adi1090x
 ##   1RaY-1 - https://github.com/1RaY-1
+##   Ali Milani Amin - https://github.com/AliMilani
 ##   Moises Tapia - https://github.com/MoisesTapia
 ##   TheLinuxChoice - https://twitter.com/linux_choice
 ##   DarksecDevelopers  - https://github.com/DarksecDevelopers
@@ -187,6 +188,14 @@ dependencies() {
 			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}proot${CYAN}"${WHITE}
             pkg install proot resolv-conf -y
         fi
+
+        if [[ `command -v tput` ]]; then
+            printf ''
+        else
+			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}ncurses-utils${CYAN}"${WHITE}
+            pkg install ncurses-utils -y
+        fi
+
     fi
 
 	if [[ `command -v php` && `command -v wget` && `command -v curl` && `command -v unzip` ]]; then
@@ -309,7 +318,7 @@ about() {
 		${GREEN}Version  ${RED}:  ${ORANGE}2.2
 
 		${REDBG}${WHITE} Thanks : Adi1090x,MoisesTapia,ThelinuxChoice
-								  DarkSecDevelopers,Mustakim Ahmed,1RaY-1 ${RESETBG}
+								  DarkSecDevelopers,Mustakim Ahmed,1RaY-1,AliMilani ${RESETBG}
 
 		${RED}Warning:${WHITE}
 		${CYAN}This Tool is made for educational purpose only ${RED}!${WHITE}
@@ -392,7 +401,7 @@ start_ngrok() {
 	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Ngrok..."
 
     if [[ `command -v termux-chroot` ]]; then
-        sleep 2 && termux-chroot ./.server/ngrok http "$HOST":"$PORT" > /dev/null 2>&1 & # Thanks to Mustakim Ahmed (https://github.com/BDhackers009)
+        sleep 2 && termux-chroot ./.server/ngrok http "$HOST":"$PORT" > /dev/null 2>&1 &
     else
         sleep 2 && ./.server/ngrok http "$HOST":"$PORT" > /dev/null 2>&1 &
     fi
