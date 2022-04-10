@@ -1,6 +1,6 @@
 name: 🚀 Feature Request
 description: Suggest an idea for improving zphisher
-title: "[Feature Request]: "
+# title: "[Feature Request]: "
 labels: ["enhancement"]
 
 body:
