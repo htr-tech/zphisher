@@ -219,13 +219,15 @@ dependencies() {
 				if [[ `command -v pkg` ]]; then
 					pkg install "$pkg" -y
 				elif [[ `command -v apt` ]]; then
-					apt install "$pkg" -y
+					sudo apt install "$pkg" -y
 				elif [[ `command -v apt-get` ]]; then
-					apt-get install "$pkg" -y
+					sudo apt-get install "$pkg" -y
 				elif [[ `command -v pacman` ]]; then
 					sudo pacman -S "$pkg" --noconfirm
 				elif [[ `command -v dnf` ]]; then
 					sudo dnf -y install "$pkg"
+				elif [[ `command -v yum` ]]; then
+					sudo yum -y install "$pkg"
 				else
 					echo -e "\n${RED}[${WHITE}!${RED}]${RED} Unsupported package manager, Install packages manually."
 					{ reset_color; exit 1; }
