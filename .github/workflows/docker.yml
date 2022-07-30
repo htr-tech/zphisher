@@ -1,0 +1,47 @@
+name: 'Build & Push Docker Image'
+
+on:
+  schedule:
+    - cron: "0 0 * * 0" # Every Sunday
+  workflow_dispatch:
+
+env:
+  CI: true
+  DOCKER_BUILDKIT: 1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build Image
+        run: |
+          # Build Docker Image for DockerHub
+          docker build --tag htrtech/zphisher:latest .
+
+          # Tag Docker Image for GHCR
+          docker tag htrtech/zphisher:latest ghcr.io/htr-tech/zphisher:latest
+
+      - name: Login to GHCR
+        if: github.repository == 'htr-tech/zphisher' && github.ref == 'refs/heads/master'
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Login to DockerHub
+        if: github.repository == 'htr-tech/zphisher' && github.ref == 'refs/heads/master'
+        uses: docker/login-action@v2
+        with:
+          username: "htrtech"
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Push
+        if: github.repository == 'htr-tech/zphisher' && github.ref == 'refs/heads/master'
+        run: |
+          # Push to DockerHub
+          docker push htrtech/zphisher:latest
+          # Push to GHCR
+          docker push ghcr.io/htr-tech/zphisher:latest
