@@ -42,6 +42,7 @@ rm -fr $_opt_dir
 exit 0
 PRERM_EOF
 
+chmod 755 ./build_env/DEBIAN
 chmod 755 ./build_env/DEBIAN/{control,prerm}
 cp -fr scripts/launch.sh ./build_env/$_bin_dir/$_PACKAGE
 chmod 755 ./build_env/$_bin_dir/$_PACKAGE
