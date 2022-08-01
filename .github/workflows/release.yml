@@ -17,7 +17,7 @@ jobs:
           sed -i 's/#PKG_NAME/PKG_NAME/' make-deb.sh
           bash make-deb.sh # Build for Debian
           bash make-deb.sh termux # Build for Termux
-          find -type f -name "*.deb" -exec sha256sum "{}" > SUMS.txt \;
+          find -type f -name "*.deb" -exec sha256sum "{}" > CHECKSUMS.txt \;
 
       - name: Upload to Release
         uses: softprops/action-gh-release@v1
@@ -25,4 +25,4 @@ jobs:
           files: "*.deb"
       - uses: softprops/action-gh-release@v1
         with:
-          files: SUMS.txt
+          files: CHECKSUMS.txt
