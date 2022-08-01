@@ -13,10 +13,10 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Author-htr--tech-blue?style=flat-square">
-  <img src="https://img.shields.io/badge/Open%20Source-Yes-darkgreen?style=flat-square">
-  <img src="https://img.shields.io/badge/Maintained%3F-Yes-lightblue?style=flat-square">
-  <img src="https://img.shields.io/badge/Written%20In-Bash-darkcyan?style=flat-square">
+  <img src="https://img.shields.io/badge/Author-htr--tech-blue?style=flat-square&edge_flat=false">
+  <img src="https://img.shields.io/badge/Open%20Source-Yes-darkgreen?style=flat-square&edge_flat=false">
+  <img src="https://img.shields.io/badge/Maintained%3F-Yes-lightblue?style=flat-square&edge_flat=false">
+  <img src="https://img.shields.io/badge/Written%20In-Bash-darkcyan?style=flat-square&edge_flat=false">
   <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fhtr-tech%2Fzphisher&title=Visitors&edge_flat=false"/></a>
 </p>
 
@@ -64,6 +64,23 @@ It only demonstrates "how phishing works". <b>You shall not misuse the informati
   ```
 
 - On first launch, It'll install the dependencies and that's it. ***Zphisher*** is installed.
+
+##
+
+### Installation via ".deb" file
+
+- Download `.deb` files from the [**Latest Release**](https://github.com/htr-tech/zphisher/releases/latest)
+- If you are using ***termux*** then download the `*_termux.deb`
+
+- Install the `.deb` file by executing
+  ```
+  apt install <your path to deb file>
+  ```
+  Or
+  ```
+  $ dpkg -i <your path to deb file>
+  $ apt install -f
+  ```
 
 ##
 
