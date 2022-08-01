@@ -1,11 +1,11 @@
 <!-- Zphisher -->
 
 <p align="center">
-  <img src=".github/misc/logo.png">
+  <img src=".imgs/logo.png">
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-2.3.0-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Version-2.2-green?style=for-the-badge">
   <img src="https://img.shields.io/github/license/htr-tech/zphisher?style=for-the-badge">
   <img src="https://img.shields.io/github/stars/htr-tech/zphisher?style=for-the-badge">
   <img src="https://img.shields.io/github/issues/htr-tech/zphisher?color=red&style=for-the-badge">
@@ -13,14 +13,12 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Author-htr--tech-blue?style=flat-square&edge_flat=false">
-  <img src="https://img.shields.io/badge/Open%20Source-Yes-darkgreen?style=flat-square&edge_flat=false">
-  <img src="https://img.shields.io/badge/Maintained%3F-Yes-lightblue?style=flat-square&edge_flat=false">
-  <img src="https://img.shields.io/badge/Written%20In-Bash-darkcyan?style=flat-square&edge_flat=false">
-  <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fhtr-tech%2Fzphisher&title=Visitors&edge_flat=false"/></a>
+  <img src="https://img.shields.io/badge/Author-HTR--Tech-cyan?style=flat-square">
+  <img src="https://img.shields.io/badge/Open%20Source-Yes-cyan?style=flat-square">
+  <img src="https://img.shields.io/badge/Written%20In-Bash-cyan?style=flat-square">
 </p>
 
-<p align="center"><b>A beginners friendly, Automated phishing tool with 30+ templates.</b></p>
+<p align="center">A beginners friendly, Automated phishing tool with 30+ templates.</p>
 
 ##
 
@@ -39,133 +37,73 @@ It only demonstrates "how phishing works". <b>You shall not misuse the informati
 ### Features
 
 - Latest and updated login pages.
+- Mask URL support 
 - Beginners friendly
+- Docker support (checkout `docker-legacy` branch)
 - Multiple tunneling options
   - Localhost
-  - Ngrok
-  - Cloudflared
-  - LocalXpose
-- Mask URL support 
-- Docker support
+  - Ngrok (With or without hotspot)
+  - Cloudflared (Alternative of Ngrok)
 
-##
 
 ### Installation
 
 - Just, Clone this repository -
-  ```
-  git clone --depth=1 https://github.com/htr-tech/zphisher.git
-  ```
+```
+$ git clone https://github.com/htr-tech/zphisher.git
+```
 
-- Now go to cloned directory and run `zphisher.sh` -
-  ```
-  $ cd zphisher
-  $ bash zphisher.sh
-  ```
+- Change to cloned directory and run `zphisher.sh` -
+```
+$ cd zphisher
+$ bash zphisher.sh
+```
 
-- On first launch, It'll install the dependencies and that's it. ***Zphisher*** is installed.
-
-##
-
-### Installation via ".deb" file
-
-- Download `.deb` files from the [**Latest Release**](https://github.com/htr-tech/zphisher/releases/latest)
-- If you are using ***termux*** then download the `*_termux.deb`
-
-- Install the `.deb` file by executing
-  ```
-  apt install <your path to deb file>
-  ```
-  Or
-  ```
-  $ dpkg -i <your path to deb file>
-  $ apt install -f
-  ```
-
-##
+- On first launch, It'll install the dependencies and that's it. `Zphisher` is installed.
 
 ### Run on Docker
+```
+$ docker pull htrtech/zphisher
+$ docker run --rm -it htrtech/zphisher
+```
 
-- Docker Image Mirror:
-  - **DockerHub** : 
-    ```
-    docker pull htrtech/zphisher
-    ```
-  - **GHCR** : 
-    ```
-    docker pull ghcr.io/htr-tech/zphisher:latest
-    ```
+### Dependencies
 
-- By using the wrapper script [**run-docker.sh**](https://raw.githubusercontent.com/htr-tech/zphisher/master/run-docker.sh)
-
-  ```
-  $ curl -LO https://raw.githubusercontent.com/htr-tech/zphisher/master/run-docker.sh
-  $ bash run-docker.sh
-  ```
-- Temporary Container
-
-  ```
-  docker run --rm -ti htrtech/zphisher
-  ```
-  - Remember to mount the `auth` directory.
-
-##
-
-<details>
-  <summary><h3>Dependencies</h3></summary>
-
-<b>Zphisher</b> requires following programs to run properly - 
-- `git`
-- `curl`
+**`Zphisher`** requires following programs to run properly - 
 - `php`
+- `wget`
+- `curl`
+- `git`
 
-> All the dependencies will be installed automatically when you run **Zphisher** for the first time.
-</details>
+> All the dependencies will be installed automatically when you run `Zphisher` for the first time.
 
-<details>
-  <summary><h3>Tested on</h3></summary>
-
-- **Ubuntu**
-- **Debian**
-- **Arch**
-- **Manjaro**
-- **Fedora**
-- **Termux**
-</details>
+> Supported Platform : **`Termux`**, **`Ubuntu/Debian/Kali/Parrot`**, **`Arch Linux/Manjaro`**, **`Fedora`**
 
 ##
 
-<h3 align="center"><i>:: Workflow ::</i></h3>
+<h3 align="center">
+:: Workflow ::
+</h3>
 <p align="center">
-<img src=".github/misc/workflow.gif"/>
+<img src=".imgs/wf.gif"/>
 </p>
 
-##
+### Special Thanks :
 
-### Find Me on:
+- [**Aditya Shakya**](https://github.com/adi1090x)
+- [**1RaY-1**](https://github.com/1RaY-1)
+- [**Yisus7u7**](https://github.com/Yisus7u7)
+- [**sepp0**](https://github.com/sepp0)
+- [**AliMilani**](https://github.com/AliMilani)
+- [**TheLinuxChoice**](https://twitter.com/linux_choice)
+- [**DarksecDevelopers**](https://github.com/DarksecDevelopers)
+- [**Moises Tapia**](https://github.com/MoisesTapia)
+
+
+### Find Me on :
 <p align="left">
-  <a href="https://tahmidrayat.is-a.dev" target="_blank"><img src="https://img.shields.io/badge/Socials-grey?style=for-the-badge&logo=linktree"></a>
-  <a href="https://github.com/htr-tech" target="_blank"><img src="https://img.shields.io/badge/Github-blue?style=for-the-badge&logo=github"></a>
+  <a href="https://github.com/htr-tech" target="_blank"><img src="https://img.shields.io/badge/Github-HTR--TECH-green?style=for-the-badge&logo=github"></a>
+  <a href="https://www.instagram.com/tahmid.rayat" target="_blank"><img src="https://img.shields.io/badge/IG-%40tahmid.rayat-red?style=for-the-badge&logo=instagram"></a>
+  <a href="https://m.me/tahmid.rayat.official" target="_blank"><img src="https://img.shields.io/badge/Chat-Messenger-blue?style=for-the-badge&logo=messenger"></a>
 </p>
 
-
-### *Thanks to all contributors*:
-
-<table>
-  <tr align="center">
-    <td><a href="https://github.com/1RaY-1"><img src="https://avatars.githubusercontent.com/u/78962948?s=100" /><br /><sub><b>1RaY-1</b></sub></a></td>
-    <td><a href="https://github.com/adi1090x"><img src="https://avatars.githubusercontent.com/u/26059688?s=100" /><br /><sub><b>Aditya Shakya</b></sub></a></td>
-    <td><a href="https://github.com/AliMilani"><img src="https://avatars.githubusercontent.com/u/59066012?s=100" /><br /><sub><b>Ali Milani</b></sub></a></td>
-    <td><a href="https://github.com/Meht-evaS"><img src="https://avatars.githubusercontent.com/u/57435273?s=100" /><br /><sub><b>AmnesiA</b></sub></a></td>
-    <td><a href="https://github.com/KasRoudra"><img src="https://avatars.githubusercontent.com/u/78908440?s=100" /><br /><sub><b>KasRoudra</b></sub></a></td>
-  </tr>
-  <tr align="center">
-   <td><a href="https://github.com/MoisesTapia"><img src="https://avatars.githubusercontent.com/u/28166400?s=100" /><br /><sub><b>Moises Tapia</b></sub></a></td>
-    <td><a href="https://github.com/BDhackers009"><img src="https://avatars.githubusercontent.com/u/67186139?s=100" /><br /><sub><b>Mustakim Ahmed</b></sub></a></td>
-    <td><a href="https://github.com/sepp0"><img src="https://avatars.githubusercontent.com/u/36642137?s=100" /><br /><sub><b>sepp0</b></sub></a></td>
-    <td><a href="https://github.com/TripleHat"><img src="https://avatars.githubusercontent.com/u/68332137?s=100" /><br /><sub><b>TripleHat</b></sub></a></td>
-    <td><a href="https://github.com/Yisus7u7"><img src="https://avatars.githubusercontent.com/u/64093255?s=100" /><br /><sub><b>Yisus7u7</b></sub></a></td>
-  </tr>
-<table>
-
-<!-- // -->
