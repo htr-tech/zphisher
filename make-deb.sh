@@ -1,35 +1,51 @@
 #!/bin/bash
-PACKAGE_NAME=zphisher
-ZPHISHER_VERSION=2.2
-PACKAGE_ARCH=all
-DISTRO=$(uname -o)
 
+# Make Deb Package for Zphisher (^.^)
+_PACKAGE=zphisher
+_VERSION=2.3.0
+_ARCH="all"
+PKG_NAME="${_PACKAGE}_${_VERSION}_${_ARCH}.deb"
 
-build_package() {
-        # define variables depending on detected platform
-        distr_name=$1
-        if [ "$distr_name" == "Android" ]; then
-                platform="Termux"
-                path_part="data/data/com.termux/files/"
-        else
-                platform="Debian"
-                path_part=""
-        fi
-        # print out message with detected platform
-        echo "Building .deb package for: $platform"
-        # run preparations and build package
-        platform=${platform^^}
-        mkdir -p ./package/DEBIAN
-	mkdir -p ./package/"$path_part"usr/bin
-	mkdir -p ./package/"$path_part"usr/opt
-	cp -rf ./.package/"$platform"/control ./package/DEBIAN/control
-	mkdir -p package/"$path_part"usr/opt/$PACKAGE_NAME
-	cp -rf ./LICENSE ./.sites ./.imgs ./zphisher.sh ./package/"$path_part"usr/opt/$PACKAGE_NAME
-	cp -rf ./.package/launch.sh ./package/"$path_part"usr/bin/$PACKAGE_NAME
-	chmod 755 ./package/DEBIAN
-	dpkg-deb --build ./package $PACKAGE_NAME\_$ZPHISHER_VERSION\_$PACKAGE_ARCH.deb
-}
+if [[ ! -e "scripts/launch.sh" ]]; then
+        echo "lauch.sh should be in the \`scripts\` Directory. Exiting..."
+        exit 1
+fi
 
+if [[ ${1,,} == "termux" || $(uname -o) == *'Android'* ]];then
+        _depend="ncurses-utils, proot, resolv-conf, "
+        _bin_dir="data/data/com.termux/files/"
+        _opt_dir="data/data/com.termux/files/usr/"
+        #PKG_NAME=${_PACKAGE}_${_VERSION}_${_ARCH}_termux.deb
+fi
 
-# launch the build
-build_package $DISTRO
+_depend+="curl, php, unzip"
+_bin_dir+="usr/bin"
+_opt_dir+="opt/${_PACKAGE}"
+
+if [[ -d "build_env" ]]; then rm -fr build_env; fi
+mkdir -p build_env
+mkdir -p ./build_env/${_bin_dir} ./build_env/$_opt_dir ./build_env/DEBIAN 
+
+cat <<- CONTROL_EOF > ./build_env/DEBIAN/control
+Package: ${_PACKAGE}
+Version: ${_VERSION}
+Architecture: ${_ARCH}
+Maintainer: @htr-tech
+Depends: ${_depend}
+Homepage: https://github.com/htr-tech/zphisher
+Description: An automated phishing tool with 30+ templates. This Tool is made for educational purpose only !
+CONTROL_EOF
+
+cat <<- PRERM_EOF > ./build_env/DEBIAN/prerm
+#!/bin/bash
+rm -fr $_opt_dir
+exit 0
+PRERM_EOF
+
+chmod 755 ./build_env/DEBIAN
+chmod 755 ./build_env/DEBIAN/{control,prerm}
+cp -fr scripts/launch.sh ./build_env/$_bin_dir/$_PACKAGE
+chmod 755 ./build_env/$_bin_dir/$_PACKAGE
+cp -fr .github/ .sites/ LICENSE README.md zphisher.sh ./build_env/$_opt_dir
+dpkg-deb --build ./build_env ${PKG_NAME}
+rm -fr ./build_env
