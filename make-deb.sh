@@ -2,7 +2,7 @@
 
 # Make Deb Package for Zphisher (^.^)
 _PACKAGE=zphisher
-_VERSION=2.3.0
+_VERSION=2.3.1
 _ARCH="all"
 PKG_NAME="${_PACKAGE}_${_VERSION}_${_ARCH}.deb"
 
