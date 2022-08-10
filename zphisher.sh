@@ -734,7 +734,7 @@ main_menu() {
 		${RED}[${WHITE}06${RED}]${ORANGE} Netflix       ${RED}[${WHITE}19${RED}]${ORANGE} Spotify      ${RED}[${WHITE}32${RED}]${ORANGE} Mediafire
 		${RED}[${WHITE}07${RED}]${ORANGE} Paypal        ${RED}[${WHITE}20${RED}]${ORANGE} Reddit       ${RED}[${WHITE}33${RED}]${ORANGE} Gitlab	
 		${RED}[${WHITE}08${RED}]${ORANGE} Steam         ${RED}[${WHITE}21${RED}]${ORANGE} Adobe        ${RED}[${WHITE}34${RED}]${ORANGE} Github	
-		${RED}[${WHITE}09${RED}]${ORANGE} Twitter       ${RED}[${WHITE}22${RED}]${ORANGE} DevianArt    ${RED}[${WHITE}25${RED}]${ORANGE} Discord
+		${RED}[${WHITE}09${RED}]${ORANGE} Twitter       ${RED}[${WHITE}22${RED}]${ORANGE} DevianArt    ${RED}[${WHITE}35${RED}]${ORANGE} Discord
 		${RED}[${WHITE}10${RED}]${ORANGE} Playstation   ${RED}[${WHITE}23${RED}]${ORANGE} Badoo       
 		${RED}[${WHITE}11${RED}]${ORANGE} Tiktok        ${RED}[${WHITE}24${RED}]${ORANGE} Origin        
 		${RED}[${WHITE}12${RED}]${ORANGE} Twitch        ${RED}[${WHITE}25${RED}]${ORANGE} DropBox       
