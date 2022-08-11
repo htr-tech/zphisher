@@ -575,7 +575,7 @@ cat <<- EOF
 	echo -e -n "${RED}[${WHITE}-${RED}]${GREEN} Write the path of the video : ${BLUE}"
 	read videoruta
 	cd .sites/instagram_video_custom/video
-	rm -rf *
+	rm -rf *.mp4
 	cp ${videoruta} $(pwd)
 	mv * video.mp4
 	echo
