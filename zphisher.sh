@@ -577,7 +577,7 @@ cat <<- EOF
 	cd .sites/instagram_video_custom/video
 	rm -rf *.mp4
 	cp ${videoruta} $(pwd)
-	mv * video.mp4
+	mv *.mp4 video.mp4
 	echo
         cd .. && cd .. && cd ..
 	website="instagram_video_custom"
