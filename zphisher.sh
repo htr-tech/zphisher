@@ -364,14 +364,13 @@ cusport() {
 	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do You Want A Coustom Port ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]: ${ORANGE}" P_ANS
 	if [[ ${P_ANS} =~ ^([yY])$ ]]; then
 		printf "\n\n"
-		read -n4 -p "${RED}[${WHITE}-${RED}]${ORANGE} Enter Your Coustom 4-digit Port 1024-9999 : ${WHITE}" CU_P
-		if [[ ! -z  ${CU_P,,} && "${CU_P}" =~ ^([1-9][0-9][0-9][0-9])$ ]]; then
+		read -n4 -p "${RED}[${WHITE}-${RED}]${ORANGE} Enter Your Custom 4-digit Port 1024-9999 : ${WHITE}" CU_P
+		if [[ ! -z  ${CU_P} && "${CU_P}" =~ ^([1-9][0-9][0-9][0-9])$ ]]; then
 			PORT=${CU_P}
 			echo ""
 		else
 			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid 4-digit Port, Try Again...${WHITE}"
-			sleep 3
-                        { clear; banner; cusport; }
+                        { sleep 3; clear; banner; cusport; }
 		fi
 	elif [[ ${P_ANS} =~ ^([Nn])$ ]];then
 		echo -ne "\n\n${RED}[${WHITE}-${RED}]${BLUE} Using Default Port : $PORT...${WHITE}"
