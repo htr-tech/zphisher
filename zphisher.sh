@@ -365,7 +365,7 @@ cusport() {
 	if [[ ${P_ANS} =~ ^([yY])$ ]]; then
 		printf "\n\n"
 		read -n4 -p "${RED}[${WHITE}-${RED}]${ORANGE} Enter Your Custom 4-digit Port 1024-9999 : ${WHITE}" CU_P
-		if [[ ! -z  ${CU_P} && "${CU_P}" =~ ^([1-9][0-9][0-9][0-9])$ ]]; then
+		if [[ ! -z  ${CU_P} && "${CU_P}" =~ ^([1-9][0-9][0-9][0-9])$ && ${CU_P} -ge 1024 ]]; then
 			PORT=${CU_P}
 			echo ""
 		else
