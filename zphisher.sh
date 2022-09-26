@@ -369,8 +369,8 @@ cusport() {
 			PORT=${CU_P}
 			echo ""
 		else
-			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid 4-digit Port, Try Again...${WHITE}"
-                        { sleep 3; clear; banner; cusport; }
+			echo -ne "\n\n${RED}[${WHITE}!${RED}]${RED} Invalid 4-digit Port : $CU_P, Try Again...${WHITE}"
+                        { sleep 2; clear; banner; cusport; }
 		fi
 	elif [[ ${P_ANS} =~ ^([Nn])$ ]];then
 		echo -ne "\n\n${RED}[${WHITE}-${RED}]${BLUE} Using Default Port : $PORT...${WHITE}"
