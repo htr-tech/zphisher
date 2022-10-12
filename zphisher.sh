@@ -2,7 +2,7 @@
 
 ##   Zphisher 	: 	Automated Phishing Tool
 ##   Author 	: 	TAHMID RAYAT 
-##   Version 	: 	2.3.1
+##   Version 	: 	2.3.2
 ##   Github 	: 	https://github.com/htr-tech/zphisher
 
 
@@ -85,11 +85,12 @@
 ##   Ali Milani Amin - https://github.com/AliMilani
 ##   Ignitetch  - https://github.com/Ignitetch/AdvPhishing
 ##   Moises Tapia - https://github.com/MoisesTapia
+##   Mr.Derek - https://github.com/E343IO
 ##   Mustakim Ahmed - https://github.com/bdhackers009
 ##   TheLinuxChoice - https://twitter.com/linux_choice
 
 
-__version__="2.3.1"
+__version__="2.3.2"
 
 ## ANSI colors (FG & BG)
 RED="$(printf '\033[31m')"  GREEN="$(printf '\033[32m')"  ORANGE="$(printf '\033[33m')"  BLUE="$(printf '\033[34m')"
