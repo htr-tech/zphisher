@@ -155,6 +155,31 @@ kill_pid() {
 	done
 }
 
+# Check for a newer release
+check_update(){
+    echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Checking for update : "
+    relase_url='https://api.github.com/repos/htr-tech/zphisher/releases/latest'
+
+    if [[ $(curl -s $relase_url | grep '"tag_name":' | awk -F\" '{print $4}') != $__version__ ]]; then
+        echo -ne "${ORANGE} update found\n"${WHITE}
+		sleep 1
+		echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${ORANGE} Updating..."
+		git pull origin master
+		{ clear; banner_small; }
+		echo -ne "\n${GREEN}[${WHITE}+${GREEN}] Successfully updated! Run zphisher again"${WHITE}
+		exit
+    else
+        echo -ne "${GREEN}up to date\n${WHITE}" ; sleep .5
+    fi
+}
+
+## Check Internet Status
+check_status() {
+    echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Internet Status : "
+    timeout 3s curl -fIs "https://api.github.com" > /dev/null
+    [ $? -eq 0 ] && echo -e "${GREEN}Online${WHITE}" && check_update || echo -e "${RED}Offline${WHITE}"
+}
+
 ## Banner
 banner() {
 	cat <<- EOF
@@ -335,7 +360,8 @@ about() {
 		
 		${WHITE} ${CYANBG}Special Thanks to:${RESETBG}
 		${GREEN}  1RaY-1, Adi1090x, AliMilani, BDhackers009,
-		  KasRoudra, sepp0, ThelinuxChoice, Yisus7u7
+		  KasRoudra, E343IO, sepp0, ThelinuxChoice,
+		  Yisus7u7
 
 		${RED}[${WHITE}00${RED}]${ORANGE} Main Menu     ${RED}[${WHITE}99${RED}]${ORANGE} Exit
 
@@ -853,6 +879,7 @@ main_menu() {
 ## Main
 kill_pid
 dependencies
+check_status
 install_ngrok
 install_cloudflared
 install_localxpose
