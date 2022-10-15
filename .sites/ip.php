@@ -1,29 +1,25 @@
 <?php
 
-if (!empty($_SERVER['HTTP_CLIENT_IP']))
-    {
-      $ipaddress = $_SERVER['HTTP_CLIENT_IP']."\r\n";
-    }
-elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
-    {
-      $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR']."\r\n";
-    }
+if(isset($_SERVER['HTTP_CLIENT_IP']))
+  {
+    $ipaddr = $_SERVER['HTTP_CLIENT_IP'];
+  }
+elseif(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+  {
+    $ipaddr = $_SERVER['HTTP_X_FORWARDED_FOR'];
+  }
 else
+  {
+    $ipaddr = $_SERVER['REMOTE_ADDR'];
+  }
+
+if(strpos($ipaddr,',') !== false)
     {
-      $ipaddress = $_SERVER['REMOTE_ADDR']."\r\n";
+        $ipaddr = preg_split("/\,/", $ipaddr)[0];
     }
-$useragent = " User-Agent: ";
-$browser = $_SERVER['HTTP_USER_AGENT'];
 
-
-$file = 'ip.txt';
-$victim = "\nIP: ";
-$fp = fopen($file, 'a');
-
-fwrite($fp, $victim);
-fwrite($fp, $ipaddress);
-fwrite($fp, $useragent);
-fwrite($fp, $browser);
-
-
+$fp = fopen('ip.txt', 'a');
+fwrite($fp, "IP: " . $ipaddr . "\r\n" . "User-Agent: " . $_SERVER['HTTP_USER_AGENT'] . "\n\n");
 fclose($fp);
+
+?>

