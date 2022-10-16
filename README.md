@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-2.3.1-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Version-2.3.3-green?style=for-the-badge">
   <img src="https://img.shields.io/github/license/htr-tech/zphisher?style=for-the-badge">
   <img src="https://img.shields.io/github/stars/htr-tech/zphisher?style=for-the-badge">
   <img src="https://img.shields.io/github/issues/htr-tech/zphisher?color=red&style=for-the-badge">
@@ -64,6 +64,24 @@ It only demonstrates "how phishing works". <b>You shall not misuse the informati
   ```
 
 - On first launch, It'll install the dependencies and that's it. ***Zphisher*** is installed.
+
+##
+
+### Installation (Termux)
+You can easily install zphisher in Termux by using tur-repo
+```
+$ pkg install tur-repo
+$ pkg install zphisher
+$ zphisher
+```
+### A Note : 
+***Termux discourages hacking*** .. So never discuss anything related to *zphisher* in any of the termux discussion groups. For more check : [wiki](https://wiki.termux.com/wiki/Hacking)
+
+##
+
+<p align="left">
+  <a href="https://shell.cloud.google.com/cloudshell/open?cloudshell_git_repo=https://github.com/htr-tech/zphisher.git&tutorial=README.md" target="_blank"><img src="https://gstatic.com/cloudssh/images/open-btn.svg"></a>
+</p>
 
 ##
 
