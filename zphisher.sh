@@ -447,7 +447,7 @@ CHECK() { #3 checking for HTTP|S or WWW input type is valid or not.
 }
 
 cusurl(){ #1
-	echo -ne "\n${RED}[${WHITE}-${RED}]${ORANGE} Do You want to Customize the uRL BeLow?\n"
+	echo -ne "\n\n${RED}[${WHITE}-${RED}]${ORANGE} Do You want to Customize the uRL BeLow?\n"
 	read -n1 -p "${RED}[${WHITE}-${RED}]${ORANGE} ${LINK} ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " CUS_URI
 	if [[ "${CUS_URI}" =~ ^([Yy])$ ]]; then
 		printf "\e[0m\n\n"
