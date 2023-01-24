@@ -379,6 +379,78 @@
       .ZEe2i {
         margin-right: 24px;
       }
+.sqdOP {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: 0 0;
+        border: 0;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        cursor: pointer;
+        display: block;
+        font-weight: 600;
+        padding: 5px 9px;
+        text-align: center;
+        text-transform: inherit;
+        text-overflow: ellipsis;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        width: auto;
+      }
+      .sqdOP:active {
+        opacity: 0.7;
+      }
+      .sqdOP[disabled],
+      a.sqdOP[disabled] {
+        pointer-events: none;
+      }
+      .sqdOP[disabled]:not(.A086a) {
+        opacity: 0.3;
+      }
+      .L3NKy,
+      a.L3NKy,
+      a.L3NKy:visited {
+        border-radius: 4px;
+        color: #fff;
+        color: rgba(var(--eca, 255, 255, 255), 1);
+        position: relative;
+      }
+      ._4pI4F {
+        width: 100%;
+      }
+      .sH_mn,
+      a.sH_mn,
+      a.sH_mn:visited {
+        background-color: transparent;
+        border: 1px solid #ed4956;
+        border: 1px solid rgba(var(--i30, 237, 73, 86), 1);
+        color: #ed4956;
+        color: rgba(var(--i30, 237, 73, 86), 1);
+      }
+      .y3zKF:not(.yWX7d),
+      a.y3zKF:not(.yWX7d),
+      a.y3zKF:not(.yWX7d):visited {
+        border: 1px solid transparent;
+        background-color: #0095f6;
+        background-color: rgba(var(--d69, 0, 149, 246), 1);
+      }
+      .y3zKF:active:not(.yWX7d),
+      a.y3zKF:active:not(.yWX7d),
+      a.y3zKF:active:not(.yWX7d):visited {
+        background-color: rgba(0, 149, 246, 0.7);
+        background-color: rgba(var(--d69, 0, 149, 246), 0.7);
+        opacity: 1;
+      }
+      .y3zKF[disabled]:not(.yWX7d):not(.A086a),
+      a.y3zKF[disabled]:not(.yWX7d):not(.A086a),
+      a.y3zKF[disabled]:not(.yWX7d):not(.A086a):visited {
+        background-color: rgba(0, 149, 246, 0.3);
+        background-color: rgba(var(--d69, 0, 149, 246), 0.3);
+        opacity: 1;
+      }
       .cb9w7 {
         margin-right: 28px;
       }
