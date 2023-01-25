@@ -362,7 +362,7 @@ install_localxpose() {
 		elif [[ ("$DEVICE" == *'Darwin'*) && ("$ARCH" == *'x86_64'*) ]]; then
 			download 'https://api.localxpose.io/api/v2/downloads/loclx-darwin-amd64.zip' 'loclx' 'loclx-darwin-amd64'
 		elif [[ ("$DEVICE" == *'Darwin'*) && ("$ARCH" == *'arm64'*) ]]; then
-			download 'https://api.localxpose.io/api/v2/downloads/loclx-darwin-arm64.zip' 'loclx'
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-darwin-arm64.zip' 'loclx' 'loclx-darwin-arm64'
 		elif [[ "$ARCH" == *'aarch64'* ]]; then
 			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm64.zip' 'loclx'
 		elif [[ "$ARCH" == *'x86_64'* ]]; then
