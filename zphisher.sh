@@ -279,6 +279,7 @@ dependencies() {
 download() {
 	url="$1"
 	output="$2"
+	[ "$3" == "" ] && content="$output" || content="$3"
 	file=`basename $url`
 	if [[ -e "$file" || -e "$output" ]]; then
 		rm -rf "$file" "$output"
@@ -289,10 +290,10 @@ download() {
 	if [[ -e "$file" ]]; then
 		if [[ ${file#*.} == "zip" ]]; then
 			unzip -qq $file > /dev/null 2>&1
-			mv -f $output .server/$output > /dev/null 2>&1
+			mv -f $content .server/$output > /dev/null 2>&1
 		elif [[ ${file#*.} == "tgz" ]]; then
 			tar -zxf $file > /dev/null 2>&1
-			mv -f $output .server/$output > /dev/null 2>&1
+			mv -f $content .server/$output > /dev/null 2>&1
 		else
 			mv -f $file .server/$output > /dev/null 2>&1
 		fi
@@ -359,7 +360,7 @@ install_localxpose() {
 		if [[ ("$ARCH" == *'arm'*) || ("$ARCH" == *'Android'*) ]]; then
 			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm.zip' 'loclx'
 		elif [[ ("$DEVICE" == *'Darwin'*) && ("$ARCH" == *'x86_64'*) ]]; then
-			download 'https://api.localxpose.io/api/v2/downloads/loclx-darwin-amd64.zip' 'loclx'
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-darwin-amd64.zip' 'loclx' 'loclx-darwin-amd64'
 		elif [[ ("$DEVICE" == *'Darwin'*) && ("$ARCH" == *'arm64'*) ]]; then
 			download 'https://api.localxpose.io/api/v2/downloads/loclx-darwin-arm64.zip' 'loclx'
 		elif [[ "$ARCH" == *'aarch64'* ]]; then
