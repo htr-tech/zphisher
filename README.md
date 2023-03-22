@@ -42,7 +42,6 @@ It only demonstrates "how phishing works". <b>You shall not misuse the informati
 - Beginners friendly
 - Multiple tunneling options
   - Localhost
-  - Ngrok
   - Cloudflared
   - LocalXpose
 - Mask URL support 
