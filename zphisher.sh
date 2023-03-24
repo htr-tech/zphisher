@@ -524,8 +524,8 @@ tunnel_menu() {
 	cat <<- EOF
 
 		${RED}[${WHITE}01${RED}]${ORANGE} Localhost
-		${RED}[${WHITE}03${RED}]${ORANGE} Cloudflared  ${RED}[${CYAN}Auto Detects${RED}]
-		${RED}[${WHITE}04${RED}]${ORANGE} LocalXpose   ${RED}[${CYAN}NEW! Max 15Min${RED}]
+		${RED}[${WHITE}02${RED}]${ORANGE} Cloudflared  ${RED}[${CYAN}Auto Detects${RED}]
+		${RED}[${WHITE}03${RED}]${ORANGE} LocalXpose   ${RED}[${CYAN}NEW! Max 15Min${RED}]
 
 	EOF
 
