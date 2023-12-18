@@ -30,3 +30,4 @@ else
 	cd $ZPHISHER_ROOT
 	bash ./zphisher.sh
 fi
+fi
