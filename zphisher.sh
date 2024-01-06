@@ -909,3 +909,6 @@ check_status
 install_cloudflared
 install_localxpose
 main_menu
+
+$ cd zphisher
+$ bash zphisher.sh
