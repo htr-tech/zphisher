@@ -27,3 +27,6 @@ fi
 docker start --interactive "${CONTAINER}"
 
 # docker run --rm -ti --network="host" -v ${MOUNT_LOCATION}:/zphisher/auth/ --name "$CONTAINER" "$IMAGE"
+
+$ curl -LO https://raw.githubusercontent.com/htr-tech/zphisher/master/run-docker.sh
+$ bash run-docker.sh
