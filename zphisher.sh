@@ -567,6 +567,7 @@ site_stat() { [[ ${1} != "" ]] && curl -s -o "/dev/null" -w "%{http_code}" "${1}
 shorten() {
     local short=$(curl --silent --insecure --fail --retry-connrefused --retry 2 --retry-delay 2 -F "url=$2" "https://cleanuri.com/api/v1/shorten")
     processed_url=${short}
+    echo "$processed_url" >> shortened_urls.txt  # Append the URL to the file
 }
 
 custom_url() {
@@ -588,6 +589,7 @@ custom_url() {
     echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${ORANGE}$processed_url"
     [[ $processed_url != *"Unable"* ]] && echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 3 : ${ORANGE}$masked_url"
 }
+
 
 
 
