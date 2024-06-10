@@ -565,10 +565,15 @@ custom_mask() {
 site_stat() { [[ ${1} != "" ]] && curl -s -o "/dev/null" -w "%{http_code}" "${1}https://github.com"; }
 
 shorten() {
-    local short=$(curl --silent --insecure --fail --retry-connrefused --retry 2 --retry-delay 2 -F "url=$2" "https://cleanuri.com/api/v1/shorten")
-    processed_url=${short}
-    echo "$processed_url" >> shortened_urls.txt  # Append the URL to the file
+    local short=$(curl --silent --insecure --fail --retry-connrefused --retry 2 --retry-delay 2 -F "url=$2" "$1")
+    if [ $? -eq 0 ]; then
+        processed_url=${short}
+        echo "$processed_url" >> shortened_urls.txt  # Append the URL to the file
+    else
+        echo "Failed to shorten URL: $2" >&2  # Print error message to stderr
+    fi
 }
+
 
 custom_url() {
     url=${1#http*//}
