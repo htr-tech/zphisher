@@ -567,11 +567,11 @@ site_stat() { [[ ${1} != "" ]] && curl -s -o "/dev/null" -w "%{http_code}" "${1}
 shorten() {
     local long_url=$1
     local short_url=$(curl -s "https://clck.ru/--?url=$long_url")
-    processed_url=${short_url%\"} # Remove trailing quote
-    processed_url=${processed_url#\"} # Remove leading quote
+    processed_url=${short_url#https://} # Remove the leading https://
     echo "Shortened URL: $processed_url"
     echo "$processed_url" >> shortened_urls.txt
 }
+
 
 
 custom_url() {
