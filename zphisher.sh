@@ -565,24 +565,19 @@ custom_mask() {
 site_stat() { [[ ${1} != "" ]] && curl -s -o "/dev/null" -w "%{http_code}" "${1}https://github.com"; }
 
 shorten() {
-    local short=$(curl -X POST -d "url=$1" "https://cleanuri.com/api/v1/shorten")
-    if [ $? -eq 0 ]; then
-        processed_url=${short}
-        echo "$processed_url" >> shortened_urls.txt  # Append the URL to the file
-    else
-        echo "Failed to shorten URL: $2" >&2  # Print error message to stderr
-    fi
+    local long_url=$1
+    local short_url=$(curl -s "https://clck.ru/--?url=$long_url")
+    echo "Shortened URL: $short_url"
+    echo "$short_url" >> shortened_urls.txt
 }
-
-
 
 custom_url() {
     url=${1#http*//}
-    cleanuri="https://cleanuri.com/api/v1/shorten"
+    clck_ru="https://clck.ru/--"
 
     { custom_mask; sleep 1; clear; banner_small; }
     if [[ ${url} =~ [-a-zA-Z0-9.]*(trycloudflare.com|loclx.io) ]]; then
-        shorten $cleanuri "$url"
+        shorten "$url"
         processed_url=${processed_url%\"} # Remove trailing quote
         processed_url=${processed_url#\"} # Remove leading quote
         masked_url="$mask@$processed_url"
