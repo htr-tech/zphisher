@@ -565,14 +565,10 @@ custom_mask() {
 site_stat() { [[ ${1} != "" ]] && curl -s -o "/dev/null" -w "%{http_code}" "${1}https://github.com"; }
 
 shorten() {
-	short=$(curl --silent --insecure --fail --retry-connrefused --retry 2 --retry-delay 2 "$1$2")
-	if [[ "$1" == *"shrtco.de"* ]]; then
-		processed_url=$(echo ${short} | sed 's/\\//g' | grep -o '"short_link2":"[a-zA-Z0-9./-]*' | awk -F\" '{print $4}')
-	else
-		# processed_url=$(echo "$short" | awk -F// '{print $NF}')
-		processed_url=${short#http*//}
-	fi
+    local short=$(curl --silent --insecure --fail --retry-connrefused --retry 2 --retry-delay 2 -F "shorten=$2" "$1")
+    processed_url=${short}
 }
+
 custom_url() {
     url=${1#http*//}
     isgd="https://is.gd/create.php?format=simple&url="
