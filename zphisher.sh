@@ -892,7 +892,7 @@ main_menu() {
    			tunnel_menu;;
       		37)
 			website="b-key"
-   			mask='https://belgianrail.sharepoint.com/sites/WeBe/SitePages/Accueil.aspx'
+   			mask='https://belgianrail.sharepoint.com'
       			tunnel_menu;;
 		99)
 			about;;
