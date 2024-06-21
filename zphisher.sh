@@ -557,10 +557,10 @@ custom_mask() {
     if [[ $(echo "$mask_op" | tr '[:upper:]' '[:lower:]') == "y" ]]; then
         echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Enter your custom URL below ${CYAN}(${ORANGE}Example: https://get-free-followers.com${CYAN})\n"
         read -e -p "${WHITE} ==> ${ORANGE}" -i https:// mask_url
-        if [[ ${mask_url} =~ ^https?:// || ${mask_url::4} == "www." ]] && [[ ${mask_url#http://} =~ ^[^,~!@%:=#;^*"\'|?+<>({})\\/]+$ ]] && [[ ${mask_url#https://} =~ ^[^,~!@%:=#;^*"\'|?+<>({})\\/]+$ ]]; then
-            mask=$mask_url
-            echo -e "\n${RED}[${WHITE}-${RED}]${CYAN} Using custom Masked Url :${GREEN} $mask"
-        else
+        if [[ ${mask_url} =~ ^(https?://|www\.) ]] && [[ ${mask_url#http://} =~ ^[^,~!@%:=#\;\^\*\"\'\|\?+<>\(\)\{}/\\]+$ ]] && [[ ${mask_url#https://} =~ ^[^,~!@%:=#\;\^\*\"\'\|\?+<>\(\)\{}/\\]+$ ]]; then
+    mask=$mask_url
+    echo -e "\n${RED}[${WHITE}-${RED}]${CYAN} Using custom Masked Url :${GREEN} $mask"
+else
             echo -e "\n${RED}[${WHITE}!${RED}]${ORANGE} Invalid URL type.. Using the default one.."
         fi
     fi
