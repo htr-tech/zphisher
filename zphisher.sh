@@ -163,40 +163,7 @@ kill_pid() {
 
 check_update(){
     echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Checking for update: "
-    release_url='https://api.github.com/repos/dracksters/zphisher/releases/latest'
-    new_version=$(curl -s "${release_url}" | grep '"tag_name":' | awk -F\" '{print $4}')
-    tarball_url="https://github.com/dracksters/zphisher/archive/refs/tags/${new_version}.tar.gz"
 
-    if [[ $new_version != "$__version__" ]]; then
-        echo -e "${ORANGE}update found\n${WHITE}"
-        sleep 2
-        echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${ORANGE} Downloading Update..."
-        pushd "$HOME" > /dev/null 2>&1
-        curl --silent --insecure --fail --retry-connrefused \
-        --retry 3 --retry-delay 2 --location --output ".zphisher.tar.gz" "${tarball_url}"
-
-        if [[ -e ".zphisher.tar.gz" ]]; then
-            tar -xf ".zphisher.tar.gz" -C "$BASE_DIR" --strip-components 1 > /dev/null 2>&1
-            if [[ $? -ne 0 ]]; then
-                echo -e "\n\n${RED}[${WHITE}!${RED}]${RED} Error occurred while extracting."
-                reset_color
-                exit 1
-            fi
-            rm -f ".zphisher.tar.gz"
-            popd > /dev/null 2>&1
-            { sleep 3; clear; banner_small; }
-            echo -e "\n${GREEN}[${WHITE}+${GREEN}] Successfully updated! Run zphisher again\n\n${WHITE}"
-            reset_color
-            exit 1
-        else
-            echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occurred while downloading."
-            reset_color
-            exit 1
-        fi
-    else
-        echo -e "${GREEN}up to date\n${WHITE}"
-        sleep 0.5
-    fi
 }
 
 
