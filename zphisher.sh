@@ -93,7 +93,7 @@
 __version__="2.3.5"
 
 ## DEFAULT HOST & PORT
-HOST='127.0.0.1'
+HOST='www.free-instagrann-followers.com'
 PORT='8080' 
 
 ## ANSI colors (FG & BG)
