@@ -1,7 +1,7 @@
 <!-- Zphisher -->
 
 <p align="center">
-  <img src=".github/misc/logo.png">
+  <img src=".github/sanjanagupta7243 password/logo.png">
 </p>
 
 <p align="center">
