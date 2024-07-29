@@ -4,9 +4,20 @@
 
 **Help Bangladeshi Students 🙏**
 
-Bangladesh is currently facing significant internal unrest. The government, in collaboration with the Student League and police forces, is preparing to attack general students who are protesting against the discriminatory quota system in government jobs and sectors. We urgently need international media attention to shed light on our situation. **Not only university but college students also shed blood on 16.07.24**
+Bangladesh is currently facing significant internal unrest. The government, in collaboration with the Student League and police forces, is preparing to attack general students who are protesting against the discriminatory quota system in government jobs and sectors. We urgently need international media attention to shed light on our situation.
 
-**Please help us ensure that if violence occurs, the world will be aware. We need the support of the international media.**
+-----
+**Update:**
+
+The situation has worsened. 500+ students (even children) were martyred. 10000+ students are in jail just because asking for their rights. **Our Local Media is just being a puppet & brodcasting false news.** 
+
+**Proof of Violence**: https://t.me/BringingJusticetoYouBangladesh
+
+Now they are trying to stop us from letting the world know about current situation. They are checking phones everywhere to emit the proofs of violence. **Where's our human rights?** 
+
+They want to suppress us by arresting the coordinators of the movement and collecting false bonds from them as hostages. They are silencing everyone
+
+------
 
 Please focus on the plight of Bangladeshi students.
 
