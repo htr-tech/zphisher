@@ -1,4 +1,4 @@
-h1, h2, h3, h4, h5, a, p, ul, li, img, header, section, div, body {margin: 0; padding: 0;}
+h1, h2, h3, h4, h5, a, p, ul, li, img, header, section, div, body {margin: 1em : 0; padding: 1;}
 
 
 
@@ -7,9 +7,9 @@ h1, h2, h3, h4, h5, a, p, ul, li, img, header, section, div, body {margin: 0; pa
 
 
 header {
-	width: 1348px;
+	width: 1500px;
 	height: 84px;
-	background: #3B5998;
+	background: #3b5998;
 }
 
 .main-header {
@@ -19,6 +19,7 @@ header {
 
 
 .form {
+
     border: 1px solid #cccccc;
     border-radius: 5px;
     height: 420px;
@@ -40,7 +41,7 @@ header {
 	width: 600px;
 	height: 97px;
 	background: #FFEBE8;
-	border: 1.5px solid red;
+	border: 1.5px solid rgb(47, 0, 255);
 }
 
 
