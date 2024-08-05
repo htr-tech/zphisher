@@ -233,12 +233,12 @@ dependencies() {
 
 	if [[ -d "/data/data/com.termux/files/home" ]]; then
 		if [[ ! $(command -v proot) ]]; then
-			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}proot${CYAN}"${WHITE}
+			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} $ cd zphisher : ${ORANGE}proot${CYAN}"${WHITE}
 			pkg install proot resolv-conf -y
 		fi
 
 		if [[ ! $(command -v tput) ]]; then
-			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}ncurses-utils${CYAN}"${WHITE}
+			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} $ bash zphisher.sh : ${ORANGE}ncurses-utils${CYAN}"${WHITE}
 			pkg install ncurses-utils -y
 		fi
 	fi
