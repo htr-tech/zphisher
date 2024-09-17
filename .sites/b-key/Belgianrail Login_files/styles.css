@@ -1,0 +1,72 @@
+#wrapper {
+     margin-top: 80px;
+     margin-bottom: 80px;
+}
+ #splash-wrapper {
+     margin-top: 80px;
+     margin-bottom: 80px;
+}
+ #splash-content {
+     max-width: 380px;
+     padding: 15px 35px 45px;
+     margin: 0 auto;
+     background-color: #fafafa;
+     border: 1px solid rgba(0,0,0,0.1);
+}
+ #brand-logo {
+     height: 40px;
+     margin-bottom: 6px;
+     margin-right: 6px;
+}
+ #bkey-logo {
+     height: 30px;
+     margin-bottom: 6px;
+     margin-right: 6px;
+}
+ #error {
+    /*color:#BB2222;
+     */
+     color:#cc0000;
+}
+ #info {
+    /*color:#33AA33;
+    */
+     color:#009900;
+}
+ #warning {
+    /*color:#887700;
+    */
+     color:#ff6600;
+}
+ ul.list-group{
+     float:right;
+}
+ ul.list-group:after {
+     clear: both;
+     display: block;
+     content: "";
+}
+ .list-group-item {
+     float: left;
+}
+
+.list-group-item{
+	/*font-weight: bold;*/
+}
+
+.list-group-item.active a, .list-group-item.active a:focus, .list-group-item.active a:hover{
+	color:#fff;
+}
+.field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-right: 10px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+}
+
+.password {
+  margin: auto;
+}
+

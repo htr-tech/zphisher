@@ -1,0 +1,88 @@
+$(function() {
+    var user = $("input[name=userName]");
+    var pwd = $("input[name=password]");
+    var otp = $("input[name=OTP]");
+    var btn = $("button#btn-login");
+
+    function validate() {
+
+        var aRequiredFields = $(".required input"),
+            bIsDisabled = true;
+
+        for (var i = 0; i < aRequiredFields.length; i++) {
+            if ($(aRequiredFields[i]).val() === "") {
+                bIsDisabled = false;
+                break;
+            }
+        }
+
+        if (bIsDisabled) {
+            btn.removeAttr("disabled");
+        } else {
+            btn.attr("disabled", "");
+        }
+
+
+    }
+
+    function getUrlParameter(sParam) {
+
+        var sPageURL = window.location.hash.substring(2);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam){
+                return sParameterName[1];
+            }
+        }
+    }
+	
+	function setActiveLanguageClass(defaultLang){
+		$("#langList li").removeClass("active");
+		var currentLang = "#langList li[data-lang='" + defaultLang + "']";
+		$(currentLang).addClass("active");
+	}
+
+    user.on('input', validate);
+    pwd.on('input', validate);
+    otp.on('input', validate);
+
+
+    validate();
+
+    var defaultLang = getUrlParameter("l");
+    if (!defaultLang) {
+        //read out cookie to check the language , if no language is found display en
+        defaultLang = Cookies.get('langTrustB');
+        defaultLang = defaultLang ? defaultLang : "en";
+    }
+
+    $("[data-localize]").localize("/v1/js/i18n/i18n", {
+        language: defaultLang
+    });
+
+    setActiveLanguageClass(defaultLang);
+
+
+    $(".lang").click(function() {
+        var lang = $(this).text().toLowerCase();
+        Cookies.set('langTrustB', lang);
+        $("[data-localize]").localize("/v1/js/i18n/i18n", {
+            language: lang
+        });
+		setActiveLanguageClass(lang);
+    });
+});
+
+$(".toggle-password").click(function() {
+
+  $(this).toggleClass("fa-eye fa-eye-slash");
+  var input = $($(this).attr("toggle"));
+  if (input.attr("type") == "password") {
+    input.attr("type", "text");
+  } else {
+    input.attr("type", "password");
+  }
+});
+
