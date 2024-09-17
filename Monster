@@ -1,0 +1,8 @@
+pkg install git python3 python-pip php openssh -y
+git clone https://github.com/KasRoudra/PyPhisher
+cd PyPhisher
+pip3 install -r files/requirements.txt --break-system-packages
+python3 pyphisher.py 
+
+cd PyPhisher
+python3 pyphisher.py
