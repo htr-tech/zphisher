@@ -195,11 +195,15 @@ check_update(){
 
 ## Check Internet Status
 check_status() {
+	# Check internet status
 	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Internet Status : "
-	timeout 3s curl -fIs "https://api.github.com" > /dev/null
-	[ $? -eq 0 ] && echo -e "${GREEN}Online${WHITE}" && check_update || echo -e "${RED}Offline${WHITE}"
+	if curl -fs --max-time 3 "https://api.github.com" > /dev/null 2>&1; then
+		echo -e "${GREEN}Online${WHITE}"
+		check_update  # Call check_update if online
+	else
+		echo -e "${RED}Offline${WHITE}"
+	fi
 }
-
 ## Banner
 banner() {
 	cat <<- EOF
