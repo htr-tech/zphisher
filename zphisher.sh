@@ -775,7 +775,7 @@ main_menu() {
 			tunnel_menu;;
 		6 | 06)
 			website="paypal"
-			mask='https://get-500-usd-free-to-your-acount'
+			mask='https://www.paypal.com/signin?locale.x=es_XC'
 			tunnel_menu;;
 		7 | 07)
 			website="steam"
