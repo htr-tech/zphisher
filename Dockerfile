@@ -1,6 +1,6 @@
 FROM alpine:latest
-LABEL MAINTAINER="https://github.com/htr-tech/zphisher"
-WORKDIR /zphisher/
-ADD . /zphisher
+LABEL MAINTAINER="https://github.com/whydohumanssuck/zen"
+WORKDIR /zen/
+ADD . /zen
 RUN apk add --no-cache bash ncurses curl unzip wget php 
-CMD "./zphisher.sh"
+CMD "./zen.sh"
