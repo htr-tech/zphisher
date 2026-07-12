@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# https://github.com/htr-tech/zen
+# https://github.com/whydohumanssuck/zen
 
 if [[ $(uname -o) == *'Android'* ]];then
 	ZPHISHER_ROOT="/data/data/com.termux/files/usr/opt/zen"

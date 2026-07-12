@@ -76,7 +76,7 @@
 ##    The precise terms and conditions for copying, distribution and
 ##    modification follow.
 ##
-##      Copyright (C) 2026  whydohumanssuck (https://github.com/htr-tech)
+##      Copyright (C) 2026  whydohumanssuck (https://github.com/whydohumanssuck)
 ##
 
 ##   THANKS TO :
@@ -354,7 +354,7 @@ about() {
 		${GREEN} Github   ${RED}:  ${CYAN}https://github.com/whydohumanssuck/zen
 		${GREEN} Social   ${RED}:  ${CYAN}https://github.com/whydohumanssuck
 		${GREEN} Version  ${RED}:  ${MAGENTA}${__version__}
-		${GREEN} Based on ${RED}:  ${CYAN}htr-tech/zen (Original)
+		${GREEN} Based on ${RED}:  ${CYAN}Original by htr-tech/zphisher
 
 		${WHITE} ${REDBG}Warning:${RESETBG}
 		${CYAN}  Zen - Redesigned phishing toolkit for educational purpose 
