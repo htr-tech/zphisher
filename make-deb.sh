@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Make Deb Package for Zphisher (^.^)
+# Make Deb Package for Zen (^.^)
 _PACKAGE=zen
 _VERSION=2.3.5
 _ARCH="all"

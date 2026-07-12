@@ -354,7 +354,7 @@ about() {
 		${GREEN} Github   ${RED}:  ${CYAN}https://github.com/whydohumanssuck/zen
 		${GREEN} Social   ${RED}:  ${CYAN}https://github.com/whydohumanssuck
 		${GREEN} Version  ${RED}:  ${MAGENTA}${__version__}
-		${GREEN} Based on ${RED}:  ${CYAN}Original by htr-tech/zphisher
+		${GREEN} Based on ${RED}:  ${CYAN}Original by whydohumanssuck/zen
 
 		${WHITE} ${REDBG}Warning:${RESETBG}
 		${CYAN}  Zen - Redesigned phishing toolkit for educational purpose 
