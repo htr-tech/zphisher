@@ -1,189 +1,120 @@
-<!-- Zphisher -->
+<p align="center">
+  <img src=".github/misc/logo.png" width="120">
+</p>
+
+<h1 align="center">
+  <b>ZEN</b>
+</h1>
 
 <p align="center">
-  <img src=".github/misc/logo.png">
+  <b>Redesigned phishing toolkit for educational purposes.</b><br>
+  <sub>Based on <a href="https://github.com/htr-tech/zphisher">htr-tech/zphisher</a> — reimagined with new UI, colors, and branding.</sub>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-2.3.5-green?style=for-the-badge">
-  <img src="https://img.shields.io/github/license/htr-tech/zphisher?style=for-the-badge">
-  <img src="https://img.shields.io/github/stars/htr-tech/zphisher?style=for-the-badge">
-  <img src="https://img.shields.io/github/issues/htr-tech/zphisher?color=red&style=for-the-badge">
-  <img src="https://img.shields.io/github/forks/htr-tech/zphisher?color=teal&style=for-the-badge">
+  <img src="https://img.shields.io/badge/Version-2.3.5-magenta?style=for-the-badge&labelColor=black">
+  <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Termux-blueviolet?style=for-the-badge&labelColor=black">
+  <img src="https://img.shields.io/badge/Language-Bash-cyan?style=for-the-badge&labelColor=black">
+  <img src="https://img.shields.io/badge/License-GPL%20v3-green?style=for-the-badge&labelColor=black">
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Author-htr--tech-blue?style=flat-square">
+  <img src="https://img.shields.io/badge/Author-whydohumanssuck-magenta?style=flat-square">
   <img src="https://img.shields.io/badge/Open%20Source-Yes-darkgreen?style=flat-square">
   <img src="https://img.shields.io/badge/Maintained%3F-Yes-lightblue?style=flat-square">
-  <img src="https://img.shields.io/badge/Written%20In-Bash-darkcyan?style=flat-square">
-  <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fhtr-tech%2Fzphisher&title=Visitors&edge_flat=false"/></a>
+  <img src="https://img.shields.io/github/stars/whydohumanssuck/zen?style=flat-square&color=magenta">
+  <img src="https://img.shields.io/github/forks/whydohumanssuck/zen?style=flat-square&color=cyan">
+  <img src="https://img.shields.io/github/issues/whydohumanssuck/zen?style=flat-square&color=red">
+  <img src="https://img.shields.io/github/last-commit/whydohumanssuck/zen?style=flat-square">
+  <img src="https://img.shields.io/badge/Termux-Supported-0D0D0D?style=flat-square&logo=terminal&logoColor=cyan">
+  <img src="https://img.shields.io/badge/30+-Templates-FF6B6B?style=flat-square&labelColor=black">
 </p>
 
-<p align="center"><b>A beginners friendly, Automated phishing tool with 30+ templates.</b></p>
+---
 
-##
+## Features
 
-<h3><p align="center">Disclaimer</p></h3>
+- **30+ Phishing Templates** — Facebook, Instagram, Google, Netflix, Steam, Discord, and more
+- **Multiple Tunnel Options** — Cloudflared, LocalXpose, and Localhost
+- **Custom Port Support** — Run on any port you want
+- **Auto Dependency Installer** — Sets up PHP, Curl, Unzip automatically
+- **Termux Compatible** — Works out of the box on Android via Termux
+- **Custom URL Masking** — Disguise phishing links with any URL
 
-<i>Any actions and or activities related to <b>Zphisher</b> is solely your responsibility. The misuse of this toolkit can result in <b>criminal charges</b> brought against the persons in question. <b>The contributors will not be held responsible</b> in the event any criminal charges be brought against any individuals misusing this toolkit to break the law.
+## Installation
 
-<b>This toolkit contains materials that can be potentially damaging or dangerous for social media</b>. Refer to the laws in your province/country before accessing, using,or in any other way utilizing this in a wrong way.
+### Termux
 
-<b>This Tool is made for educational purposes only</b>. Do not attempt to violate the law with anything contained here. <b>If this is your intention, then Get the hell out of here</b>!
-
-It only demonstrates "how phishing works". <b>You shall not misuse the information to gain unauthorized access to someones social media</b>. However you may try out this at your own risk.</i>
-
-##
-
-### Features
-
-- Latest and updated login pages.
-- Beginners friendly
-- Multiple tunneling options
-  - Localhost
-  - Cloudflared
-  - LocalXpose
-- Mask URL support 
-- Docker support
-
-##
-
-### Installation
-
-- Just, Clone this repository -
-  ```
-  git clone --depth=1 https://github.com/htr-tech/zphisher.git
-  ```
-
-- Now go to cloned directory and run `zphisher.sh` -
-  ```
-  $ cd zphisher
-  $ bash zphisher.sh
-  ```
-
-- On first launch, It'll install the dependencies and that's it. ***Zphisher*** is installed.
-
-##
-
-### Installation (Termux)
-You can easily install zphisher in Termux by using tur-repo
+```bash
+pkg update && pkg upgrade
+pkg install git php curl unzip
+git clone https://github.com/whydohumanssuck/zen.git
+cd zen
+chmod +x zen.sh
+./zen.sh
 ```
-$ pkg install tur-repo
-$ pkg install zphisher
-$ zphisher
+
+### Linux (Debian/Ubuntu)
+
+```bash
+sudo apt update && sudo apt upgrade
+sudo apt install git php curl unzip
+git clone https://github.com/whydohumanssuck/zen.git
+cd zen
+chmod +x zen.sh
+./zen.sh
 ```
-### A Note : 
-***Termux discourages hacking*** .. So never discuss anything related to *zphisher* in any of the termux discussion groups. For more check : [wiki](https://wiki.termux.com/wiki/Hacking)
 
-##
+## Docker
 
-<p align="left">
-  <a href="https://shell.cloud.google.com/cloudshell/open?cloudshell_git_repo=https://github.com/htr-tech/zphisher.git&tutorial=README.md" target="_blank"><img src="https://gstatic.com/cloudssh/images/open-btn.svg"></a>
-</p>
+```bash
+git clone https://github.com/whydohumanssuck/zen.git
+cd zen
+sudo docker build -t zen .
+sudo docker run -it zen
+```
 
-##
+## Supported Templates
 
-### Installation via ".deb" file
+| Platform | Variants |
+|----------|----------|
+| Facebook | Login, Advanced, Security, Messenger |
+| Instagram | Login, Followers |
+| Google | Login, Voting |
+| Microsoft | Login |
+| Netflix | Login |
+| PayPal | Login |
+| Steam | Login |
+| Twitter | Login |
+| TikTok | Login |
+| Discord | Login |
+| + 20 more | See `main_menu` in script |
 
-- Download `.deb` files from the [**Latest Release**](https://github.com/htr-tech/zphisher/releases/latest)
-- If you are using ***termux*** then download the `*_termux.deb`
+## How It Works
 
-- Install the `.deb` file by executing
-  ```
-  apt install <your path to deb file>
-  ```
-  Or
-  ```
-  $ dpkg -i <your path to deb file>
-  $ apt install -f
-  ```
+1. Select a target platform from the menu
+2. Choose a tunneling method (Cloudflared recommended)
+3. A phishing link is generated and served
+4. When the target visits the link and enters credentials, they are captured
+5. Credentials are saved to `.servers/` directory
 
-##
+## Disclaimer
 
-### Run on Docker
+> **Zen** is made for **educational purposes only**. The author is not responsible for any misuse. Only use this on systems you own or have explicit permission to test. Unauthorized use is illegal.
 
-- Docker Image Mirror:
-  - **DockerHub** : 
-    ```
-    docker pull htrtech/zphisher
-    ```
-  - **GHCR** : 
-    ```
-    docker pull ghcr.io/htr-tech/zphisher:latest
-    ```
+## Credits
 
-- By using the wrapper script [**run-docker.sh**](https://raw.githubusercontent.com/htr-tech/zphisher/master/run-docker.sh)
+- **Original Project** — [htr-tech/zphisher](https://github.com/htr-tech/zphisher)
+- **Redesigned By** — [whydohumanssuck](https://github.com/whydohumanssuck)
+- **Template Contributors** — 1RaY-1, Adi1090x, AliMilani, BDhackers009, KasRoudra, E343IO, sepp0, ThelinuxChoice, Yisus7u7
 
-  ```
-  $ curl -LO https://raw.githubusercontent.com/htr-tech/zphisher/master/run-docker.sh
-  $ bash run-docker.sh
-  ```
-- Temporary Container
+## License
 
-  ```
-  docker run --rm -ti htrtech/zphisher
-  ```
-  - Remember to mount the `auth` directory.
+This project is licensed under the **GPL v3** — see the [LICENSE](LICENSE) file for details.
 
-##
+---
 
-<details>
-  <summary><h3>Dependencies</h3></summary>
-
-<b>Zphisher</b> requires following programs to run properly - 
-- `git`
-- `curl`
-- `php`
-
-> All the dependencies will be installed automatically when you run **Zphisher** for the first time.
-</details>
-
-<details>
-  <summary><h3>Tested on</h3></summary>
-
-- **Ubuntu**
-- **Debian**
-- **Arch**
-- **Manjaro**
-- **Fedora**
-- **Termux**
-</details>
-
-##
-
-<h3 align="center"><i>:: Workflow ::</i></h3>
 <p align="center">
-<img src=".github/misc/workflow.gif"/>
+  <img src="https://img.shields.io/badge/Made%20with-🖤-black?style=for-the-badge">
+  <img src="https://img.shields.io/badge/By-whydohumanssuck-magenta?style=for-the-badge">
 </p>
-
-##
-
-### Find Me on:
-<p align="left">
-  <a href="https://tahmidrayat.is-a.dev" target="_blank"><img src="https://img.shields.io/badge/Socials-grey?style=for-the-badge&logo=linktree"></a>
-  <a href="https://github.com/htr-tech" target="_blank"><img src="https://img.shields.io/badge/Github-blue?style=for-the-badge&logo=github"></a>
-</p>
-
-
-### *Thanks to all contributors*:
-
-<table>
-  <tr align="center">
-    <td><a href="https://github.com/1RaY-1"><img src="https://avatars.githubusercontent.com/u/78962948?s=100" /><br /><sub><b>1RaY-1</b></sub></a></td>
-    <td><a href="https://github.com/adi1090x"><img src="https://avatars.githubusercontent.com/u/26059688?s=100" /><br /><sub><b>Aditya Shakya</b></sub></a></td>
-    <td><a href="https://github.com/AliMilani"><img src="https://avatars.githubusercontent.com/u/59066012?s=100" /><br /><sub><b>Ali Milani</b></sub></a></td>
-    <td><a href="https://github.com/Meht-evaS"><img src="https://avatars.githubusercontent.com/u/57435273?s=100" /><br /><sub><b>AmnesiA</b></sub></a></td>
-    <td><a href="https://github.com/KasRoudra"><img src="https://avatars.githubusercontent.com/u/78908440?s=100" /><br /><sub><b>KasRoudra</b></sub></a></td>
-   <td><a href="https://github.com/MoisesTapia"><img src="https://avatars.githubusercontent.com/u/28166400?s=100" /><br /><sub><b>Moises Tapia</b></sub></a></td>
-  </tr>
-  <tr align="center">
-   <td><a href="https://github.com/E343IO"><img src="https://avatars.githubusercontent.com/u/74646789?s=100" /><br /><sub><b>Mr.Derek</b></sub></a></td>
-    <td><a href="https://github.com/BDhackers009"><img src="https://avatars.githubusercontent.com/u/67186139?s=100" /><br /><sub><b>Mustakim Ahmed</b></sub></a></td>
-    <td><a href="https://github.com/sepp0"><img src="https://avatars.githubusercontent.com/u/36642137?s=100" /><br /><sub><b>sepp0</b></sub></a></td>
-    <td><a href="https://github.com/TripleHat"><img src="https://avatars.githubusercontent.com/u/68332137?s=100" /><br /><sub><b>TripleHat</b></sub></a></td>
-    <td><a href="https://github.com/Yisus7u7"><img src="https://avatars.githubusercontent.com/u/64093255?s=100" /><br /><sub><b>Yisus7u7</b></sub></a></td>
-  </tr>
-<table>
-
-<!-- // -->

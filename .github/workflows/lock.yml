@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Lock Issues
-        if: github.repository == 'htr-tech/zphisher' && github.ref == 'refs/heads/master'
+        if: github.repository == 'whydohumanssuck/zen' && github.ref == 'refs/heads/master'
         uses: dessant/lock-threads@v3
         with:
           process-only: 'issues'
